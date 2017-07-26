@@ -1,0 +1,28 @@
+{
+    "sagrabeApp": {
+        "serata" : {
+            "home": {
+                "title": "Seratas",
+                "createLabel": "Create a new Serata",
+                "createOrEditLabel": "Create or edit a Serata"
+            },
+            "created": "A new Serata is created with identifier {{ param }}",
+            "updated": "A Serata is updated with identifier {{ param }}",
+            "deleted": "A Serata is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Serata {{ id }}?"
+            },
+            "detail": {
+                "title": "Serata"
+            },
+            "codice": "Codice",
+            "descrizione": "Descrizione",
+            "data": "Data",
+            "dataApertura": "Data Apertura",
+            "dataChiusura": "Data Chiusura",
+            "personaApertura": "Persona Apertura",
+            "personaChiusura": "Persona Chiusura",
+            "sagra": "Sagra"
+        }
+    }
+}

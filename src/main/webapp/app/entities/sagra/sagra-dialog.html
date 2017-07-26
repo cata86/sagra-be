@@ -1,0 +1,83 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="mySagraLabel" data-translate="sagrabeApp.sagra.home.createOrEditLabel">Create or edit a Sagra</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.sagra.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.sagra.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.sagra.nome" for="field_nome">Nome</label>
+            <input type="text" class="form-control" name="nome" id="field_nome"
+                    ng-model="vm.sagra.nome"
+                    />
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setLogo($file, vm.sagra)" ngf-pattern="'image/*'">
+            <label class="control-label" data-translate="sagrabeApp.sagra.logo" for="field_logo">Logo</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.sagra.logoContentType + ';base64,' + vm.sagra.logo}}" style="max-height: 100px;" ng-if="vm.sagra.logo" alt="sagra image"/>
+                <div ng-if="vm.sagra.logo" class="help-block clearfix">
+                    <span class="pull-left">{{vm.sagra.logoContentType}}, {{vm.byteSize(vm.sagra.logo)}}</span>
+                    <button type="button" ng-click="vm.sagra.logo=null;vm.sagra.logoContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setLogo($file, vm.sagra)" accept="image/*" data-translate="entity.action.addimage">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="logo" id="field_logo"
+                    ng-model="vm.sagra.logo"
+                    />
+            <input type="hidden" class="form-control" name="logoContentType" id="field_logoContentType"
+                    ng-model="vm.sagra.logoContentType" />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.sagra.indirizzo" for="field_indirizzo">Indirizzo</label>
+            <input type="text" class="form-control" name="indirizzo" id="field_indirizzo"
+                    ng-model="vm.sagra.indirizzo"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.sagra.piva" for="field_piva">Piva</label>
+            <input type="text" class="form-control" name="piva" id="field_piva"
+                    ng-model="vm.sagra.piva"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.sagra.testataScontrino" for="field_testataScontrino">Testata Scontrino</label>
+            <input type="text" class="form-control" name="testataScontrino" id="field_testataScontrino"
+                    ng-model="vm.sagra.testataScontrino"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.sagra.footerScontrino" for="field_footerScontrino">Footer Scontrino</label>
+            <input type="text" class="form-control" name="footerScontrino" id="field_footerScontrino"
+                    ng-model="vm.sagra.footerScontrino"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.sagra.sequenzeAbilitate" for="field_sequenzeAbilitate">Sequenze Abilitate</label>
+                <input type="checkbox" name="sequenzeAbilitate" id="field_sequenzeAbilitate"
+                          ng-model="vm.sagra.sequenzeAbilitate"/>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "logo",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "image"
+        },
+        {
+            "fieldName": "indirizzo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "piva",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "testataScontrino",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "footerScontrino",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sequenzeAbilitate",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170725110158",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "sagra",
+    "pagination": "no"
+}

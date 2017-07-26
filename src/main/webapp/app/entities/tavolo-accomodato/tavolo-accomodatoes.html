@@ -1,0 +1,92 @@
+<div>
+    <h2 data-translate="sagrabeApp.tavoloAccomodato.home.title">Tavolo Accomodatoes</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="tavolo-accomodato.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="sagrabeApp.tavoloAccomodato.home.createLabel">
+                        Create new Tavolo Accomodato
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="codice"><span data-translate="sagrabeApp.tavoloAccomodato.codice">Codice</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="descrizione"><span data-translate="sagrabeApp.tavoloAccomodato.descrizione">Descrizione</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="numCoperti"><span data-translate="sagrabeApp.tavoloAccomodato.numCoperti">Num Coperti</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="stato"><span data-translate="sagrabeApp.tavoloAccomodato.stato">Stato</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="accomodatoOrario"><span data-translate="sagrabeApp.tavoloAccomodato.accomodatoOrario">Accomodato Orario</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="accomodatoPersona"><span data-translate="sagrabeApp.tavoloAccomodato.accomodatoPersona">Accomodato Persona</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="inOrdinazioneOrario"><span data-translate="sagrabeApp.tavoloAccomodato.inOrdinazioneOrario">In Ordinazione Orario</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="inOrdinazionePersona"><span data-translate="sagrabeApp.tavoloAccomodato.inOrdinazionePersona">In Ordinazione Persona</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="ordinazioneOrario"><span data-translate="sagrabeApp.tavoloAccomodato.ordinazioneOrario">Ordinazione Orario</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="ordinazionePersona"><span data-translate="sagrabeApp.tavoloAccomodato.ordinazionePersona">Ordinazione Persona</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="liberatoOrario"><span data-translate="sagrabeApp.tavoloAccomodato.liberatoOrario">Liberato Orario</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="liberatoPersona"><span data-translate="sagrabeApp.tavoloAccomodato.liberatoPersona">Liberato Persona</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="asporto"><span data-translate="sagrabeApp.tavoloAccomodato.asporto">Asporto</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="serata.codice"><span data-translate="sagrabeApp.tavoloAccomodato.serata">Serata</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="tavoloReale.codice"><span data-translate="sagrabeApp.tavoloAccomodato.tavoloReale">Tavolo Reale</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="tavoloAccomodato in vm.tavoloAccomodatoes track by tavoloAccomodato.id">
+                    <td><a ui-sref="tavolo-accomodato-detail({id:tavoloAccomodato.id})">{{tavoloAccomodato.id}}</a></td>
+                    <td>{{tavoloAccomodato.codice}}</td>
+                    <td>{{tavoloAccomodato.descrizione}}</td>
+                    <td>{{tavoloAccomodato.numCoperti}}</td>
+                    <td data-translate="{{'sagrabeApp.TavoloStato.' + tavoloAccomodato.stato}}">{{tavoloAccomodato.stato}}</td>
+                    <td>{{tavoloAccomodato.accomodatoOrario | date:'medium'}}</td>
+                    <td>{{tavoloAccomodato.accomodatoPersona}}</td>
+                    <td>{{tavoloAccomodato.inOrdinazioneOrario | date:'medium'}}</td>
+                    <td>{{tavoloAccomodato.inOrdinazionePersona}}</td>
+                    <td>{{tavoloAccomodato.ordinazioneOrario | date:'medium'}}</td>
+                    <td>{{tavoloAccomodato.ordinazionePersona}}</td>
+                    <td>{{tavoloAccomodato.liberatoOrario | date:'medium'}}</td>
+                    <td>{{tavoloAccomodato.liberatoPersona}}</td>
+                    <td>{{tavoloAccomodato.asporto}}</td>
+                    <td>
+                        <a ui-sref="serata-detail({id:tavoloAccomodato.serata.id})">{{tavoloAccomodato.serata.codice}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="tavolo-reale-detail({id:tavoloAccomodato.tavoloReale.id})">{{tavoloAccomodato.tavoloReale.codice}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="tavolo-accomodato-detail({id:tavoloAccomodato.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="tavolo-accomodato.edit({id:tavoloAccomodato.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="tavolo-accomodato.delete({id:tavoloAccomodato.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

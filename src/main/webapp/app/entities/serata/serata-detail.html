@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span data-translate="sagrabeApp.serata.detail.title">Serata</span> {{vm.serata.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="sagrabeApp.serata.codice">Codice</span></dt>
+        <dd>
+            <span>{{vm.serata.codice}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.serata.descrizione">Descrizione</span></dt>
+        <dd>
+            <span>{{vm.serata.descrizione}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.serata.data">Data</span></dt>
+        <dd>
+            <span>{{vm.serata.data | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.serata.dataApertura">Data Apertura</span></dt>
+        <dd>
+            <span>{{vm.serata.dataApertura | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.serata.dataChiusura">Data Chiusura</span></dt>
+        <dd>
+            <span>{{vm.serata.dataChiusura | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.serata.personaApertura">Persona Apertura</span></dt>
+        <dd>
+            <span>{{vm.serata.personaApertura}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.serata.personaChiusura">Persona Chiusura</span></dt>
+        <dd>
+            <span>{{vm.serata.personaChiusura}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.serata.sagra">Sagra</span></dt>
+        <dd>
+            <a ui-sref="sagra-detail({id:vm.serata.sagra.id})">{{vm.serata.sagra.nome}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="serata-detail.edit({id:vm.serata.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

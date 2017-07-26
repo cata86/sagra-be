@@ -1,0 +1,43 @@
+
+<div>
+    <h2><span data-translate="sagrabeApp.tavoloReale.detail.title">Tavolo Reale</span> {{vm.tavoloReale.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="sagrabeApp.tavoloReale.codice">Codice</span></dt>
+        <dd>
+            <span>{{vm.tavoloReale.codice}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloReale.descrizione">Descrizione</span></dt>
+        <dd>
+            <span>{{vm.tavoloReale.descrizione}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloReale.postiMax">Posti Max</span></dt>
+        <dd>
+            <span>{{vm.tavoloReale.postiMax}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloReale.postiOccupati">Posti Occupati</span></dt>
+        <dd>
+            <span>{{vm.tavoloReale.postiOccupati}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloReale.asporto">Asporto</span></dt>
+        <dd>
+            <span>{{vm.tavoloReale.asporto}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloReale.sagra">Sagra</span></dt>
+        <dd>
+            <a ui-sref="sagra-detail({id:vm.tavoloReale.sagra.id})">{{vm.tavoloReale.sagra.nome}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="tavolo-reale-detail.edit({id:vm.tavoloReale.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

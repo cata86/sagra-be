@@ -1,0 +1,26 @@
+{
+    "sagrabeApp": {
+        "tavoloReale" : {
+            "home": {
+                "title": "Tavolo Reales",
+                "createLabel": "Create a new Tavolo Reale",
+                "createOrEditLabel": "Create or edit a Tavolo Reale"
+            },
+            "created": "A new Tavolo Reale is created with identifier {{ param }}",
+            "updated": "A Tavolo Reale is updated with identifier {{ param }}",
+            "deleted": "A Tavolo Reale is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Tavolo Reale {{ id }}?"
+            },
+            "detail": {
+                "title": "Tavolo Reale"
+            },
+            "codice": "Codice",
+            "descrizione": "Descrizione",
+            "postiMax": "Posti Max",
+            "postiOccupati": "Posti Occupati",
+            "asporto": "Asporto",
+            "sagra": "Sagra"
+        }
+    }
+}

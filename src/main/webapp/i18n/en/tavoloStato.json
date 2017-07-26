@@ -1,0 +1,11 @@
+{
+    "sagrabeApp": {
+        "TavoloStato" : {
+            "null": "",
+            "ACCOMODATO": "ACCOMODATO",
+            "IN_ORDINAZIONE": "IN_ORDINAZIONE",
+            "ORDINATO": "ORDINATO",
+            "LIBERATO": "LIBERATO"
+        }
+    }
+}

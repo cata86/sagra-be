@@ -1,0 +1,52 @@
+
+<div>
+    <h2><span data-translate="sagrabeApp.sagra.detail.title">Sagra</span> {{vm.sagra.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="sagrabeApp.sagra.nome">Nome</span></dt>
+        <dd>
+            <span>{{vm.sagra.nome}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.sagra.logo">Logo</span></dt>
+        <dd>
+            <div ng-if="vm.sagra.logo">
+                <a ng-click="vm.openFile(vm.sagra.logoContentType, vm.sagra.logo)">
+                    <img data-ng-src="{{'data:' + vm.sagra.logoContentType + ';base64,' + vm.sagra.logo}}" style="max-width: 100%;" alt="sagra image"/>
+                </a>
+                {{vm.sagra.logoContentType}}, {{vm.byteSize(vm.sagra.logo)}}
+            </div>
+        </dd>
+        <dt><span data-translate="sagrabeApp.sagra.indirizzo">Indirizzo</span></dt>
+        <dd>
+            <span>{{vm.sagra.indirizzo}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.sagra.piva">Piva</span></dt>
+        <dd>
+            <span>{{vm.sagra.piva}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.sagra.testataScontrino">Testata Scontrino</span></dt>
+        <dd>
+            <span>{{vm.sagra.testataScontrino}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.sagra.footerScontrino">Footer Scontrino</span></dt>
+        <dd>
+            <span>{{vm.sagra.footerScontrino}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.sagra.sequenzeAbilitate">Sequenze Abilitate</span></dt>
+        <dd>
+            <span>{{vm.sagra.sequenzeAbilitate}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="sagra-detail.edit({id:vm.sagra.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

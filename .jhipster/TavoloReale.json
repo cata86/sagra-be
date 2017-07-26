@@ -1,0 +1,41 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "sagra",
+            "otherEntityName": "sagra",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "nome"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codice",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descrizione",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "postiMax",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "postiOccupati",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "asporto",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170725110803",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "tavolo_reale",
+    "pagination": "infinite-scroll"
+}

@@ -1,0 +1,66 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTavoloRealeLabel" data-translate="sagrabeApp.tavoloReale.home.createOrEditLabel">Create or edit a Tavolo Reale</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.tavoloReale.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.tavoloReale.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloReale.codice" for="field_codice">Codice</label>
+            <input type="text" class="form-control" name="codice" id="field_codice"
+                    ng-model="vm.tavoloReale.codice"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloReale.descrizione" for="field_descrizione">Descrizione</label>
+            <input type="text" class="form-control" name="descrizione" id="field_descrizione"
+                    ng-model="vm.tavoloReale.descrizione"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloReale.postiMax" for="field_postiMax">Posti Max</label>
+            <input type="number" class="form-control" name="postiMax" id="field_postiMax"
+                    ng-model="vm.tavoloReale.postiMax"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloReale.postiOccupati" for="field_postiOccupati">Posti Occupati</label>
+            <input type="number" class="form-control" name="postiOccupati" id="field_postiOccupati"
+                    ng-model="vm.tavoloReale.postiOccupati"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloReale.asporto" for="field_asporto">Asporto</label>
+                <input type="checkbox" name="asporto" id="field_asporto"
+                          ng-model="vm.tavoloReale.asporto"/>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="sagrabeApp.tavoloReale.sagra" for="field_sagra">Sagra</label>
+            <select class="form-control" id="field_sagra" name="sagra" ng-model="vm.tavoloReale.sagra" ng-options="sagra as sagra.nome for sagra in vm.sagras track by sagra.id" required>
+            </select>
+        </div>
+        <div ng-show="editForm.sagra.$invalid">
+            <p class="help-block"
+                ng-show="editForm.sagra.$error.required" data-translate="entity.validation.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

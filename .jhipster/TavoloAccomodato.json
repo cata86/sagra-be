@@ -1,0 +1,83 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "serata",
+            "otherEntityName": "serata",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "codice"
+        },
+        {
+            "relationshipName": "tavoloReale",
+            "otherEntityName": "tavoloReale",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "codice"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codice",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descrizione",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numCoperti",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "stato",
+            "fieldType": "TavoloStato",
+            "fieldValues": "ACCOMODATO,IN_ORDINAZIONE,ORDINATO,LIBERATO"
+        },
+        {
+            "fieldName": "accomodatoOrario",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "accomodatoPersona",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "inOrdinazioneOrario",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "inOrdinazionePersona",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ordinazioneOrario",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "ordinazionePersona",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "liberatoOrario",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "liberatoPersona",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "asporto",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170725112353",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "tavolo_accomodato",
+    "pagination": "pagination"
+}

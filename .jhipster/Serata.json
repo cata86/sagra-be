@@ -1,0 +1,49 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "sagra",
+            "otherEntityName": "sagra",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "nome"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codice",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descrizione",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "data",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "dataApertura",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "dataChiusura",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "personaApertura",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "personaChiusura",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170725111616",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "serata",
+    "pagination": "infinite-scroll"
+}

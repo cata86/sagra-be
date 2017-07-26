@@ -1,0 +1,79 @@
+
+<div>
+    <h2><span data-translate="sagrabeApp.tavoloAccomodato.detail.title">Tavolo Accomodato</span> {{vm.tavoloAccomodato.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.codice">Codice</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.codice}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.descrizione">Descrizione</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.descrizione}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.numCoperti">Num Coperti</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.numCoperti}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.stato">Stato</span></dt>
+        <dd>
+            <span data-translate="{{'sagrabeApp.TavoloStato.' + vm.tavoloAccomodato.stato}}">{{vm.tavoloAccomodato.stato}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.accomodatoOrario">Accomodato Orario</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.accomodatoOrario | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.accomodatoPersona">Accomodato Persona</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.accomodatoPersona}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.inOrdinazioneOrario">In Ordinazione Orario</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.inOrdinazioneOrario | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.inOrdinazionePersona">In Ordinazione Persona</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.inOrdinazionePersona}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.ordinazioneOrario">Ordinazione Orario</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.ordinazioneOrario | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.ordinazionePersona">Ordinazione Persona</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.ordinazionePersona}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.liberatoOrario">Liberato Orario</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.liberatoOrario | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.liberatoPersona">Liberato Persona</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.liberatoPersona}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.asporto">Asporto</span></dt>
+        <dd>
+            <span>{{vm.tavoloAccomodato.asporto}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.serata">Serata</span></dt>
+        <dd>
+            <a ui-sref="serata-detail({id:vm.tavoloAccomodato.serata.id})">{{vm.tavoloAccomodato.serata.codice}}</a>
+        </dd>
+        <dt><span data-translate="sagrabeApp.tavoloAccomodato.tavoloReale">Tavolo Reale</span></dt>
+        <dd>
+            <a ui-sref="tavolo-reale-detail({id:vm.tavoloAccomodato.tavoloReale.id})">{{vm.tavoloAccomodato.tavoloReale.codice}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="tavolo-accomodato-detail.edit({id:vm.tavoloAccomodato.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

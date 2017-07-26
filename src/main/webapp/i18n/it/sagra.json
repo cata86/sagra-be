@@ -1,0 +1,27 @@
+{
+    "sagrabeApp": {
+        "sagra" : {
+            "home": {
+                "title": "Sagras",
+                "createLabel": "Genera un nuovo Sagra",
+                "createOrEditLabel": "Genera o modifica un Sagra"
+            },
+            "created": "&Egrave; stato generato un nuovo Sagra con identificatore {{ param }}",
+            "updated": "&Egrave; stato aggiornato Sagra identificato da {{ param }}",
+            "deleted": "&Egrave; stato eliminato Sagra con identificatore {{ param }}",
+            "delete": {
+                "question": "Sei sicuro di volere eliminare Sagra {{ id }}?"
+            },
+            "detail": {
+                "title": "Sagra"
+            },
+            "nome": "Nome",
+            "logo": "Logo",
+            "indirizzo": "Indirizzo",
+            "piva": "Piva",
+            "testataScontrino": "Testata Scontrino",
+            "footerScontrino": "Footer Scontrino",
+            "sequenzeAbilitate": "Sequenze Abilitate"
+        }
+    }
+}

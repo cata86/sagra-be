@@ -1,0 +1,35 @@
+{
+    "sagrabeApp": {
+        "tavoloAccomodato" : {
+            "home": {
+                "title": "Tavolo Accomodatoes",
+                "createLabel": "Create a new Tavolo Accomodato",
+                "createOrEditLabel": "Create or edit a Tavolo Accomodato"
+            },
+            "created": "A new Tavolo Accomodato is created with identifier {{ param }}",
+            "updated": "A Tavolo Accomodato is updated with identifier {{ param }}",
+            "deleted": "A Tavolo Accomodato is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Tavolo Accomodato {{ id }}?"
+            },
+            "detail": {
+                "title": "Tavolo Accomodato"
+            },
+            "codice": "Codice",
+            "descrizione": "Descrizione",
+            "numCoperti": "Num Coperti",
+            "stato": "Stato",
+            "accomodatoOrario": "Accomodato Orario",
+            "accomodatoPersona": "Accomodato Persona",
+            "inOrdinazioneOrario": "In Ordinazione Orario",
+            "inOrdinazionePersona": "In Ordinazione Persona",
+            "ordinazioneOrario": "Ordinazione Orario",
+            "ordinazionePersona": "Ordinazione Persona",
+            "liberatoOrario": "Liberato Orario",
+            "liberatoPersona": "Liberato Persona",
+            "asporto": "Asporto",
+            "serata": "Serata",
+            "tavoloReale": "Tavolo Reale"
+        }
+    }
+}

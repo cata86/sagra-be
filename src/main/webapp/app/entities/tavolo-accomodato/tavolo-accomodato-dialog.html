@@ -1,0 +1,144 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myTavoloAccomodatoLabel" data-translate="sagrabeApp.tavoloAccomodato.home.createOrEditLabel">Create or edit a Tavolo Accomodato</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.tavoloAccomodato.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.tavoloAccomodato.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.codice" for="field_codice">Codice</label>
+            <input type="text" class="form-control" name="codice" id="field_codice"
+                    ng-model="vm.tavoloAccomodato.codice"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.descrizione" for="field_descrizione">Descrizione</label>
+            <input type="text" class="form-control" name="descrizione" id="field_descrizione"
+                    ng-model="vm.tavoloAccomodato.descrizione"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.numCoperti" for="field_numCoperti">Num Coperti</label>
+            <input type="number" class="form-control" name="numCoperti" id="field_numCoperti"
+                    ng-model="vm.tavoloAccomodato.numCoperti"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.stato" for="field_stato">Stato</label>
+            <select class="form-control" name="stato" ng-model="vm.tavoloAccomodato.stato" id="field_stato">
+                <option value="ACCOMODATO" data-translate="sagrabeApp.TavoloStato.ACCOMODATO">ACCOMODATO</option>
+                <option value="IN_ORDINAZIONE" data-translate="sagrabeApp.TavoloStato.IN_ORDINAZIONE">IN_ORDINAZIONE</option>
+                <option value="ORDINATO" data-translate="sagrabeApp.TavoloStato.ORDINATO">ORDINATO</option>
+                <option value="LIBERATO" data-translate="sagrabeApp.TavoloStato.LIBERATO">LIBERATO</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.accomodatoOrario" for="field_accomodatoOrario">Accomodato Orario</label>
+                <div class="input-group">
+                    <input id="field_accomodatoOrario" type="text" class="form-control" name="accomodatoOrario" datetime-picker="{{dateformat}}" ng-model="vm.tavoloAccomodato.accomodatoOrario" is-open="vm.datePickerOpenStatus.accomodatoOrario"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('accomodatoOrario')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.accomodatoPersona" for="field_accomodatoPersona">Accomodato Persona</label>
+            <input type="text" class="form-control" name="accomodatoPersona" id="field_accomodatoPersona"
+                    ng-model="vm.tavoloAccomodato.accomodatoPersona"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.inOrdinazioneOrario" for="field_inOrdinazioneOrario">In Ordinazione Orario</label>
+                <div class="input-group">
+                    <input id="field_inOrdinazioneOrario" type="text" class="form-control" name="inOrdinazioneOrario" datetime-picker="{{dateformat}}" ng-model="vm.tavoloAccomodato.inOrdinazioneOrario" is-open="vm.datePickerOpenStatus.inOrdinazioneOrario"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('inOrdinazioneOrario')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.inOrdinazionePersona" for="field_inOrdinazionePersona">In Ordinazione Persona</label>
+            <input type="text" class="form-control" name="inOrdinazionePersona" id="field_inOrdinazionePersona"
+                    ng-model="vm.tavoloAccomodato.inOrdinazionePersona"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.ordinazioneOrario" for="field_ordinazioneOrario">Ordinazione Orario</label>
+                <div class="input-group">
+                    <input id="field_ordinazioneOrario" type="text" class="form-control" name="ordinazioneOrario" datetime-picker="{{dateformat}}" ng-model="vm.tavoloAccomodato.ordinazioneOrario" is-open="vm.datePickerOpenStatus.ordinazioneOrario"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('ordinazioneOrario')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.ordinazionePersona" for="field_ordinazionePersona">Ordinazione Persona</label>
+            <input type="text" class="form-control" name="ordinazionePersona" id="field_ordinazionePersona"
+                    ng-model="vm.tavoloAccomodato.ordinazionePersona"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.liberatoOrario" for="field_liberatoOrario">Liberato Orario</label>
+                <div class="input-group">
+                    <input id="field_liberatoOrario" type="text" class="form-control" name="liberatoOrario" datetime-picker="{{dateformat}}" ng-model="vm.tavoloAccomodato.liberatoOrario" is-open="vm.datePickerOpenStatus.liberatoOrario"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('liberatoOrario')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.liberatoPersona" for="field_liberatoPersona">Liberato Persona</label>
+            <input type="text" class="form-control" name="liberatoPersona" id="field_liberatoPersona"
+                    ng-model="vm.tavoloAccomodato.liberatoPersona"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.tavoloAccomodato.asporto" for="field_asporto">Asporto</label>
+                <input type="checkbox" name="asporto" id="field_asporto"
+                          ng-model="vm.tavoloAccomodato.asporto"/>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="sagrabeApp.tavoloAccomodato.serata" for="field_serata">Serata</label>
+            <select class="form-control" id="field_serata" name="serata" ng-model="vm.tavoloAccomodato.serata" ng-options="serata as serata.codice for serata in vm.seratas track by serata.id" required>
+            </select>
+        </div>
+        <div ng-show="editForm.serata.$invalid">
+            <p class="help-block"
+                ng-show="editForm.serata.$error.required" data-translate="entity.validation.required">
+                This field is required.
+            </p>
+        </div>
+        <div class="form-group">
+            <label data-translate="sagrabeApp.tavoloAccomodato.tavoloReale" for="field_tavoloReale">Tavolo Reale</label>
+            <select class="form-control" id="field_tavoloReale" name="tavoloReale" ng-model="vm.tavoloAccomodato.tavoloReale" ng-options="tavoloReale as tavoloReale.codice for tavoloReale in vm.tavoloreales track by tavoloReale.id" required>
+            </select>
+        </div>
+        <div ng-show="editForm.tavoloReale.$invalid">
+            <p class="help-block"
+                ng-show="editForm.tavoloReale.$error.required" data-translate="entity.validation.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

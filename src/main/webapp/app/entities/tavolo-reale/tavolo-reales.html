@@ -1,0 +1,68 @@
+<div>
+    <h2 data-translate="sagrabeApp.tavoloReale.home.title">Tavolo Reales</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="tavolo-reale.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="sagrabeApp.tavoloReale.home.createLabel">
+                        Create new Tavolo Reale
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="codice"><span data-translate="sagrabeApp.tavoloReale.codice">Codice</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="descrizione"><span data-translate="sagrabeApp.tavoloReale.descrizione">Descrizione</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="postiMax"><span data-translate="sagrabeApp.tavoloReale.postiMax">Posti Max</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="postiOccupati"><span data-translate="sagrabeApp.tavoloReale.postiOccupati">Posti Occupati</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="asporto"><span data-translate="sagrabeApp.tavoloReale.asporto">Asporto</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="sagra.nome"><span data-translate="sagrabeApp.tavoloReale.sagra">Sagra</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="tavoloReale in vm.tavoloReales track by tavoloReale.id">
+                    <td><a ui-sref="tavolo-reale-detail({id:tavoloReale.id})">{{tavoloReale.id}}</a></td>
+                    <td>{{tavoloReale.codice}}</td>
+                    <td>{{tavoloReale.descrizione}}</td>
+                    <td>{{tavoloReale.postiMax}}</td>
+                    <td>{{tavoloReale.postiOccupati}}</td>
+                    <td>{{tavoloReale.asporto}}</td>
+                    <td>
+                        <a ui-sref="sagra-detail({id:tavoloReale.sagra.id})">{{tavoloReale.sagra.nome}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="tavolo-reale-detail({id:tavoloReale.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="tavolo-reale.edit({id:tavoloReale.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="tavolo-reale.delete({id:tavoloReale.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

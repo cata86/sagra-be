@@ -1,0 +1,91 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="mySerataLabel" data-translate="sagrabeApp.serata.home.createOrEditLabel">Create or edit a Serata</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.serata.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.serata.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.serata.codice" for="field_codice">Codice</label>
+            <input type="text" class="form-control" name="codice" id="field_codice"
+                    ng-model="vm.serata.codice"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.serata.descrizione" for="field_descrizione">Descrizione</label>
+            <input type="text" class="form-control" name="descrizione" id="field_descrizione"
+                    ng-model="vm.serata.descrizione"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.serata.data" for="field_data">Data</label>
+                <div class="input-group">
+                    <input id="field_data" type="text" class="form-control" name="data" uib-datepicker-popup="{{dateformat}}" ng-model="vm.serata.data" is-open="vm.datePickerOpenStatus.data"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('data')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.serata.dataApertura" for="field_dataApertura">Data Apertura</label>
+                <div class="input-group">
+                    <input id="field_dataApertura" type="text" class="form-control" name="dataApertura" datetime-picker="{{dateformat}}" ng-model="vm.serata.dataApertura" is-open="vm.datePickerOpenStatus.dataApertura"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dataApertura')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.serata.dataChiusura" for="field_dataChiusura">Data Chiusura</label>
+                <div class="input-group">
+                    <input id="field_dataChiusura" type="text" class="form-control" name="dataChiusura" datetime-picker="{{dateformat}}" ng-model="vm.serata.dataChiusura" is-open="vm.datePickerOpenStatus.dataChiusura"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dataChiusura')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.serata.personaApertura" for="field_personaApertura">Persona Apertura</label>
+            <input type="text" class="form-control" name="personaApertura" id="field_personaApertura"
+                    ng-model="vm.serata.personaApertura"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.serata.personaChiusura" for="field_personaChiusura">Persona Chiusura</label>
+            <input type="text" class="form-control" name="personaChiusura" id="field_personaChiusura"
+                    ng-model="vm.serata.personaChiusura"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="sagrabeApp.serata.sagra" for="field_sagra">Sagra</label>
+            <select class="form-control" id="field_sagra" name="sagra" ng-model="vm.serata.sagra" ng-options="sagra as sagra.nome for sagra in vm.sagras track by sagra.id" required>
+            </select>
+        </div>
+        <div ng-show="editForm.sagra.$invalid">
+            <p class="help-block"
+                ng-show="editForm.sagra.$error.required" data-translate="entity.validation.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
