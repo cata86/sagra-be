@@ -3,6 +3,7 @@ package it.alecata.sagra.web.swagger.api;
 
 import io.swagger.annotations.*;
 import it.alecata.sagra.domain.TavoloAccomodato;
+import it.alecata.sagra.domain.TavoloReale;
 import it.alecata.sagra.domain.enumeration.TavoloStato;
 import it.alecata.sagra.service.SerataService;
 import it.alecata.sagra.service.TavoloAccomodatoService;
@@ -16,6 +17,8 @@ import it.alecata.sagra.web.swagger.model.TavoloAccomodato.StatoEnum;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.*;
@@ -113,7 +117,22 @@ public class TavoliApiController implements TavoliApi {
 
     public ResponseEntity<List<InlineResponse2001>> listaTavoliReali(@ApiParam(value = "Solo tavoli liberi") @RequestParam(value = "soloLiberi", required = false) Boolean soloLiberi) {
         // do some magic!
-        return new ResponseEntity<List<InlineResponse2001>>(HttpStatus.OK);
+    	Page<TavoloReale> tavoliRealiPage = tavoloRealeService.findAll(new PageRequest(0, Integer.MAX_VALUE));
+    	List<TavoloReale> tavoliReali = tavoliRealiPage.getContent();
+    	List<InlineResponse2001> response = new ArrayList<InlineResponse2001>();
+    	for (TavoloReale tavoloReale : tavoliReali) {
+    		InlineResponse2001 tavoloDto = new InlineResponse2001();
+    		tavoloDto.setAsporto(tavoloReale.isAsporto());
+    		tavoloDto.setCodice(tavoloReale.getCodice());
+    		tavoloDto.setDescrizione(tavoloReale.getDescrizione());
+    		tavoloDto.setId(tavoloReale.getId());
+    		tavoloDto.setIdSagra(tavoloReale.getSagra().getId());
+    		tavoloDto.setPostiMax(tavoloReale.getPostiMax());
+    		tavoloDto.setPostiOccupati(tavoloReale.getPostiOccupati());
+    		response.add(tavoloDto);
+    	}
+    	
+        return new ResponseEntity<List<InlineResponse2001>>(response,HttpStatus.OK);
     }
 
 }
