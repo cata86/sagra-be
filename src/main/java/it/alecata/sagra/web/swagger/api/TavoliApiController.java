@@ -112,11 +112,35 @@ public class TavoliApiController implements TavoliApi {
 
     public ResponseEntity<List<InlineResponse2002>> listaTavoliAccomodatiByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo reale", required = true) @RequestParam(value = "idTavoloReale", required = true) Long idTavoloReale) {
         // do some magic!
-        return new ResponseEntity<List<InlineResponse2002>>(HttpStatus.OK);
+    	TavoloReale tavoloReale = tavoloRealeService.findOne(idTavoloReale);
+    	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();
+    	List<InlineResponse2002> response = new ArrayList<InlineResponse2002>();
+    	for (TavoloAccomodato tavoloAccomodato : tavoliAccomodati) {
+    		InlineResponse2002 tavoloAccomodatoDto = new InlineResponse2002();
+    		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
+    		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
+    		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
+    		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
+    		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+    		tavoloAccomodatoDto.setAccomodatoPersona(tavoloAccomodato.getAccomodatoPersona());
+    		tavoloAccomodatoDto.setLiberatoOrario(new DateTime(tavoloAccomodato.getLiberatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+    		tavoloAccomodatoDto.setLiberatoPersona(tavoloAccomodato.getLiberatoPersona());
+        	if(tavoloAccomodato.getOrdinazioneOrario()!=null)
+        		tavoloAccomodatoDto.setOrdinazioneOrario(new DateTime(tavoloAccomodato.getOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+        	tavoloAccomodatoDto.setOrdinazionePersona(tavoloAccomodato.getOrdinazionePersona());
+        	if(tavoloAccomodato.getInOrdinazioneOrario()!=null)
+        		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+        	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
+        	response.add(tavoloAccomodatoDto);
+    	}
+    	
+        return new ResponseEntity<List<InlineResponse2002>>(response,HttpStatus.OK);
     }
 
     public ResponseEntity<List<InlineResponse2001>> listaTavoliReali(@ApiParam(value = "Solo tavoli liberi") @RequestParam(value = "soloLiberi", required = false) Boolean soloLiberi) {
         // do some magic!
+    	//FIXME parametro soloLiberi
+    	
     	Page<TavoloReale> tavoliRealiPage = tavoloRealeService.findAll(new PageRequest(0, Integer.MAX_VALUE));
     	List<TavoloReale> tavoliReali = tavoliRealiPage.getContent();
     	List<InlineResponse2001> response = new ArrayList<InlineResponse2001>();

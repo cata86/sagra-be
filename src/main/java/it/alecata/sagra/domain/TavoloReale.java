@@ -4,6 +4,7 @@ package it.alecata.sagra.domain;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -37,6 +38,9 @@ public class TavoloReale implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private Sagra sagra;
+    
+    @OneToMany(mappedBy="tavoloReale")
+    private List<TavoloAccomodato> tavoliAccomodati;
 
     public Long getId() {
         return id;
@@ -124,7 +128,15 @@ public class TavoloReale implements Serializable {
         this.sagra = sagra;
     }
 
-    @Override
+    public List<TavoloAccomodato> getTavoliAccomodati() {
+		return tavoliAccomodati;
+	}
+
+	public void setTavoliAccomodati(List<TavoloAccomodato> tavoliAccomodati) {
+		this.tavoliAccomodati = tavoliAccomodati;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

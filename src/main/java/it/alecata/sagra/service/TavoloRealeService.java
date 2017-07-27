@@ -57,7 +57,9 @@ public class TavoloRealeService {
     @Transactional(readOnly = true)
     public TavoloReale findOne(Long id) {
         log.debug("Request to get TavoloReale : {}", id);
-        return tavoloRealeRepository.findOne(id);
+        TavoloReale tavoloReale = tavoloRealeRepository.findOne(id);
+        tavoloReale.getTavoliAccomodati().iterator();
+        return tavoloReale;
     }
 
     /**
