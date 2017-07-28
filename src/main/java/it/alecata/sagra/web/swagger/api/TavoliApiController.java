@@ -8,12 +8,9 @@ import it.alecata.sagra.domain.enumeration.TavoloStato;
 import it.alecata.sagra.service.SerataService;
 import it.alecata.sagra.service.TavoloAccomodatoService;
 import it.alecata.sagra.service.TavoloRealeService;
-import it.alecata.sagra.web.swagger.model.Body2;
-import it.alecata.sagra.web.swagger.model.Body3;
-import it.alecata.sagra.web.swagger.model.InlineResponse2001;
-import it.alecata.sagra.web.swagger.model.InlineResponse2002;
-import it.alecata.sagra.web.swagger.model.InlineResponse2003;
-import it.alecata.sagra.web.swagger.model.TavoloAccomodato.StatoEnum;
+import it.alecata.sagra.web.swagger.model.TavoloAccomodatoDto;
+import it.alecata.sagra.web.swagger.model.TavoloAccomodatoDto.StatoEnum;
+import it.alecata.sagra.web.swagger.model.TavoloRealeDto;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -55,7 +52,7 @@ public class TavoliApiController implements TavoliApi {
 
 
 
-    public ResponseEntity<InlineResponse2003> apriTavoloAccomodato(@ApiParam(value = "idTavoloReale, codice, descrizione, numCoperti, accomodatoPersona" ,required=true )  @Valid @RequestBody Body2 body) {
+    public ResponseEntity<TavoloAccomodatoDto> apriTavoloAccomodato(@ApiParam(value = "idTavoloReale, codice, descrizione, numCoperti, accomodatoPersona" ,required=true )  @Valid @RequestBody TavoloAccomodatoDto body) {
     	//idTavoloReale, codice, descrizione, numCoperti, accomodatoPersona
     	it.alecata.sagra.domain.Serata serata = serataService.findLastSerata();
     	
@@ -75,7 +72,7 @@ public class TavoliApiController implements TavoliApi {
     	accomodato.setTavoloReale(tavoloReale);
     	tavoloAccomodatoService.save(accomodato);
     	
-    	InlineResponse2003 response = new InlineResponse2003();
+    	TavoloAccomodatoDto response = new TavoloAccomodatoDto();
     	response.setId(accomodato.getId());
     	response.setIdSerata(serata.getId());
     	response.setCodice(accomodato.getCodice());
@@ -84,10 +81,10 @@ public class TavoliApiController implements TavoliApi {
     	response.setAccomodatoPersona(accomodato.getAccomodatoPersona());
     	response.setStato(StatoEnum.fromValue(accomodato.getStato().toString()));
     	
-        return new ResponseEntity<InlineResponse2003>(response,HttpStatus.OK);
+        return new ResponseEntity<TavoloAccomodatoDto>(response,HttpStatus.OK);
     }
 
-    public ResponseEntity<InlineResponse2003> chiudiTavoloAccomodato(@ApiParam(value = "idTavoloAccomodato, accomodatoPersona" ,required=true )  @Valid @RequestBody Body3 body) {
+    public ResponseEntity<TavoloAccomodatoDto> chiudiTavoloAccomodato(@ApiParam(value = "idTavoloAccomodato, accomodatoPersona" ,required=true )  @Valid @RequestBody TavoloAccomodatoDto body) {
     	TavoloAccomodato accomodato = tavoloAccomodatoService.findOne(body.getId());
     	accomodato.setLiberatoOrario(ZonedDateTime.now(ZoneId.systemDefault()));
     	accomodato.setLiberatoPersona(body.getLiberatoPersona());
@@ -95,7 +92,7 @@ public class TavoliApiController implements TavoliApi {
     	
     	tavoloAccomodatoService.save(accomodato);
     	
-    	InlineResponse2003 response = new InlineResponse2003();
+    	TavoloAccomodatoDto response = new TavoloAccomodatoDto();
     	response.setId(accomodato.getId());
     	response.setIdSerata(accomodato.getSerata().getId());
     	response.setCodice(accomodato.getCodice());
@@ -112,15 +109,15 @@ public class TavoliApiController implements TavoliApi {
     	response.setInOrdinazionePersona(accomodato.getInOrdinazionePersona());
     	response.setStato(StatoEnum.fromValue(accomodato.getStato().toString()));
     	
-        return new ResponseEntity<InlineResponse2003>(response,HttpStatus.OK);
+        return new ResponseEntity<TavoloAccomodatoDto>(response,HttpStatus.OK);
     }
 
-    public ResponseEntity<List<InlineResponse2002>> listaTavoliAccomodatiByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo reale", required = true) @RequestParam(value = "idTavoloReale", required = true) Long idTavoloReale) {
+    public ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodatiByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo reale", required = true) @RequestParam(value = "idTavoloReale", required = true) Long idTavoloReale) {
     	TavoloReale tavoloReale = tavoloRealeService.findOne(idTavoloReale);
     	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();
-    	List<InlineResponse2002> response = new ArrayList<InlineResponse2002>();
+    	List<TavoloAccomodatoDto> response = new ArrayList<TavoloAccomodatoDto>();
     	for (TavoloAccomodato tavoloAccomodato : tavoliAccomodati) {
-    		InlineResponse2002 tavoloAccomodatoDto = new InlineResponse2002();
+    		TavoloAccomodatoDto tavoloAccomodatoDto = new TavoloAccomodatoDto();
     		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
     		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
     		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
@@ -140,18 +137,18 @@ public class TavoliApiController implements TavoliApi {
         	response.add(tavoloAccomodatoDto);      	
     	}
     	
-        return new ResponseEntity<List<InlineResponse2002>>(response,HttpStatus.OK);
+        return new ResponseEntity<List<TavoloAccomodatoDto>>(response,HttpStatus.OK);
     }
 
-    public ResponseEntity<List<InlineResponse2001>> listaTavoliReali(@ApiParam(value = "Solo tavoli liberi") @RequestParam(value = "soloLiberi", required = false) Boolean soloLiberi) {
+    public ResponseEntity<List<TavoloRealeDto>> listaTavoliReali(@ApiParam(value = "Solo tavoli liberi") @RequestParam(value = "soloLiberi", required = false) Boolean soloLiberi) {
         // do some magic!
     	//FIXME parametro soloLiberi
     	
     	Page<TavoloReale> tavoliRealiPage = tavoloRealeService.findAll(new PageRequest(0, Integer.MAX_VALUE));
     	List<TavoloReale> tavoliReali = tavoliRealiPage.getContent();
-    	List<InlineResponse2001> response = new ArrayList<InlineResponse2001>();
+    	List<TavoloRealeDto> response = new ArrayList<TavoloRealeDto>();
     	for (TavoloReale tavoloReale : tavoliReali) {
-    		InlineResponse2001 tavoloDto = new InlineResponse2001();
+    		TavoloRealeDto tavoloDto = new TavoloRealeDto();
     		tavoloDto.setAsporto(tavoloReale.isAsporto());
     		tavoloDto.setCodice(tavoloReale.getCodice());
     		tavoloDto.setDescrizione(tavoloReale.getDescrizione());
@@ -162,7 +159,7 @@ public class TavoliApiController implements TavoliApi {
     		response.add(tavoloDto);
     	}
     	
-        return new ResponseEntity<List<InlineResponse2001>>(response,HttpStatus.OK);
+        return new ResponseEntity<List<TavoloRealeDto>>(response,HttpStatus.OK);
     }
 
 }
