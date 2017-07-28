@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import it.alecata.sagra.web.swagger.model.TavoloAccomodato.StatoEnum;
+
 import org.joda.time.DateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -34,40 +36,6 @@ public class InlineResponse2002   {
   @JsonProperty("numCoperti")
   private Integer numCoperti = null;
 
-  /**
-   * Gets or Sets stato
-   */
-  public enum StatoEnum {
-    ACCOMODATO("ACCOMODATO"),
-    
-    IN_ORDINAZIONE("IN_ORDINAZIONE"),
-    
-    ORDINATO("ORDINATO"),
-    
-    LIBERATO("LIBERATO");
-
-    private String value;
-
-    StatoEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatoEnum fromValue(String text) {
-      for (StatoEnum b : StatoEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
 
   @JsonProperty("stato")
   private StatoEnum stato = null;

@@ -79,6 +79,7 @@ public class TavoliApiController implements TavoliApi {
     	response.setDescrizione(accomodato.getDescrizione());
     	response.setAccomodatoOrario(new DateTime(accomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
     	response.setAccomodatoPersona(accomodato.getAccomodatoPersona());
+    	response.setStato(StatoEnum.fromValue(accomodato.getStato().toString()));
     	
         return new ResponseEntity<InlineResponse2003>(response,HttpStatus.OK);
     }
@@ -93,7 +94,7 @@ public class TavoliApiController implements TavoliApi {
     	
     	InlineResponse2003 response = new InlineResponse2003();
     	response.setId(accomodato.getId());
-    	response.setIdSerata(body.getIdSerata());
+    	response.setIdSerata(accomodato.getSerata().getId());
     	response.setCodice(accomodato.getCodice());
     	response.setDescrizione(accomodato.getDescrizione());
     	response.setAccomodatoOrario(new DateTime(accomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
@@ -106,6 +107,7 @@ public class TavoliApiController implements TavoliApi {
     	if(accomodato.getInOrdinazioneOrario()!=null)
     		response.setInOrdinazioneOrario(new DateTime(accomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
     	response.setInOrdinazionePersona(accomodato.getInOrdinazionePersona());
+    	response.setStato(StatoEnum.fromValue(accomodato.getStato().toString()));
     	
         return new ResponseEntity<InlineResponse2003>(response,HttpStatus.OK);
     }
@@ -132,7 +134,8 @@ public class TavoliApiController implements TavoliApi {
         	if(tavoloAccomodato.getInOrdinazioneOrario()!=null)
         		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
         	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
-        	response.add(tavoloAccomodatoDto);
+        	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
+        	response.add(tavoloAccomodatoDto);      	
     	}
     	
         return new ResponseEntity<List<InlineResponse2002>>(response,HttpStatus.OK);
