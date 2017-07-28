@@ -57,19 +57,22 @@ public class TavoliApiController implements TavoliApi {
 
     public ResponseEntity<InlineResponse2003> apriTavoloAccomodato(@ApiParam(value = "idTavoloReale, codice, descrizione, numCoperti, accomodatoPersona" ,required=true )  @Valid @RequestBody Body2 body) {
     	//idTavoloReale, codice, descrizione, numCoperti, accomodatoPersona
-    	//FIXME fare calcolo codice e descrizione
     	it.alecata.sagra.domain.Serata serata = serataService.findLastSerata();
     	
+    	TavoloReale tavoloReale = tavoloRealeService.findOne(body.getIdTavoloReale());
+    	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();
+    	String nuovoCodice = tavoloAccomodatoService.findCodeTavoloLibero(body.getIdTavoloReale(),tavoliAccomodati);
+    	
     	TavoloAccomodato accomodato = new TavoloAccomodato();
-    	accomodato.setCodice(body.getCodice());
-    	accomodato.setDescrizione(body.getDescrizione());
+    	accomodato.setCodice(nuovoCodice);
+    	accomodato.setDescrizione("Tavolo " +nuovoCodice);
     	accomodato.setNumCoperti(body.getNumCoperti());
     	accomodato.setAccomodatoPersona(body.getAccomodatoPersona());
     	accomodato.setAccomodatoOrario(ZonedDateTime.now(ZoneId.systemDefault()));
     	accomodato.setStato(TavoloStato.ACCOMODATO);
     	accomodato.setAsporto(body.getAsporto());
     	accomodato.setSerata(serata);
-    	accomodato.setTavoloReale(tavoloRealeService.findOne(body.getIdTavoloReale()));
+    	accomodato.setTavoloReale(tavoloReale);
     	tavoloAccomodatoService.save(accomodato);
     	
     	InlineResponse2003 response = new InlineResponse2003();
@@ -113,7 +116,6 @@ public class TavoliApiController implements TavoliApi {
     }
 
     public ResponseEntity<List<InlineResponse2002>> listaTavoliAccomodatiByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo reale", required = true) @RequestParam(value = "idTavoloReale", required = true) Long idTavoloReale) {
-        // do some magic!
     	TavoloReale tavoloReale = tavoloRealeService.findOne(idTavoloReale);
     	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();
     	List<InlineResponse2002> response = new ArrayList<InlineResponse2002>();

@@ -1,7 +1,11 @@
 package it.alecata.sagra.service;
 
 import it.alecata.sagra.domain.TavoloAccomodato;
+import it.alecata.sagra.domain.enumeration.TavoloStato;
 import it.alecata.sagra.repository.TavoloAccomodatoRepository;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -68,5 +72,25 @@ public class TavoloAccomodatoService {
     public void delete(Long id) {
         log.debug("Request to delete TavoloAccomodato : {}", id);
         tavoloAccomodatoRepository.delete(id);
+    }
+    
+    public String findCodeTavoloLibero(Long tavoloRealeId,List<TavoloAccomodato> tavoliAccomodati){
+    	
+    	for (int i = -1; i < 27*27; ++i) {
+	    	boolean trovato = false;
+	    	for(TavoloAccomodato accomodato : tavoliAccomodati){
+	    		//!liberato & trovato
+	    		if((!accomodato.getStato().equals(TavoloStato.LIBERATO)) && accomodato.getCodice().equals(tavoloRealeId+str(i)) ){
+	    			trovato = true;
+	    		}
+	    	}
+	    	if(!trovato)
+	    		return tavoloRealeId+str(i);
+    	}
+    	return "000000000";
+    }
+    
+    private String str(int i) {
+        return i < 0 ? "" : str((i / 26) - 1) + (char)(65 + i % 26);
     }
 }
