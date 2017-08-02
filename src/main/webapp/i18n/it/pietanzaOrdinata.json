@@ -1,0 +1,25 @@
+{
+    "sagrabeApp": {
+        "pietanzaOrdinata" : {
+            "home": {
+                "title": "PietanzaOrdinatas",
+                "createLabel": "Genera un nuovo Pietanza Ordinata",
+                "createOrEditLabel": "Genera o modifica un Pietanza Ordinata"
+            },
+            "created": "&Egrave; stato generato un nuovo Pietanza Ordinata con identificatore {{ param }}",
+            "updated": "&Egrave; stato aggiornato Pietanza Ordinata identificato da {{ param }}",
+            "deleted": "&Egrave; stato eliminato Pietanza Ordinata con identificatore {{ param }}",
+            "delete": {
+                "question": "Sei sicuro di volere eliminare Pietanza Ordinata {{ id }}?"
+            },
+            "detail": {
+                "title": "Pietanza Ordinata"
+            },
+            "numeroSequenza": "Numero Sequenza",
+            "quantita": "Quantita",
+            "note": "Note",
+            "ordine": "Ordine",
+            "pietanza": "Pietanza"
+        }
+    }
+}

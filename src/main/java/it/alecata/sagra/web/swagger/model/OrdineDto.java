@@ -10,6 +10,8 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
+import org.joda.time.DateTime;
+
 /**
  * Ordine
  */
@@ -26,7 +28,7 @@ public class OrdineDto   {
   private String personaOrdine = null;
 
   @JsonProperty("data")
-  private Integer data = null;
+  private DateTime data = null;
 
   @JsonProperty("pietanzeOrdinate")
   private List<PietanzaOrdinataDto> pietanzeOrdinate = null;
@@ -103,7 +105,7 @@ public class OrdineDto   {
     this.personaOrdine = personaOrdine;
   }
 
-  public OrdineDto data(Integer data) {
+  public OrdineDto data(DateTime data) {
     this.data = data;
     return this;
   }
@@ -115,11 +117,11 @@ public class OrdineDto   {
   @ApiModelProperty(value = "")
 
 
-  public Integer getData() {
+  public DateTime getData() {
     return data;
   }
 
-  public void setData(Integer data) {
+  public void setData(DateTime data) {
     this.data = data;
   }
 

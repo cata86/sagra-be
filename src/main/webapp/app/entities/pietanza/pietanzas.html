@@ -1,0 +1,66 @@
+<div>
+    <h2 data-translate="sagrabeApp.pietanza.home.title">Pietanzas</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="pietanza.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="sagrabeApp.pietanza.home.createLabel">
+                        Create new Pietanza
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.reset()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="codice"><span data-translate="sagrabeApp.pietanza.codice">Codice</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="nome"><span data-translate="sagrabeApp.pietanza.nome">Nome</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="descrizione"><span data-translate="sagrabeApp.pietanza.descrizione">Descrizione</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="prezzo"><span data-translate="sagrabeApp.pietanza.prezzo">Prezzo</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="pietanzaCategoria.descrizioneBreve"><span data-translate="sagrabeApp.pietanza.pietanzaCategoria">Pietanza Categoria</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+                <tr ng-repeat="pietanza in vm.pietanzas track by pietanza.id">
+                    <td><a ui-sref="pietanza-detail({id:pietanza.id})">{{pietanza.id}}</a></td>
+                    <td>{{pietanza.codice}}</td>
+                    <td>{{pietanza.nome}}</td>
+                    <td>{{pietanza.descrizione}}</td>
+                    <td>{{pietanza.prezzo}}</td>
+                    <td>
+                        <a ui-sref="pietanza-categoria-detail({id:pietanza.pietanzaCategoria.id})">{{pietanza.pietanzaCategoria.descrizioneBreve}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="pietanza-detail({id:pietanza.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="pietanza.edit({id:pietanza.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="pietanza.delete({id:pietanza.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

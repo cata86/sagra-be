@@ -1,0 +1,27 @@
+{
+    "sagrabeApp": {
+        "ordine" : {
+            "home": {
+                "title": "Ordines",
+                "createLabel": "Genera un nuovo Ordine",
+                "createOrEditLabel": "Genera o modifica un Ordine"
+            },
+            "created": "&Egrave; stato generato un nuovo Ordine con identificatore {{ param }}",
+            "updated": "&Egrave; stato aggiornato Ordine identificato da {{ param }}",
+            "deleted": "&Egrave; stato eliminato Ordine con identificatore {{ param }}",
+            "delete": {
+                "question": "Sei sicuro di volere eliminare Ordine {{ id }}?"
+            },
+            "detail": {
+                "title": "Ordine"
+            },
+            "personaOrdine": "Persona Ordine",
+            "dataOrdine": "Data Ordine",
+            "numeroCoperti": "Numero Coperti",
+            "totale": "Totale",
+            "quotaPersona": "Quota Persona",
+            "asporto": "Asporto",
+            "tavoloAccomodato": "Tavolo Accomodato"
+        }
+    }
+}

@@ -25,15 +25,15 @@ import javax.validation.Valid;
 @Api(value = "ordini", description = "the ordini API")
 public interface OrdiniApi {
 
-    @ApiOperation(value = "Crea Ordine", notes = "Crea un ordine per un tavolo", response = OrdineDto.class, responseContainer = "List", tags={ "ordinatore", })
+    @ApiOperation(value = "Crea Ordine", notes = "Crea un ordine per un tavolo", response = OrdineDto.class, tags={ "ordinatore", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = OrdineDto.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "successful operation", response = OrdineDto.class),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
     
     @RequestMapping(value = "/api/ordini/creaOrdine",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<List<OrdineDto>> creaOrdine(@ApiParam(value = "ordine" ,required=true )  @Valid @RequestBody OrdineDto body);
+    ResponseEntity<OrdineDto> creaOrdine(@ApiParam(value = "ordine" ,required=true )  @Valid @RequestBody OrdineDto body);
 
 
     @ApiOperation(value = "Ordini del tavolo", notes = "Ritorna gli ordini del tavolo", response = OrdineDto.class, responseContainer = "List", 
@@ -57,7 +57,19 @@ public interface OrdiniApi {
     @RequestMapping(value = "/api/ordini/listaPietanze",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<PietanzaDto>> listaPietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Boolean idSagra);
+    ResponseEntity<List<PietanzaDto>> listaPietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
+
+    
+    @ApiOperation(value = "Lista Categorie pietanze", notes = "Lista Categorie pietanze", response = PietanzaCategoriaDto.class, responseContainer = "List", 
+    		tags={ "ordinatore", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = PietanzaCategoriaDto.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
+    
+    @RequestMapping(value = "/api/ordini/listaCategoriePietanze",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<List<PietanzaCategoriaDto>> listaCategoriePietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
 
 
     @ApiOperation(value = "Cerca tavoli accomodati", notes = "Cerca tavoli accomodati", response = TavoloAccomodatoDto.class, responseContainer = "List", 

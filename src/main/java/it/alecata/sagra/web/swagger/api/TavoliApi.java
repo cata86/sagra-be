@@ -8,6 +8,7 @@ package it.alecata.sagra.web.swagger.api;
 
 import io.swagger.annotations.*;
 import it.alecata.sagra.web.swagger.model.*;
+import it.alecata.sagra.web.swagger.model.TavoloAccomodatoDto.StatoEnum;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,6 +62,21 @@ public interface TavoliApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodatiByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo reale", required = true) @RequestParam(value = "idTavoloReale", required = true) Long idTavoloReale);
+
+    
+    @ApiOperation(value = "Imposta stato tavolo accomodato", notes = "Imposta stato tavolo accomodato", response = TavoloAccomodatoDto.class, 
+    		tags={ "accomodatore", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = TavoloAccomodatoDto.class),
+        @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
+    
+    @RequestMapping(value = "/api/tavoli/impostaStatoTavoloAccomodato",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<TavoloAccomodatoDto> impostaStatoTavoloAccomodato( @NotNull@ApiParam(value = "Identificativo del tavolo accomodato", required = true) @RequestParam(value = "idTavoloAccomodato", required = true) Long idTavoloReale,
+    		 @NotNull@ApiParam(value = "stato del tavolo accomodato", required = true) @RequestParam(value = "stato", required = true) StatoEnum stato,
+    		 @NotNull@ApiParam(value = "personaModifica", required = true) @RequestParam(value = "persona", required = true) String persona);
+
 
 
     @ApiOperation(value = "Cerca tavoli reali", notes = "Cerca tavoli reali", response = TavoloRealeDto.class, responseContainer = "List", 

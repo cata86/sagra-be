@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "pietanzaCategoria",
+            "otherEntityName": "pietanzaCategoria",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "descrizioneBreve"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "codice",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nome",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descrizione",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "prezzo",
+            "fieldType": "Float"
+        }
+    ],
+    "changelogDate": "20170801161130",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "pietanza",
+    "pagination": "infinite-scroll"
+}

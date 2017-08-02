@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="sagrabeApp.pietanzaOrdinata.detail.title">Pietanza Ordinata</span> {{vm.pietanzaOrdinata.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="sagrabeApp.pietanzaOrdinata.numeroSequenza">Numero Sequenza</span></dt>
+        <dd>
+            <span>{{vm.pietanzaOrdinata.numeroSequenza}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.pietanzaOrdinata.quantita">Quantita</span></dt>
+        <dd>
+            <span>{{vm.pietanzaOrdinata.quantita}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.pietanzaOrdinata.note">Note</span></dt>
+        <dd>
+            <span>{{vm.pietanzaOrdinata.note}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.pietanzaOrdinata.ordine">Ordine</span></dt>
+        <dd>
+            <a ui-sref="ordine-detail({id:vm.pietanzaOrdinata.ordine.id})">{{vm.pietanzaOrdinata.ordine.id}}</a>
+        </dd>
+        <dt><span data-translate="sagrabeApp.pietanzaOrdinata.pietanza">Pietanza</span></dt>
+        <dd>
+            <a ui-sref="pietanza-detail({id:vm.pietanzaOrdinata.pietanza.id})">{{vm.pietanzaOrdinata.pietanza.nome}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="pietanza-ordinata-detail.edit({id:vm.pietanzaOrdinata.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

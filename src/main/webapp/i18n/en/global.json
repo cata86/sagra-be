@@ -11,6 +11,10 @@
                 "tavoloReale": "Tavolo Reale",
                 "serata": "Serata",
                 "tavoloAccomodato": "Tavolo Accomodato",
+                "pietanzaCategoria": "Pietanza Categoria",
+                "pietanza": "Pietanza",
+                "ordine": "Ordine",
+                "pietanzaOrdinata": "Pietanza Ordinata",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

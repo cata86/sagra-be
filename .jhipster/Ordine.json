@@ -1,0 +1,45 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "tavoloAccomodato",
+            "otherEntityName": "tavoloAccomodato",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "codice"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "personaOrdine",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dataOrdine",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "numeroCoperti",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "totale",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "quotaPersona",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "asporto",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170801161738",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "ordine",
+    "pagination": "pagination"
+}

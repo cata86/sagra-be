@@ -1,0 +1,47 @@
+
+<div>
+    <h2><span data-translate="sagrabeApp.ordine.detail.title">Ordine</span> {{vm.ordine.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="sagrabeApp.ordine.personaOrdine">Persona Ordine</span></dt>
+        <dd>
+            <span>{{vm.ordine.personaOrdine}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.ordine.dataOrdine">Data Ordine</span></dt>
+        <dd>
+            <span>{{vm.ordine.dataOrdine | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.ordine.numeroCoperti">Numero Coperti</span></dt>
+        <dd>
+            <span>{{vm.ordine.numeroCoperti}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.ordine.totale">Totale</span></dt>
+        <dd>
+            <span>{{vm.ordine.totale}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.ordine.quotaPersona">Quota Persona</span></dt>
+        <dd>
+            <span>{{vm.ordine.quotaPersona}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.ordine.asporto">Asporto</span></dt>
+        <dd>
+            <span>{{vm.ordine.asporto}}</span>
+        </dd>
+        <dt><span data-translate="sagrabeApp.ordine.tavoloAccomodato">Tavolo Accomodato</span></dt>
+        <dd>
+            <a ui-sref="tavolo-accomodato-detail({id:vm.ordine.tavoloAccomodato.id})">{{vm.ordine.tavoloAccomodato.codice}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="ordine-detail.edit({id:vm.ordine.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "codice",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descrizione",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "descrizioneBreve",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nomeStampante",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170801160328",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "pietanza_categoria",
+    "pagination": "no"
+}

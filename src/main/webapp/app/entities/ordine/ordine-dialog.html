@@ -1,0 +1,76 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myOrdineLabel" data-translate="sagrabeApp.ordine.home.createOrEditLabel">Create or edit a Ordine</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.ordine.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.ordine.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.ordine.personaOrdine" for="field_personaOrdine">Persona Ordine</label>
+            <input type="text" class="form-control" name="personaOrdine" id="field_personaOrdine"
+                    ng-model="vm.ordine.personaOrdine"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.ordine.dataOrdine" for="field_dataOrdine">Data Ordine</label>
+                <div class="input-group">
+                    <input id="field_dataOrdine" type="text" class="form-control" name="dataOrdine" datetime-picker="{{dateformat}}" ng-model="vm.ordine.dataOrdine" is-open="vm.datePickerOpenStatus.dataOrdine"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('dataOrdine')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.ordine.numeroCoperti" for="field_numeroCoperti">Numero Coperti</label>
+            <input type="number" class="form-control" name="numeroCoperti" id="field_numeroCoperti"
+                    ng-model="vm.ordine.numeroCoperti"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.ordine.totale" for="field_totale">Totale</label>
+            <input type="number" class="form-control" name="totale" id="field_totale"
+                    ng-model="vm.ordine.totale"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.ordine.quotaPersona" for="field_quotaPersona">Quota Persona</label>
+            <input type="number" class="form-control" name="quotaPersona" id="field_quotaPersona"
+                    ng-model="vm.ordine.quotaPersona"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="sagrabeApp.ordine.asporto" for="field_asporto">Asporto</label>
+                <input type="checkbox" name="asporto" id="field_asporto"
+                          ng-model="vm.ordine.asporto"/>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="sagrabeApp.ordine.tavoloAccomodato" for="field_tavoloAccomodato">Tavolo Accomodato</label>
+            <select class="form-control" id="field_tavoloAccomodato" name="tavoloAccomodato" ng-model="vm.ordine.tavoloAccomodato" ng-options="tavoloAccomodato as tavoloAccomodato.codice for tavoloAccomodato in vm.tavoloaccomodatoes track by tavoloAccomodato.id" required>
+            </select>
+        </div>
+        <div ng-show="editForm.tavoloAccomodato.$invalid">
+            <p class="help-block"
+                ng-show="editForm.tavoloAccomodato.$error.required" data-translate="entity.validation.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

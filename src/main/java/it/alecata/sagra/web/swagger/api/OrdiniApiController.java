@@ -2,16 +2,25 @@ package it.alecata.sagra.web.swagger.api;
 
 
 import io.swagger.annotations.*;
+import it.alecata.sagra.domain.Ordine;
+import it.alecata.sagra.domain.Pietanza;
+import it.alecata.sagra.domain.PietanzaCategoria;
+import it.alecata.sagra.domain.PietanzaOrdinata;
 import it.alecata.sagra.domain.TavoloAccomodato;
-import it.alecata.sagra.domain.TavoloReale;
 import it.alecata.sagra.domain.enumeration.TavoloStato;
+import it.alecata.sagra.repository.OrdineRepository;
+import it.alecata.sagra.repository.PietanzaCategoriaRepository;
+import it.alecata.sagra.repository.PietanzaOrdinataRepository;
+import it.alecata.sagra.repository.PietanzaRepository;
+import it.alecata.sagra.service.OrdineService;
 import it.alecata.sagra.service.SerataService;
 import it.alecata.sagra.service.TavoloAccomodatoService;
 import it.alecata.sagra.service.TavoloRealeService;
 import it.alecata.sagra.web.swagger.model.OrdineDto;
+import it.alecata.sagra.web.swagger.model.PietanzaCategoriaDto;
 import it.alecata.sagra.web.swagger.model.PietanzaDto;
+import it.alecata.sagra.web.swagger.model.PietanzaOrdinataDto;
 import it.alecata.sagra.web.swagger.model.TavoloAccomodatoDto;
-import it.alecata.sagra.web.swagger.model.TavoloRealeDto;
 import it.alecata.sagra.web.swagger.model.TavoloAccomodatoDto.StatoEnum;
 
 import org.joda.time.DateTime;
@@ -21,13 +30,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,16 +50,36 @@ public class OrdiniApiController implements OrdiniApi {
     private final SerataService serataService;
     
     private final TavoloRealeService tavoloRealeService;
+    
+    private final PietanzaCategoriaRepository pietanzaCategoriaRepository;
+    
+    private final PietanzaRepository pietanzaRepository;
+    
+    private final OrdineRepository ordineRepository;
+    
+    private final PietanzaOrdinataRepository pietanzaOrdinataRepository;
+    
+    private final OrdineService ordineService;
 
-    public OrdiniApiController(TavoloAccomodatoService tavoloAccomodatoService, SerataService serataService, TavoloRealeService tavoloRealeService) {
+    public OrdiniApiController(TavoloAccomodatoService tavoloAccomodatoService, SerataService serataService, TavoloRealeService tavoloRealeService,
+    		PietanzaCategoriaRepository pietanzaCategoriaRepository, PietanzaRepository pietanzaRepository, OrdineRepository ordineRepository,
+    		PietanzaOrdinataRepository pietanzaOrdinataRepository, OrdineService ordineService) {
         this.tavoloAccomodatoService = tavoloAccomodatoService;
         this.serataService = serataService;
         this.tavoloRealeService = tavoloRealeService;
+        this.pietanzaCategoriaRepository = pietanzaCategoriaRepository;
+        this.pietanzaRepository = pietanzaRepository;
+        this.ordineRepository = ordineRepository;
+        this.pietanzaOrdinataRepository = pietanzaOrdinataRepository;
+        this.ordineService = ordineService;
     }
 
-    public ResponseEntity<List<OrdineDto>> creaOrdine(@ApiParam(value = "ordine" ,required=true )  @Valid @RequestBody OrdineDto body) {
+
+    public ResponseEntity<OrdineDto> creaOrdine(@ApiParam(value = "ordine" ,required=true )  @Valid @RequestBody OrdineDto body) {
         // do some magic!
-        return new ResponseEntity<List<OrdineDto>>(HttpStatus.OK);
+    	
+    	body = ordineService.creaOrdine(body);
+        return new ResponseEntity<OrdineDto>(body,HttpStatus.OK);
     }
 
     public ResponseEntity<List<OrdineDto>> listaOrdiniByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo accomodato", required = true) @RequestParam(value = "idTavoloAccomodato", required = true) Long idTavoloAccomodato) {
@@ -60,9 +87,40 @@ public class OrdiniApiController implements OrdiniApi {
         return new ResponseEntity<List<OrdineDto>>(HttpStatus.OK);
     }
 
-    public ResponseEntity<List<PietanzaDto>> listaPietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Boolean idSagra) {
+    public ResponseEntity<List<PietanzaDto>> listaPietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra) {
+    	Page<Pietanza> pietanzaPage = pietanzaRepository.findAll(new PageRequest(0, Integer.MAX_VALUE));
+    	List<Pietanza> pietanze = pietanzaPage.getContent();
+    	List<PietanzaDto> response = new ArrayList<PietanzaDto>();
+    	for (Pietanza pietanza : pietanze) {
+    		PietanzaDto pietanzaDto = new PietanzaDto();
+    		pietanzaDto.setId(pietanza.getId());
+    		pietanzaDto.setNome(pietanza.getNome());
+    		pietanzaDto.setPrezzo(pietanza.getPrezzo());
+    		pietanzaDto.setDescrizione(pietanza.getDescrizione());
+    		PietanzaCategoriaDto pietanzaCategoriaDto = new PietanzaCategoriaDto();
+    		pietanzaCategoriaDto.setId(pietanza.getPietanzaCategoria().getId());
+    		pietanzaDto.setCategoria(pietanzaCategoriaDto);
+    		response.add(pietanzaDto);
+    	}
+        return new ResponseEntity<List<PietanzaDto>>(response,HttpStatus.OK);
+    }
+    
+    public ResponseEntity<List<PietanzaCategoriaDto>> listaCategoriePietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra) {
         // do some magic!
-        return new ResponseEntity<List<PietanzaDto>>(HttpStatus.OK);
+    	
+    	Page<PietanzaCategoria> pietanzaCategoriaPage = pietanzaCategoriaRepository.findAll(new PageRequest(0, Integer.MAX_VALUE));
+    	List<PietanzaCategoria> pietanzaCategorie = pietanzaCategoriaPage.getContent();
+    	List<PietanzaCategoriaDto> response = new ArrayList<PietanzaCategoriaDto>();
+    	for (PietanzaCategoria pietanzaCategoria : pietanzaCategorie) {
+    		PietanzaCategoriaDto pietanzaCategoriaDto = new PietanzaCategoriaDto();
+    		pietanzaCategoriaDto.setId(pietanzaCategoria.getId());
+    		pietanzaCategoriaDto.setCodice(pietanzaCategoria.getCodice());
+    		pietanzaCategoriaDto.setDescrizione(pietanzaCategoria.getDescrizione());
+    		pietanzaCategoriaDto.setDescrizioneBreve(pietanzaCategoria.getDescrizioneBreve());
+    		pietanzaCategoriaDto.setNomeStampante(pietanzaCategoria.getNomeStampante());
+    		response.add(pietanzaCategoriaDto);
+    	}
+        return new ResponseEntity<List<PietanzaCategoriaDto>>(response,HttpStatus.OK);
     }
 
     public ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodati( @NotNull@ApiParam(value = "Anche i tavoli in stato ordinato", required = true) @RequestParam(value = "statoOrdinato", required = true) Boolean statoOrdinato) {

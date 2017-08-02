@@ -1,0 +1,42 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "ordine",
+            "otherEntityName": "ordine",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "pietanza",
+            "otherEntityName": "pietanza",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "nome"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "numeroSequenza",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "quantita",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "note",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170801162320",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "pietanza_ordinata",
+    "pagination": "pagination"
+}

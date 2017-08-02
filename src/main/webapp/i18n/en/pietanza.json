@@ -1,0 +1,25 @@
+{
+    "sagrabeApp": {
+        "pietanza" : {
+            "home": {
+                "title": "Pietanzas",
+                "createLabel": "Create a new Pietanza",
+                "createOrEditLabel": "Create or edit a Pietanza"
+            },
+            "created": "A new Pietanza is created with identifier {{ param }}",
+            "updated": "A Pietanza is updated with identifier {{ param }}",
+            "deleted": "A Pietanza is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Pietanza {{ id }}?"
+            },
+            "detail": {
+                "title": "Pietanza"
+            },
+            "codice": "Codice",
+            "nome": "Nome",
+            "descrizione": "Descrizione",
+            "prezzo": "Prezzo",
+            "pietanzaCategoria": "Pietanza Categoria"
+        }
+    }
+}

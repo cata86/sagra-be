@@ -54,6 +54,8 @@ public class TavoliApiController implements TavoliApi {
 
     public ResponseEntity<TavoloAccomodatoDto> apriTavoloAccomodato(@ApiParam(value = "idTavoloReale, codice, descrizione, numCoperti, accomodatoPersona" ,required=true )  @Valid @RequestBody TavoloAccomodatoDto body) {
     	//idTavoloReale, codice, descrizione, numCoperti, accomodatoPersona
+    	//FIXME serata me lo passano
+    	
     	it.alecata.sagra.domain.Serata serata = serataService.findLastSerata();
     	
     	TavoloReale tavoloReale = tavoloRealeService.findOne(body.getIdTavoloReale());
@@ -72,16 +74,9 @@ public class TavoliApiController implements TavoliApi {
     	accomodato.setTavoloReale(tavoloReale);
     	tavoloAccomodatoService.save(accomodato);
     	
-    	TavoloAccomodatoDto response = new TavoloAccomodatoDto();
-    	response.setId(accomodato.getId());
-    	response.setIdSerata(serata.getId());
-    	response.setCodice(accomodato.getCodice());
-    	response.setDescrizione(accomodato.getDescrizione());
-    	response.setAccomodatoOrario(new DateTime(accomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    	response.setAccomodatoPersona(accomodato.getAccomodatoPersona());
-    	response.setStato(StatoEnum.fromValue(accomodato.getStato().toString()));
+    	TavoloAccomodatoDto tavoloAccomodatoDto = tavoloAccomodatoToDto(accomodato);
     	
-        return new ResponseEntity<TavoloAccomodatoDto>(response,HttpStatus.OK);
+        return new ResponseEntity<TavoloAccomodatoDto>(tavoloAccomodatoDto,HttpStatus.OK);
     }
 
     public ResponseEntity<TavoloAccomodatoDto> chiudiTavoloAccomodato(@ApiParam(value = "idTavoloAccomodato, accomodatoPersona" ,required=true )  @Valid @RequestBody TavoloAccomodatoDto body) {
@@ -92,24 +87,9 @@ public class TavoliApiController implements TavoliApi {
     	
     	tavoloAccomodatoService.save(accomodato);
     	
-    	TavoloAccomodatoDto response = new TavoloAccomodatoDto();
-    	response.setId(accomodato.getId());
-    	response.setIdSerata(accomodato.getSerata().getId());
-    	response.setCodice(accomodato.getCodice());
-    	response.setDescrizione(accomodato.getDescrizione());
-    	response.setAccomodatoOrario(new DateTime(accomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    	response.setAccomodatoPersona(accomodato.getAccomodatoPersona());
-    	response.setLiberatoOrario(new DateTime(accomodato.getLiberatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    	response.setLiberatoPersona(accomodato.getLiberatoPersona());
-    	if(accomodato.getOrdinazioneOrario()!=null)
-    		response.setOrdinazioneOrario(new DateTime(accomodato.getOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    	response.setOrdinazionePersona(accomodato.getOrdinazionePersona());
-    	if(accomodato.getInOrdinazioneOrario()!=null)
-    		response.setInOrdinazioneOrario(new DateTime(accomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    	response.setInOrdinazionePersona(accomodato.getInOrdinazionePersona());
-    	response.setStato(StatoEnum.fromValue(accomodato.getStato().toString()));
+    	TavoloAccomodatoDto tavoloAccomodatoDto = tavoloAccomodatoToDto(accomodato);
     	
-        return new ResponseEntity<TavoloAccomodatoDto>(response,HttpStatus.OK);
+        return new ResponseEntity<TavoloAccomodatoDto>(tavoloAccomodatoDto,HttpStatus.OK);
     }
 
     public ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodatiByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo reale", required = true) @RequestParam(value = "idTavoloReale", required = true) Long idTavoloReale) {
@@ -117,23 +97,7 @@ public class TavoliApiController implements TavoliApi {
     	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();
     	List<TavoloAccomodatoDto> response = new ArrayList<TavoloAccomodatoDto>();
     	for (TavoloAccomodato tavoloAccomodato : tavoliAccomodati) {
-    		TavoloAccomodatoDto tavoloAccomodatoDto = new TavoloAccomodatoDto();
-    		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
-    		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
-    		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
-    		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
-    		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    		tavoloAccomodatoDto.setAccomodatoPersona(tavoloAccomodato.getAccomodatoPersona());
-    		if(tavoloAccomodato.getLiberatoOrario()!=null)
-    			tavoloAccomodatoDto.setLiberatoOrario(new DateTime(tavoloAccomodato.getLiberatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    		tavoloAccomodatoDto.setLiberatoPersona(tavoloAccomodato.getLiberatoPersona());
-        	if(tavoloAccomodato.getOrdinazioneOrario()!=null)
-        		tavoloAccomodatoDto.setOrdinazioneOrario(new DateTime(tavoloAccomodato.getOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-        	tavoloAccomodatoDto.setOrdinazionePersona(tavoloAccomodato.getOrdinazionePersona());
-        	if(tavoloAccomodato.getInOrdinazioneOrario()!=null)
-        		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-        	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
-        	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
+    		TavoloAccomodatoDto tavoloAccomodatoDto = tavoloAccomodatoToDto(tavoloAccomodato);
         	response.add(tavoloAccomodatoDto);      	
     	}
     	
@@ -161,5 +125,50 @@ public class TavoliApiController implements TavoliApi {
     	
         return new ResponseEntity<List<TavoloRealeDto>>(response,HttpStatus.OK);
     }
+
+	public ResponseEntity<TavoloAccomodatoDto> impostaStatoTavoloAccomodato(Long idTavoloReale, StatoEnum stato, String persona) {
+		// TODO Auto-generated method stub
+    	TavoloAccomodato accomodato = tavoloAccomodatoService.findOne(idTavoloReale);
+    	accomodato.setLiberatoOrario(ZonedDateTime.now(ZoneId.systemDefault()));
+    	if(stato.equals(StatoEnum.ACCOMODATO)){
+    		accomodato.setAccomodatoPersona(persona);
+    		accomodato.setAccomodatoOrario(ZonedDateTime.now(ZoneId.systemDefault()));
+    	}else if (stato.equals(StatoEnum.IN_ORDINAZIONE)){
+    		accomodato.setInOrdinazionePersona(persona);
+    		accomodato.setInOrdinazioneOrario(ZonedDateTime.now(ZoneId.systemDefault()));
+    	}else if (stato.equals(StatoEnum.ORDINATO)){
+    		accomodato.setOrdinazionePersona(persona);
+    		accomodato.setOrdinazioneOrario(ZonedDateTime.now(ZoneId.systemDefault()));
+		}else if (stato.equals(StatoEnum.LIBERATO)){
+    		accomodato.setLiberatoPersona(persona);
+    		accomodato.setLiberatoOrario(ZonedDateTime.now(ZoneId.systemDefault()));
+		}   	
+    	accomodato.setStato(TavoloStato.valueOf(stato.name()));
+    	tavoloAccomodatoService.save(accomodato);
+    	
+		return new ResponseEntity<TavoloAccomodatoDto>(tavoloAccomodatoToDto(accomodato),HttpStatus.OK);
+	}
+	
+	private TavoloAccomodatoDto tavoloAccomodatoToDto(TavoloAccomodato tavoloAccomodato){
+		TavoloAccomodatoDto tavoloAccomodatoDto = new TavoloAccomodatoDto();
+		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
+		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
+		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
+		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
+		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+		tavoloAccomodatoDto.setAccomodatoPersona(tavoloAccomodato.getAccomodatoPersona());
+		if(tavoloAccomodato.getLiberatoOrario()!=null)
+			tavoloAccomodatoDto.setLiberatoOrario(new DateTime(tavoloAccomodato.getLiberatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+		tavoloAccomodatoDto.setLiberatoPersona(tavoloAccomodato.getLiberatoPersona());
+    	if(tavoloAccomodato.getOrdinazioneOrario()!=null)
+    		tavoloAccomodatoDto.setOrdinazioneOrario(new DateTime(tavoloAccomodato.getOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+    	tavoloAccomodatoDto.setOrdinazionePersona(tavoloAccomodato.getOrdinazionePersona());
+    	if(tavoloAccomodato.getInOrdinazioneOrario()!=null)
+    		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+    	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
+    	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
+    	
+    	return tavoloAccomodatoDto;
+	}
 
 }

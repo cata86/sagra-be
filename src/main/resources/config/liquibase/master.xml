@@ -9,9 +9,16 @@
     <include file="config/liquibase/changelog/20170725110803_added_entity_TavoloReale.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170725111616_added_entity_Serata.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170725112353_added_entity_TavoloAccomodato.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170801160328_added_entity_PietanzaCategoria.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170801161130_added_entity_Pietanza.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170801161738_added_entity_Ordine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170801162320_added_entity_PietanzaOrdinata.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20170725110803_added_entity_constraints_TavoloReale.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170725111616_added_entity_constraints_Serata.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170725112353_added_entity_constraints_TavoloAccomodato.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170801161130_added_entity_constraints_Pietanza.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170801161738_added_entity_constraints_Ordine.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170801162320_added_entity_constraints_PietanzaOrdinata.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

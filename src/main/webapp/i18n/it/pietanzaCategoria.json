@@ -1,0 +1,24 @@
+{
+    "sagrabeApp": {
+        "pietanzaCategoria" : {
+            "home": {
+                "title": "PietanzaCategorias",
+                "createLabel": "Genera un nuovo Pietanza Categoria",
+                "createOrEditLabel": "Genera o modifica un Pietanza Categoria"
+            },
+            "created": "&Egrave; stato generato un nuovo Pietanza Categoria con identificatore {{ param }}",
+            "updated": "&Egrave; stato aggiornato Pietanza Categoria identificato da {{ param }}",
+            "deleted": "&Egrave; stato eliminato Pietanza Categoria con identificatore {{ param }}",
+            "delete": {
+                "question": "Sei sicuro di volere eliminare Pietanza Categoria {{ id }}?"
+            },
+            "detail": {
+                "title": "Pietanza Categoria"
+            },
+            "codice": "Codice",
+            "descrizione": "Descrizione",
+            "descrizioneBreve": "Descrizione Breve",
+            "nomeStampante": "Nome Stampante"
+        }
+    }
+}
