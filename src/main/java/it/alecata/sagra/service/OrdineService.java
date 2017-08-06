@@ -10,10 +10,14 @@ import it.alecata.sagra.repository.PietanzaCategoriaRepository;
 import it.alecata.sagra.repository.PietanzaOrdinataRepository;
 import it.alecata.sagra.repository.PietanzaRepository;
 import it.alecata.sagra.web.swagger.model.OrdineDto;
+import it.alecata.sagra.web.swagger.model.PietanzaCategoriaDto;
+import it.alecata.sagra.web.swagger.model.PietanzaDto;
 import it.alecata.sagra.web.swagger.model.PietanzaOrdinataDto;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -22,6 +26,7 @@ import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -100,6 +105,25 @@ public class OrdineService {
     public void delete(Long id) {
         log.debug("Request to delete Ordine : {}", id);
         ordineRepository.delete(id);
+    }
+    
+    public List<PietanzaDto> listaPietanze(Long idSagra){
+    	Page<Pietanza> pietanzaPage = pietanzaRepository.findAll(new PageRequest(0, Integer.MAX_VALUE));
+    	List<Pietanza> pietanze = pietanzaPage.getContent();
+    	List<PietanzaDto> response = new ArrayList<PietanzaDto>();
+    	for (Pietanza pietanza : pietanze) {
+    		PietanzaDto pietanzaDto = new PietanzaDto();
+    		pietanzaDto.setId(pietanza.getId());
+    		pietanzaDto.setNome(pietanza.getNome());
+    		pietanzaDto.setPrezzo(pietanza.getPrezzo());
+    		pietanzaDto.setDescrizione(pietanza.getDescrizione());
+    		PietanzaCategoriaDto pietanzaCategoriaDto = new PietanzaCategoriaDto();
+    		pietanzaCategoriaDto.setId(pietanza.getPietanzaCategoria().getId());
+    		pietanzaCategoriaDto.setCodice(pietanza.getPietanzaCategoria().getCodice());
+    		pietanzaDto.setCategoria(pietanzaCategoriaDto);
+    		response.add(pietanzaDto);
+    	}
+    	return response;
     }
     
     public OrdineDto creaOrdine(OrdineDto body) {

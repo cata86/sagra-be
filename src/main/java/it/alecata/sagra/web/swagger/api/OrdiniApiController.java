@@ -88,20 +88,7 @@ public class OrdiniApiController implements OrdiniApi {
     }
 
     public ResponseEntity<List<PietanzaDto>> listaPietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra) {
-    	Page<Pietanza> pietanzaPage = pietanzaRepository.findAll(new PageRequest(0, Integer.MAX_VALUE));
-    	List<Pietanza> pietanze = pietanzaPage.getContent();
-    	List<PietanzaDto> response = new ArrayList<PietanzaDto>();
-    	for (Pietanza pietanza : pietanze) {
-    		PietanzaDto pietanzaDto = new PietanzaDto();
-    		pietanzaDto.setId(pietanza.getId());
-    		pietanzaDto.setNome(pietanza.getNome());
-    		pietanzaDto.setPrezzo(pietanza.getPrezzo());
-    		pietanzaDto.setDescrizione(pietanza.getDescrizione());
-    		PietanzaCategoriaDto pietanzaCategoriaDto = new PietanzaCategoriaDto();
-    		pietanzaCategoriaDto.setId(pietanza.getPietanzaCategoria().getId());
-    		pietanzaDto.setCategoria(pietanzaCategoriaDto);
-    		response.add(pietanzaDto);
-    	}
+    	List<PietanzaDto> response = ordineService.listaPietanze(idSagra);
         return new ResponseEntity<List<PietanzaDto>>(response,HttpStatus.OK);
     }
     
@@ -148,7 +135,8 @@ public class OrdiniApiController implements OrdiniApi {
         		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
         	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
         	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
-    		
+        	tavoloAccomodatoDto.setNumCoperti(tavoloAccomodato.getNumCoperti());
+        	
         	if(!tavoloAccomodato.getStato().equals(TavoloStato.LIBERATO))
         		response.add(tavoloAccomodatoDto);
     	}
