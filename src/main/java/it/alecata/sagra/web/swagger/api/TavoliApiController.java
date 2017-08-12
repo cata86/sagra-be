@@ -60,7 +60,7 @@ public class TavoliApiController implements TavoliApi {
     	
     	TavoloReale tavoloReale = tavoloRealeService.findOne(body.getIdTavoloReale());
     	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();
-    	String nuovoCodice = tavoloAccomodatoService.findCodeTavoloLibero(body.getIdTavoloReale(),tavoliAccomodati);
+    	String nuovoCodice = tavoloAccomodatoService.findCodeTavoloLibero(tavoloReale.getCodice(),tavoliAccomodati);
     	
     	TavoloAccomodato accomodato = new TavoloAccomodato();
     	accomodato.setCodice(nuovoCodice);
