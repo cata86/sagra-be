@@ -74,7 +74,7 @@ public class TavoloAccomodatoService {
         tavoloAccomodatoRepository.delete(id);
     }
     
-    public String findCodeTavoloLibero(Long tavoloRealeId,List<TavoloAccomodato> tavoliAccomodati){
+    public String findCodeTavoloLibero(String tavoloRealeId,List<TavoloAccomodato> tavoliAccomodati){
     	
     	for (int i = -1; i < 27*27; ++i) {
 	    	boolean trovato = false;
