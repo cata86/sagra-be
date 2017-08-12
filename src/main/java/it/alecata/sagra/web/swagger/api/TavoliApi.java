@@ -72,7 +72,7 @@ public interface TavoliApi {
     
     @RequestMapping(value = "/api/tavoli/impostaStatoTavoloAccomodato",
         produces = { "application/json" }, 
-        method = RequestMethod.POST)
+        method = RequestMethod.GET)
     ResponseEntity<TavoloAccomodatoDto> impostaStatoTavoloAccomodato( @NotNull@ApiParam(value = "Identificativo del tavolo accomodato", required = true) @RequestParam(value = "idTavoloAccomodato", required = true) Long idTavoloReale,
     		 @NotNull@ApiParam(value = "stato del tavolo accomodato", required = true) @RequestParam(value = "stato", required = true) StatoEnum stato,
     		 @NotNull@ApiParam(value = "personaModifica", required = true) @RequestParam(value = "persona", required = true) String persona);
