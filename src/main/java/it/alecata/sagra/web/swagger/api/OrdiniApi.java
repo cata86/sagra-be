@@ -81,6 +81,7 @@ public interface OrdiniApi {
     @RequestMapping(value = "/api/ordini/listaTavoliAccomodati",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodati( @NotNull@ApiParam(value = "Anche i tavoli in stato ordinato", required = true) @RequestParam(value = "statoOrdinato", required = true) Boolean statoOrdinato);
+    ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodati( @NotNull@ApiParam(value = "Anche i tavoli in stato ordinato", required = true) @RequestParam(value = "statoOrdinato", required = true) Boolean statoOrdinato,
+    		@NotNull@ApiParam(value = "Anche i tavolo di asporto", required = true) @RequestParam(value = "asporto", required = true) Boolean asporto);
 
 }

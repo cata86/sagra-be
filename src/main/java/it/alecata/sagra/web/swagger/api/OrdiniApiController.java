@@ -110,7 +110,8 @@ public class OrdiniApiController implements OrdiniApi {
         return new ResponseEntity<List<PietanzaCategoriaDto>>(response,HttpStatus.OK);
     }
 
-    public ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodati( @NotNull@ApiParam(value = "Anche i tavoli in stato ordinato", required = true) @RequestParam(value = "statoOrdinato", required = true) Boolean statoOrdinato) {
+    public ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodati( @NotNull@ApiParam(value = "Anche i tavoli in stato ordinato", required = true) @RequestParam(value = "statoOrdinato", required = true) Boolean statoOrdinato,
+    		@NotNull@ApiParam(value = "Anche i tavolo di asporto", required = true) @RequestParam(value = "asporto", required = true) Boolean asporto) {
         // do some magic!
     	//FIXME parametro statoOrdinato
     	
@@ -118,27 +119,30 @@ public class OrdiniApiController implements OrdiniApi {
     	List<TavoloAccomodato> tavoliAccomodati = tavoliAccomodatiPage.getContent();
     	List<TavoloAccomodatoDto> response = new ArrayList<TavoloAccomodatoDto>();
     	for (TavoloAccomodato tavoloAccomodato : tavoliAccomodati) {
-    		TavoloAccomodatoDto tavoloAccomodatoDto = new TavoloAccomodatoDto();
-    		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
-    		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
-    		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
-    		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
-    		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    		tavoloAccomodatoDto.setAccomodatoPersona(tavoloAccomodato.getAccomodatoPersona());
-    		if(tavoloAccomodato.getLiberatoOrario()!=null)
-    			tavoloAccomodatoDto.setLiberatoOrario(new DateTime(tavoloAccomodato.getLiberatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    		tavoloAccomodatoDto.setLiberatoPersona(tavoloAccomodato.getLiberatoPersona());
-        	if(tavoloAccomodato.getOrdinazioneOrario()!=null)
-        		tavoloAccomodatoDto.setOrdinazioneOrario(new DateTime(tavoloAccomodato.getOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-        	tavoloAccomodatoDto.setOrdinazionePersona(tavoloAccomodato.getOrdinazionePersona());
-        	if(tavoloAccomodato.getInOrdinazioneOrario()!=null)
-        		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-        	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
-        	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
-        	tavoloAccomodatoDto.setNumCoperti(tavoloAccomodato.getNumCoperti());
-        	
-        	if(!tavoloAccomodato.getStato().equals(TavoloStato.LIBERATO))
-        		response.add(tavoloAccomodatoDto);
+    		if(!tavoloAccomodato.getStato().equals(TavoloStato.LIBERATO)){
+    			if(asporto || (!tavoloAccomodato.isAsporto())){
+		    		TavoloAccomodatoDto tavoloAccomodatoDto = new TavoloAccomodatoDto();
+		    		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
+		    		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
+		    		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
+		    		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
+		    		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+		    		tavoloAccomodatoDto.setAccomodatoPersona(tavoloAccomodato.getAccomodatoPersona());
+		    		if(tavoloAccomodato.getLiberatoOrario()!=null)
+		    			tavoloAccomodatoDto.setLiberatoOrario(new DateTime(tavoloAccomodato.getLiberatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+		    		tavoloAccomodatoDto.setLiberatoPersona(tavoloAccomodato.getLiberatoPersona());
+		        	if(tavoloAccomodato.getOrdinazioneOrario()!=null)
+		        		tavoloAccomodatoDto.setOrdinazioneOrario(new DateTime(tavoloAccomodato.getOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+		        	tavoloAccomodatoDto.setOrdinazionePersona(tavoloAccomodato.getOrdinazionePersona());
+		        	if(tavoloAccomodato.getInOrdinazioneOrario()!=null)
+		        		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+		        	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
+		        	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
+		        	tavoloAccomodatoDto.setNumCoperti(tavoloAccomodato.getNumCoperti());
+		        	
+		        	response.add(tavoloAccomodatoDto);
+    			}
+    		}
     	}
         return new ResponseEntity<List<TavoloAccomodatoDto>>(response,HttpStatus.OK);
     }
