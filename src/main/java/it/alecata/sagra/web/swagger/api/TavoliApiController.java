@@ -156,6 +156,7 @@ public class TavoliApiController implements TavoliApi {
 		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
 		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
 		tavoloAccomodatoDto.setNomeAsporto(tavoloAccomodato.getNomeAsporto());
+		tavoloAccomodatoDto.setNumCoperti(tavoloAccomodato.getNumCoperti());
 		tavoloAccomodatoDto.setAsporto(tavoloAccomodato.isAsporto());
 		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
 		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
