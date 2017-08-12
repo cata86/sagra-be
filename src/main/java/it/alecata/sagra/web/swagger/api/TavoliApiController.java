@@ -64,6 +64,7 @@ public class TavoliApiController implements TavoliApi {
     	
     	TavoloAccomodato accomodato = new TavoloAccomodato();
     	accomodato.setCodice(nuovoCodice);
+    	accomodato.setNomeAsporto(body.getNomeAsporto());
     	accomodato.setDescrizione("Tavolo " +nuovoCodice);
     	accomodato.setNumCoperti(body.getNumCoperti());
     	accomodato.setAccomodatoPersona(body.getAccomodatoPersona());
@@ -154,6 +155,7 @@ public class TavoliApiController implements TavoliApi {
 		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
 		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
 		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
+		tavoloAccomodatoDto.setNomeAsporto(tavoloAccomodato.getNomeAsporto());
 		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
 		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
 		tavoloAccomodatoDto.setAccomodatoPersona(tavoloAccomodato.getAccomodatoPersona());

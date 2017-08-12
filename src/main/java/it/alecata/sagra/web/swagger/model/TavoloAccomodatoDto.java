@@ -27,6 +27,9 @@ public class TavoloAccomodatoDto   {
 
   @JsonProperty("codice")
   private String codice = null;
+  
+  @JsonProperty("nomeAsporto")
+  private String nomeAsporto = null;
 
   @JsonProperty("descrizione")
   private String descrizione = null;
@@ -184,7 +187,15 @@ public class TavoloAccomodatoDto   {
     return this;
   }
 
-   /**
+   public String getNomeAsporto() {
+	return nomeAsporto;
+   }
+
+	public void setNomeAsporto(String nomeAsporto) {
+		this.nomeAsporto = nomeAsporto;
+	}
+
+/**
    * Get descrizione
    * @return descrizione
   **/

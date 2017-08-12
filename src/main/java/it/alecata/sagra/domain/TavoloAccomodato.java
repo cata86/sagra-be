@@ -24,6 +24,9 @@ public class TavoloAccomodato implements Serializable {
 
     @Column(name = "codice")
     private String codice;
+    
+    @Column(name = "nome_asporto")
+    private String nomeAsporto;
 
     @Column(name = "descrizione")
     private String descrizione;
@@ -91,7 +94,15 @@ public class TavoloAccomodato implements Serializable {
         this.codice = codice;
     }
 
-    public String getDescrizione() {
+    public String getNomeAsporto() {
+		return nomeAsporto;
+	}
+
+	public void setNomeAsporto(String nomeAsporto) {
+		this.nomeAsporto = nomeAsporto;
+	}
+
+	public String getDescrizione() {
         return descrizione;
     }
 
