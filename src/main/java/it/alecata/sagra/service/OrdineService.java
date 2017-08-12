@@ -160,6 +160,8 @@ public class OrdineService {
     	}
     	//FIXME approssimare 2 decimali
     	
+    	if(persone==0)
+    		persone=new Float(1);
     	ordine.setQuotaPersona(totale/persone);
     	ordine.setTotale(totale);
 
