@@ -26,6 +26,9 @@ public class PietanzaDto   {
   @JsonProperty("descrizione")
   private String descrizione = null;
 
+  @JsonProperty("coperto")
+  private Boolean coperto = null;
+  
   @JsonProperty("prezzo")
   private Float prezzo = null;
 
@@ -130,8 +133,15 @@ public class PietanzaDto   {
     this.prezzo = prezzo;
   }
 
+  public Boolean getCoperto() {
+	return coperto;
+  }
 
-  @Override
+  public void setCoperto(Boolean coperto) {
+	this.coperto = coperto;
+  }
+
+@Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;

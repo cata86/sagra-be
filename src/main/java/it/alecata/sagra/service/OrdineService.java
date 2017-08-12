@@ -117,6 +117,10 @@ public class OrdineService {
     		pietanzaDto.setNome(pietanza.getNome());
     		pietanzaDto.setPrezzo(pietanza.getPrezzo());
     		pietanzaDto.setDescrizione(pietanza.getDescrizione());
+    		if(pietanza.getCodice().equals("000"))
+    			pietanzaDto.setCoperto(true);
+    		else
+    			pietanzaDto.setCoperto(false);
     		PietanzaCategoriaDto pietanzaCategoriaDto = new PietanzaCategoriaDto();
     		pietanzaCategoriaDto.setId(pietanza.getPietanzaCategoria().getId());
     		pietanzaCategoriaDto.setCodice(pietanza.getPietanzaCategoria().getCodice());
