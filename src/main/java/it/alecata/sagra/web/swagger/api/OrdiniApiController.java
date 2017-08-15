@@ -139,6 +139,8 @@ public class OrdiniApiController implements OrdiniApi {
 		        	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
 		        	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
 		        	tavoloAccomodatoDto.setNumCoperti(tavoloAccomodato.getNumCoperti());
+		        	tavoloAccomodatoDto.setAsporto(tavoloAccomodato.isAsporto());
+		        	tavoloAccomodatoDto.setNomeAsporto(tavoloAccomodato.getNomeAsporto());
 		        	
 		        	response.add(tavoloAccomodatoDto);
     			}
