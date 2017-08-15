@@ -84,7 +84,9 @@ public class OrdiniApiController implements OrdiniApi {
 
     public ResponseEntity<List<OrdineDto>> listaOrdiniByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo accomodato", required = true) @RequestParam(value = "idTavoloAccomodato", required = true) Long idTavoloAccomodato) {
         // do some magic!
-        return new ResponseEntity<List<OrdineDto>>(HttpStatus.OK);
+    	List<OrdineDto> ordini = ordineService.listaOrdiniByTavoloId(idTavoloAccomodato);
+    	
+        return new ResponseEntity<List<OrdineDto>>(ordini,HttpStatus.OK);
     }
 
     public ResponseEntity<List<PietanzaDto>> listaPietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra) {

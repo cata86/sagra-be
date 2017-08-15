@@ -180,4 +180,63 @@ public class OrdineService {
     	body.setData(new DateTime(ordine.getDataOrdine().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
     	return body;
     }
+    
+    public List<OrdineDto> listaOrdiniByTavoloId(Long tavoloAccomodatoId){
+    	TavoloAccomodato tavoloAccomodato = new TavoloAccomodato(tavoloAccomodatoId);
+    	List<Ordine> ordini = ordineRepository.findByTavoloAccomodato(tavoloAccomodato);
+    	
+    	List<OrdineDto> response = new ArrayList<OrdineDto>();
+    	for(Ordine ordine : ordini){
+    		response.add(ordineToOrdineDto(ordine));
+    	}
+    	return response;
+    }
+    
+    public OrdineDto ordineToOrdineDto(Ordine ordine){
+    	OrdineDto ordineDto = new OrdineDto();
+    	ordineDto.setId(ordine.getId());
+    	ordineDto.setAsporto(ordine.isAsporto());
+    	ordineDto.setData(new DateTime(ordine.getDataOrdine().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+    	ordineDto.setIdTavoloAccomodato(ordine.getTavoloAccomodato().getId());
+    	ordineDto.setNumCoperti(ordine.getNumeroCoperti());
+    	ordineDto.setPersonaOrdine(ordine.getPersonaOrdine());
+    	ordineDto.setQuotaPersona(ordine.getQuotaPersona());
+    	ordineDto.setTotale(ordine.getTotale());
+    	
+    	List<PietanzaOrdinata> pietanzeOrdinate = ordine.getPietanzeOrdinate();
+    	List<PietanzaOrdinataDto> pietanzeOrdinateDto = new ArrayList<PietanzaOrdinataDto>();
+    	for(PietanzaOrdinata pietanzaOrdinata : pietanzeOrdinate){
+    		pietanzeOrdinateDto.add(pietanzaOrdinataToPietanzaOrdinataDto(pietanzaOrdinata));
+    	}
+    	ordineDto.setPietanzeOrdinate(pietanzeOrdinateDto);
+    	return ordineDto;
+    }
+    
+    public PietanzaDto pietanzaToPietanzaDto(Pietanza pietanza){
+		PietanzaDto pietanzaDto = new PietanzaDto();
+		pietanzaDto.setId(pietanza.getId());
+		pietanzaDto.setNome(pietanza.getNome());
+		pietanzaDto.setPrezzo(pietanza.getPrezzo());
+		pietanzaDto.setDescrizione(pietanza.getDescrizione());
+		if(pietanza.getCodice().equals("000"))
+			pietanzaDto.setCoperto(true);
+		else
+			pietanzaDto.setCoperto(false);
+		PietanzaCategoriaDto pietanzaCategoriaDto = new PietanzaCategoriaDto();
+		pietanzaCategoriaDto.setId(pietanza.getPietanzaCategoria().getId());
+		pietanzaCategoriaDto.setCodice(pietanza.getPietanzaCategoria().getCodice());
+		pietanzaDto.setCategoria(pietanzaCategoriaDto);
+		return pietanzaDto;
+    }
+    
+    public PietanzaOrdinataDto pietanzaOrdinataToPietanzaOrdinataDto(PietanzaOrdinata pietanzaOrdinata){
+		PietanzaOrdinataDto pietanzaOrdinataDto = new PietanzaOrdinataDto();
+		pietanzaOrdinataDto.setId(pietanzaOrdinata.getId());
+		pietanzaOrdinataDto.setNote(pietanzaOrdinata.getNote());
+		pietanzaOrdinataDto.setNumSequenza(pietanzaOrdinata.getNumeroSequenza());
+		pietanzaOrdinataDto.setQuantita(pietanzaOrdinata.getQuantita());
+		pietanzaOrdinataDto.setPietanza(pietanzaToPietanzaDto(pietanzaOrdinata.getPietanza()));
+		return pietanzaOrdinataDto;
+    }
+    
 }

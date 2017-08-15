@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -41,6 +42,9 @@ public class Ordine implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private TavoloAccomodato tavoloAccomodato;
+    
+    @OneToMany(mappedBy = "ordine")
+    private List<PietanzaOrdinata> pietanzeOrdinate;
 
     public Long getId() {
         return id;
@@ -141,7 +145,15 @@ public class Ordine implements Serializable {
         this.tavoloAccomodato = tavoloAccomodato;
     }
 
-    @Override
+    public List<PietanzaOrdinata> getPietanzeOrdinate() {
+		return pietanzeOrdinate;
+	}
+
+	public void setPietanzeOrdinate(List<PietanzaOrdinata> pietanzeOrdinate) {
+		this.pietanzeOrdinate = pietanzeOrdinate;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
