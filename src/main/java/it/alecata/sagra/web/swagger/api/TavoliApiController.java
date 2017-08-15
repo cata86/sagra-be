@@ -2,6 +2,7 @@ package it.alecata.sagra.web.swagger.api;
 
 
 import io.swagger.annotations.*;
+import it.alecata.sagra.domain.Serata;
 import it.alecata.sagra.domain.TavoloAccomodato;
 import it.alecata.sagra.domain.TavoloReale;
 import it.alecata.sagra.domain.enumeration.TavoloStato;
@@ -56,7 +57,7 @@ public class TavoliApiController implements TavoliApi {
     	//idTavoloReale, codice, descrizione, numCoperti, accomodatoPersona
     	//FIXME serata me lo passano
     	
-    	it.alecata.sagra.domain.Serata serata = serataService.findLastSerata();
+    	Serata serata = serataService.findLastSerata();
     	
     	TavoloReale tavoloReale = tavoloRealeService.findOne(body.getIdTavoloReale());
     	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();

@@ -3,6 +3,7 @@ package it.alecata.sagra.web.swagger.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.joda.time.DateTime;
@@ -10,9 +11,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Serata
+ * SerataDto
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-25T09:45:13.933Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-08-12T20:01:54.092+02:00")
 
 public class SerataDto   {
   @JsonProperty("id")
@@ -26,6 +27,40 @@ public class SerataDto   {
 
   @JsonProperty("descrizione")
   private String descrizione = null;
+
+  /**
+   * Gets or Sets stato
+   */
+  public enum StatoEnum {
+    APERTA("APERTA"),
+    
+    CHIUSA("CHIUSA");
+
+    private String value;
+
+    StatoEnum(String value) {
+      this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static StatoEnum fromValue(String text) {
+      for (StatoEnum b : StatoEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }
+
+  @JsonProperty("stato")
+  private StatoEnum stato = null;
 
   @JsonProperty("data")
   private DateTime data = null;
@@ -120,6 +155,26 @@ public class SerataDto   {
 
   public void setDescrizione(String descrizione) {
     this.descrizione = descrizione;
+  }
+
+  public SerataDto stato(StatoEnum stato) {
+    this.stato = stato;
+    return this;
+  }
+
+   /**
+   * Get stato
+   * @return stato
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public StatoEnum getStato() {
+    return stato;
+  }
+
+  public void setStato(StatoEnum stato) {
+    this.stato = stato;
   }
 
   public SerataDto data(DateTime data) {
@@ -239,6 +294,7 @@ public class SerataDto   {
         Objects.equals(this.idSagra, serata.idSagra) &&
         Objects.equals(this.codice, serata.codice) &&
         Objects.equals(this.descrizione, serata.descrizione) &&
+        Objects.equals(this.stato, serata.stato) &&
         Objects.equals(this.data, serata.data) &&
         Objects.equals(this.dataApertura, serata.dataApertura) &&
         Objects.equals(this.dataChiusura, serata.dataChiusura) &&
@@ -248,18 +304,19 @@ public class SerataDto   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, idSagra, codice, descrizione, data, dataApertura, dataChiusura, personaApertura, personaChiusura);
+    return Objects.hash(id, idSagra, codice, descrizione, stato, data, dataApertura, dataChiusura, personaApertura, personaChiusura);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Serata {\n");
+    sb.append("class SerataDto {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    idSagra: ").append(toIndentedString(idSagra)).append("\n");
     sb.append("    codice: ").append(toIndentedString(codice)).append("\n");
     sb.append("    descrizione: ").append(toIndentedString(descrizione)).append("\n");
+    sb.append("    stato: ").append(toIndentedString(stato)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    dataApertura: ").append(toIndentedString(dataApertura)).append("\n");
     sb.append("    dataChiusura: ").append(toIndentedString(dataChiusura)).append("\n");
