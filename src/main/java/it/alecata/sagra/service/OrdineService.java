@@ -142,7 +142,7 @@ public class OrdineService {
     	
     	ordineRepository.save(ordine);
     	
-    	
+    	boolean esisteCoperto = false;
     	Float totale = new Float(0);
     	Float persone = new Float(body.getNumCoperti());
     	for(PietanzaOrdinataDto pietanzaOrdinataDto : body.getPietanzeOrdinate()){
@@ -157,6 +157,9 @@ public class OrdineService {
     		
     		totale = totale + (pietanzaOrdinata.getQuantita()*pietanza.getPrezzo());
     		
+    		if(pietanza.getCodice().equals("000"))
+    			esisteCoperto = true;
+    		
     	}
     	//FIXME approssimare 2 decimali
     	
@@ -169,11 +172,13 @@ public class OrdineService {
 
     	ordineRepository.save(ordine);
     	
-    	tavoloAccomodato.setStato(TavoloStato.ORDINATO);
-    	tavoloAccomodato.setOrdinazionePersona(body.getPersonaOrdine());
-    	tavoloAccomodato.setOrdinazioneOrario(ZonedDateTime.now(ZoneId.systemDefault()));
-    	tavoloAccomodatoService.save(tavoloAccomodato);
-    	
+    	if(esisteCoperto){
+	    	tavoloAccomodato.setStato(TavoloStato.ORDINATO);
+	    	tavoloAccomodato.setOrdinazionePersona(body.getPersonaOrdine());
+	    	tavoloAccomodato.setOrdinazioneOrario(ZonedDateTime.now(ZoneId.systemDefault()));
+	    	tavoloAccomodatoService.save(tavoloAccomodato);
+    	}
+
     	body.setQuotaPersona(ordine.getQuotaPersona());
     	body.setTotale(ordine.getTotale());
     	body.setId(ordine.getId());
