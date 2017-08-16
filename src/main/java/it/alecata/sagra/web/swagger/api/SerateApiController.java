@@ -112,6 +112,10 @@ public class SerateApiController implements SerateApi {
     	serata.setDescrizione(body.getDescrizione());
     	serata.setPersonaApertura(body.getPersonaApertura());
     	serata.setPersonaChiusura(body.getPersonaChiusura());
+    	if(body.getStato().compareTo(StatoEnum.APERTA) == 0){
+    		serata.setDataChiusura(null);
+    		serata.setPersonaChiusura(null);
+    	}
     	serataService.save(serata);
     	SerataDto serataDto = serataToSerataDto(serata);
     	
