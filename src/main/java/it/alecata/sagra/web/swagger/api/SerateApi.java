@@ -56,7 +56,7 @@ public interface SerateApi {
     @RequestMapping(value = "/api/serate/listaSerata",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
-    ResponseEntity<List<SerataDto>> listaSerata( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Boolean idSagra);
+    ResponseEntity<List<SerataDto>> listaSerata( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
 
 
     @ApiOperation(value = "Modifiica Serata", notes = "Modifiica Serata", response = SerataDto.class, tags={ "cassa", })

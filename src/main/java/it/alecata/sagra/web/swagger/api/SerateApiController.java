@@ -83,7 +83,7 @@ public class SerateApiController implements SerateApi {
         return new ResponseEntity<SerataDto>(serataDto,HttpStatus.OK);
     }
 
-    public ResponseEntity<List<SerataDto>> listaSerata( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Boolean idSagra) {
+    public ResponseEntity<List<SerataDto>> listaSerata( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra) {
     	Page<Serata> seratePage = serataService.findAll(new PageRequest(0, Integer.MAX_VALUE));
     	List<Serata> serate = seratePage.getContent();
     	List<SerataDto> response = new ArrayList<SerataDto>();
