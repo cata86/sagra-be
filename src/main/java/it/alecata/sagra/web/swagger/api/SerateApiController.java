@@ -91,7 +91,7 @@ public class SerateApiController implements SerateApi {
     		response.add(serataToSerataDto(serata));
     	}
     	
-        return new ResponseEntity<List<SerataDto>>(HttpStatus.OK);
+        return new ResponseEntity<List<SerataDto>>(response,HttpStatus.OK);
     }
 
     public ResponseEntity<SerataDto> modificaSerata(@ApiParam(value = "serata" ,required=true )  @Valid @RequestBody SerataDto body) {
@@ -122,9 +122,10 @@ public class SerateApiController implements SerateApi {
     	SerataDto serataDto = new SerataDto();
     	serataDto.setId(serata.getId());
     	serataDto.setCodice(serata.getCodice());
-    	serataDto.setData(new DateTime(serata.getData(), DateTimeZone.getDefault()));
+    	serataDto.setData(new DateTime(serata.getData().toEpochDay()*24*60*60*1000, DateTimeZone.getDefault()));
     	serataDto.setDataApertura(new DateTime(serata.getDataApertura().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    	serataDto.setDataChiusura(new DateTime(serata.getDataChiusura().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+    	if(serata.getDataChiusura()!=null)
+    		serataDto.setDataChiusura(new DateTime(serata.getDataChiusura().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
     	serataDto.setDescrizione(serata.getDescrizione());
     	serataDto.setPersonaApertura(serata.getPersonaApertura());
     	serataDto.setPersonaChiusura(serata.getPersonaChiusura());
