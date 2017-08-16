@@ -31,7 +31,7 @@ public interface SerateApi {
         @ApiResponse(code = 200, message = "successful operation", response = SerataDto.class),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
     
-    @RequestMapping(value = "/serate/apriSerata",
+    @RequestMapping(value = "/api/serate/apriSerata",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
     ResponseEntity<SerataDto> apriSerata(@ApiParam(value = "idSagra, codice, descrizione, data, personaApertura" ,required=true )  @Valid @RequestBody SerataDto body);
@@ -42,7 +42,7 @@ public interface SerateApi {
         @ApiResponse(code = 200, message = "successful operation", response = SerataDto.class),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
     
-    @RequestMapping(value = "/serate/chiudiSerata",
+    @RequestMapping(value = "/api/serate/chiudiSerata",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
     ResponseEntity<SerataDto> chiudiSerata(@ApiParam(value = "id, personaChiusura" ,required=true )  @Valid @RequestBody SerataDto body);
@@ -53,7 +53,7 @@ public interface SerateApi {
         @ApiResponse(code = 200, message = "successful operation", response = SerataDto.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
     
-    @RequestMapping(value = "/serate/listaSerata",
+    @RequestMapping(value = "/api/serate/listaSerata",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
     ResponseEntity<List<SerataDto>> listaSerata( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Boolean idSagra);
@@ -64,7 +64,7 @@ public interface SerateApi {
         @ApiResponse(code = 200, message = "successful operation", response = SerataDto.class),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
     
-    @RequestMapping(value = "/serate/modificaSerata",
+    @RequestMapping(value = "/api/serate/modificaSerata",
         produces = { "application/json" }, 
         method = RequestMethod.POST)
     ResponseEntity<SerataDto> modificaSerata(@ApiParam(value = "serata" ,required=true )  @Valid @RequestBody SerataDto body);
