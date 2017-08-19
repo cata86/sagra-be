@@ -53,13 +53,17 @@ public class OrdineService {
     private final OrdineRepository ordineRepository;
     
     private final PietanzaOrdinataRepository pietanzaOrdinataRepository;
+    
+    private final PrinterService printerService;
 
     public OrdineService(TavoloAccomodatoService tavoloAccomodatoService, PietanzaRepository pietanzaRepository, 
-    		OrdineRepository ordineRepository, PietanzaOrdinataRepository pietanzaOrdinataRepository) {
+    		OrdineRepository ordineRepository, PietanzaOrdinataRepository pietanzaOrdinataRepository,
+    		PrinterService printerService) {
         this.tavoloAccomodatoService = tavoloAccomodatoService;
         this.pietanzaRepository = pietanzaRepository;
         this.ordineRepository = ordineRepository;
         this.pietanzaOrdinataRepository = pietanzaOrdinataRepository;
+        this.printerService = printerService;
     }
 
     /**
@@ -145,6 +149,8 @@ public class OrdineService {
     	boolean esisteCoperto = false;
     	Float totale = new Float(0);
     	Float persone = new Float(body.getNumCoperti());
+
+    	List<PietanzaOrdinata> pietanzeOrdinate = new ArrayList<PietanzaOrdinata>();
     	for(PietanzaOrdinataDto pietanzaOrdinataDto : body.getPietanzeOrdinate()){
     		Pietanza pietanza = pietanzaRepository.findOne(pietanzaOrdinataDto.getPietanza().getId());
     		PietanzaOrdinata pietanzaOrdinata = new PietanzaOrdinata();
@@ -154,6 +160,7 @@ public class OrdineService {
     		pietanzaOrdinata.setPietanza(pietanza);
     		pietanzaOrdinata.setQuantita(pietanzaOrdinataDto.getQuantita());
     		pietanzaOrdinataRepository.save(pietanzaOrdinata);
+    		pietanzeOrdinate.add(pietanzaOrdinata);
     		
     		totale = totale + (pietanzaOrdinata.getQuantita()*pietanza.getPrezzo());
     		
@@ -167,6 +174,7 @@ public class OrdineService {
     		persone=new Float(1);
     	ordine.setQuotaPersona(totale/persone);
     	ordine.setTotale(totale);
+    	ordine.setPietanzeOrdinate(pietanzeOrdinate);
 
     	
 
@@ -178,12 +186,28 @@ public class OrdineService {
 	    	tavoloAccomodato.setOrdinazioneOrario(ZonedDateTime.now(ZoneId.systemDefault()));
 	    	tavoloAccomodatoService.save(tavoloAccomodato);
     	}
+    	
+    	printerService.printOrder(ordine.getId());
+    	printerService.printCucina(ordine.getId());
 
-    	body.setQuotaPersona(ordine.getQuotaPersona());
+    	/*body.setQuotaPersona(ordine.getQuotaPersona());
     	body.setTotale(ordine.getTotale());
     	body.setId(ordine.getId());
     	body.setData(new DateTime(ordine.getDataOrdine().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    	return body;
+    	return body;*/
+    	return ordineToOrdineDto(ordine);
+    }
+    
+    public OrdineDto stampaScontrino(Long idOrdine) {
+    	Ordine ordine = ordineRepository.findOne(idOrdine);
+    	printerService.printOrder(ordine.getId());
+    	return ordineToOrdineDto(ordine);
+    }
+    
+    public OrdineDto stampaCucina(Long idOrdine) {
+    	Ordine ordine = ordineRepository.findOne(idOrdine);
+    	printerService.printCucina(ordine.getId());;
+    	return ordineToOrdineDto(ordine);
     }
     
     public List<OrdineDto> listaOrdiniByTavoloId(Long tavoloAccomodatoId){

@@ -3,6 +3,7 @@ package it.alecata.sagra.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,6 +30,10 @@ public class PietanzaCategoria implements Serializable {
 
     @Column(name = "nome_stampante")
     private String nomeStampante;
+    
+    @OneToMany(mappedBy = "pietanzaCategoria")
+    private List<Pietanza> pietanze;
+
 
     public Long getId() {
         return id;
@@ -89,8 +94,16 @@ public class PietanzaCategoria implements Serializable {
     public void setNomeStampante(String nomeStampante) {
         this.nomeStampante = nomeStampante;
     }
+    
+    public List<Pietanza> getPietanze() {
+		return pietanze;
+	}
 
-    @Override
+	public void setPietanze(List<Pietanza> pietanze) {
+		this.pietanze = pietanze;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

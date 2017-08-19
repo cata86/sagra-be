@@ -4,6 +4,7 @@ import it.alecata.sagra.domain.Sagra;
 import it.alecata.sagra.domain.Serata;
 import it.alecata.sagra.domain.TavoloAccomodato;
 import it.alecata.sagra.domain.TavoloReale;
+import it.alecata.sagra.service.PrinterService;
 import it.alecata.sagra.service.SagraService;
 import it.alecata.sagra.service.SerataService;
 import it.alecata.sagra.web.swagger.model.SerataDto;
@@ -43,10 +44,14 @@ public class SerateApiController implements SerateApi {
     private final SerataService serataService;
     
     private final SagraService sagraService;
+    
+    private final PrinterService printerService;
 
-    public SerateApiController(SerataService serataService, SagraService sagraService) {
+    public SerateApiController(SerataService serataService, SagraService sagraService,
+    		PrinterService printerService) {
         this.serataService = serataService;
         this.sagraService = sagraService;
+        this.printerService = printerService;
     }
 
     public ResponseEntity<SerataDto> apriSerata(@ApiParam(value = "idSagra, codice, descrizione, data, personaApertura" ,required=true )  @Valid @RequestBody SerataDto body) {
@@ -77,6 +82,8 @@ public class SerateApiController implements SerateApi {
     	serata.setDataChiusura(ZonedDateTime.now(ZoneId.systemDefault()));
     	serata.setPersonaChiusura(body.getPersonaChiusura());
     	serataService.save(serata);
+    	
+    	printerService.printSerata(serata);
     	
     	SerataDto serataDto = serataToSerataDto(serata);
     	
@@ -139,5 +146,23 @@ public class SerateApiController implements SerateApi {
     		serataDto.setStato(StatoEnum.CHIUSA);
     	return serataDto;
     }
+
+	@Override
+	public ResponseEntity<Void> cancellaSerata(Long idSerata) {
+		// TODO Auto-generated method stub
+		serataService.delete(idSerata);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<SerataDto> stampaSerata(Long idSerata) {
+		// TODO Auto-generated method stub
+		Serata serata = serataService.findOne(idSerata);
+    	printerService.printSerata(serata);
+    	
+    	SerataDto serataDto = serataToSerataDto(serata);
+    	
+        return new ResponseEntity<SerataDto>(serataDto,HttpStatus.OK);
+	}
     
 }

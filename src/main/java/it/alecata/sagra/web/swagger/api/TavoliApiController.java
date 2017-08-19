@@ -128,9 +128,9 @@ public class TavoliApiController implements TavoliApi {
         return new ResponseEntity<List<TavoloRealeDto>>(response,HttpStatus.OK);
     }
 
-	public ResponseEntity<TavoloAccomodatoDto> impostaStatoTavoloAccomodato(Long idTavoloReale, StatoEnum stato, String persona) {
+	public ResponseEntity<TavoloAccomodatoDto> impostaStatoTavoloAccomodato(Long idTavoloAccomodato, StatoEnum stato, String persona) {
 		// TODO Auto-generated method stub
-    	TavoloAccomodato accomodato = tavoloAccomodatoService.findOne(idTavoloReale);
+    	TavoloAccomodato accomodato = tavoloAccomodatoService.findOne(idTavoloAccomodato);
     	accomodato.setLiberatoOrario(ZonedDateTime.now(ZoneId.systemDefault()));
     	if(stato.equals(StatoEnum.ACCOMODATO)){
     		accomodato.setAccomodatoPersona(persona);
@@ -175,5 +175,7 @@ public class TavoliApiController implements TavoliApi {
     	
     	return tavoloAccomodatoDto;
 	}
+
+
 
 }

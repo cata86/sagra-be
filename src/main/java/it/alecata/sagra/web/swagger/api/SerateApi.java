@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-08-12T20:01:54.092+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-08-19T16:46:29.535+02:00")
 
 @Api(value = "serate", description = "the serate API")
 public interface SerateApi {
@@ -35,6 +35,17 @@ public interface SerateApi {
         produces = { "application/json" }, 
         method = RequestMethod.POST)
     ResponseEntity<SerataDto> apriSerata(@ApiParam(value = "idSagra, codice, descrizione, data, personaApertura" ,required=true )  @Valid @RequestBody SerataDto body);
+
+
+    @ApiOperation(value = "Cancella serata", notes = "Cancella serata", response = Void.class, tags={ "cassa", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = Void.class),
+        @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
+    
+    @RequestMapping(value = "/api/serate/cancellaSerata",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<Void> cancellaSerata( @NotNull@ApiParam(value = "Identificativo della serata", required = true) @RequestParam(value = "idSerata", required = true) Long idSerata);
 
 
     @ApiOperation(value = "Chiudi serata", notes = "Chiude la serata", response = SerataDto.class, tags={ "cassa", })
@@ -55,7 +66,7 @@ public interface SerateApi {
     
     @RequestMapping(value = "/api/serate/listaSerata",
         produces = { "application/json" }, 
-        method = RequestMethod.GET)
+        method = RequestMethod.POST)
     ResponseEntity<List<SerataDto>> listaSerata( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
 
 
@@ -68,5 +79,16 @@ public interface SerateApi {
         produces = { "application/json" }, 
         method = RequestMethod.POST)
     ResponseEntity<SerataDto> modificaSerata(@ApiParam(value = "serata" ,required=true )  @Valid @RequestBody SerataDto body);
+
+
+    @ApiOperation(value = "Ristampa serata", notes = "Ristampa serata", response = SerataDto.class, tags={ "cassa", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = SerataDto.class),
+        @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
+    
+    @RequestMapping(value = "/api/serate/stampaSerata",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<SerataDto> stampaSerata( @NotNull@ApiParam(value = "Identificativo della serata", required = true) @RequestParam(value = "idSerata", required = true) Long idSerata);
 
 }

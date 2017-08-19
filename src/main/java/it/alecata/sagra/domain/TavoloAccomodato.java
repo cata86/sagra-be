@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import it.alecata.sagra.domain.enumeration.TavoloStato;
@@ -79,6 +80,9 @@ public class TavoloAccomodato implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     private TavoloReale tavoloReale;
+    
+    @OneToMany(mappedBy = "tavoloAccomodato")
+    private List<Ordine> ordini;
 
     public Long getId() {
         return id;
@@ -290,8 +294,16 @@ public class TavoloAccomodato implements Serializable {
     public void setTavoloReale(TavoloReale tavoloReale) {
         this.tavoloReale = tavoloReale;
     }
+    
+    public List<Ordine> getOrdini() {
+		return ordini;
+	}
 
-    @Override
+	public void setOrdini(List<Ordine> ordini) {
+		this.ordini = ordini;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

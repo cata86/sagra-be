@@ -5,13 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import it.alecata.sagra.web.swagger.model.PietanzaCategoriaDto;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Pietanza
+ * PietanzaDto
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-28T13:04:29.118Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-08-19T16:46:29.535+02:00")
 
 public class PietanzaDto   {
   @JsonProperty("id")
@@ -26,11 +27,14 @@ public class PietanzaDto   {
   @JsonProperty("descrizione")
   private String descrizione = null;
 
-  @JsonProperty("coperto")
-  private Boolean coperto = null;
-  
   @JsonProperty("prezzo")
   private Float prezzo = null;
+
+  @JsonProperty("coperto")
+  private Boolean coperto = false;
+
+  @JsonProperty("contatore")
+  private Boolean contatore = false;
 
   public PietanzaDto id(Long id) {
     this.id = id;
@@ -133,15 +137,48 @@ public class PietanzaDto   {
     this.prezzo = prezzo;
   }
 
+  public PietanzaDto coperto(Boolean coperto) {
+    this.coperto = coperto;
+    return this;
+  }
+
+   /**
+   * Get coperto
+   * @return coperto
+  **/
+  @ApiModelProperty(value = "")
+
+
   public Boolean getCoperto() {
-	return coperto;
+    return coperto;
   }
 
   public void setCoperto(Boolean coperto) {
-	this.coperto = coperto;
+    this.coperto = coperto;
   }
 
-@Override
+  public PietanzaDto contatore(Boolean contatore) {
+    this.contatore = contatore;
+    return this;
+  }
+
+   /**
+   * Get contatore
+   * @return contatore
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Boolean getContatore() {
+    return contatore;
+  }
+
+  public void setContatore(Boolean contatore) {
+    this.contatore = contatore;
+  }
+
+
+  @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
@@ -154,24 +191,28 @@ public class PietanzaDto   {
         Objects.equals(this.categoria, pietanza.categoria) &&
         Objects.equals(this.nome, pietanza.nome) &&
         Objects.equals(this.descrizione, pietanza.descrizione) &&
-        Objects.equals(this.prezzo, pietanza.prezzo);
+        Objects.equals(this.prezzo, pietanza.prezzo) &&
+        Objects.equals(this.coperto, pietanza.coperto) &&
+        Objects.equals(this.contatore, pietanza.contatore);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, categoria, nome, descrizione, prezzo);
+    return Objects.hash(id, categoria, nome, descrizione, prezzo, coperto, contatore);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Pietanza {\n");
+    sb.append("class PietanzaDto {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    categoria: ").append(toIndentedString(categoria)).append("\n");
     sb.append("    nome: ").append(toIndentedString(nome)).append("\n");
     sb.append("    descrizione: ").append(toIndentedString(descrizione)).append("\n");
     sb.append("    prezzo: ").append(toIndentedString(prezzo)).append("\n");
+    sb.append("    coperto: ").append(toIndentedString(coperto)).append("\n");
+    sb.append("    contatore: ").append(toIndentedString(contatore)).append("\n");
     sb.append("}");
     return sb.toString();
   }

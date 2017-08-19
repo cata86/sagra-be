@@ -151,4 +151,41 @@ public class OrdiniApiController implements OrdiniApi {
         return new ResponseEntity<List<TavoloAccomodatoDto>>(response,HttpStatus.OK);
     }
 
+
+	@Override
+	public ResponseEntity<Void> cancellaOrdine(Long idOrdine) {
+		// TODO Auto-generated method stub
+		ordineService.delete(idOrdine);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<List<PietanzaOrdinataDto>> getContatori() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<OrdineDto> modificaOrdine(OrdineDto body) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public ResponseEntity<OrdineDto> stampaCucina(Long idOrdine) {
+		// TODO Auto-generated method stub
+		OrdineDto ordineDto = ordineService.stampaScontrino(idOrdine);
+		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<OrdineDto> stampaScontrino(Long idOrdine) {
+		// TODO Auto-generated method stub
+		OrdineDto ordineDto = ordineService.stampaCucina(idOrdine);
+		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
+	}
+
 }

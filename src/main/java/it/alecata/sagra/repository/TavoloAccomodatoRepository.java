@@ -1,7 +1,10 @@
 package it.alecata.sagra.repository;
 
+import it.alecata.sagra.domain.Serata;
 import it.alecata.sagra.domain.TavoloAccomodato;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import org.springframework.data.jpa.repository.*;
 
@@ -12,5 +15,7 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface TavoloAccomodatoRepository extends JpaRepository<TavoloAccomodato,Long> {
+	
+	List<TavoloAccomodato> findAllBySerata(Serata serata);
     
 }
