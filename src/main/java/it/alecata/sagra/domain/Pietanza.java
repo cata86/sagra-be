@@ -30,6 +30,9 @@ public class Pietanza implements Serializable {
 
     @Column(name = "prezzo")
     private Float prezzo;
+    
+    @Column(name = "contatore")
+    private Boolean contatore;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -94,8 +97,16 @@ public class Pietanza implements Serializable {
     public void setPrezzo(Float prezzo) {
         this.prezzo = prezzo;
     }
+    
+    public Boolean getContatore() {
+		return contatore;
+	}
 
-    public PietanzaCategoria getPietanzaCategoria() {
+	public void setContatore(Boolean contatore) {
+		this.contatore = contatore;
+	}
+
+	public PietanzaCategoria getPietanzaCategoria() {
         return pietanzaCategoria;
     }
 

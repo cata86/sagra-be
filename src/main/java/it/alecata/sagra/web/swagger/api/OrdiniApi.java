@@ -5,6 +5,7 @@
  */
 package it.alecata.sagra.web.swagger.api;
 
+import java.util.List;
 import it.alecata.sagra.web.swagger.model.OrdineDto;
 import it.alecata.sagra.web.swagger.model.PietanzaCategoriaDto;
 import it.alecata.sagra.web.swagger.model.PietanzaDto;
@@ -25,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-08-19T16:46:29.535+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-08-19T18:29:46.996+02:00")
 
 @Api(value = "ordini", description = "the ordini API")
 public interface OrdiniApi {
@@ -63,8 +64,18 @@ public interface OrdiniApi {
     ResponseEntity<List<PietanzaOrdinataDto>> getContatori();
 
 
-    @ApiOperation(value = "Ordini del tavolo", notes = "Ritorna gli ordini del tavolo", response = OrdineDto.class, responseContainer = "List", 
-    		tags={ "ordinatore", })
+    @ApiOperation(value = "Lista delle pietanze", notes = "Lista delle pietanze", response = PietanzaCategoriaDto.class, responseContainer = "List", tags={ "ordinatore", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = PietanzaCategoriaDto.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
+    
+    @RequestMapping(value = "/api/ordini/listaCategoriePietanze",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<List<PietanzaCategoriaDto>> listaCategoriePietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
+
+
+    @ApiOperation(value = "Ordini del tavolo", notes = "Ritorna gli ordini del tavolo", response = OrdineDto.class, responseContainer = "List", tags={ "ordinatore", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = OrdineDto.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
@@ -75,8 +86,7 @@ public interface OrdiniApi {
     ResponseEntity<List<OrdineDto>> listaOrdiniByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo accomodato", required = true) @RequestParam(value = "idTavoloAccomodato", required = true) Long idTavoloAccomodato);
 
 
-    @ApiOperation(value = "Lista delle pietanze", notes = "Lista delle pietanze", response = PietanzaDto.class, responseContainer = "List",
-    		tags={ "ordinatore", })
+    @ApiOperation(value = "Lista delle pietanze", notes = "Lista delle pietanze", response = PietanzaDto.class, responseContainer = "List", tags={ "ordinatore", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = PietanzaDto.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
@@ -86,15 +96,8 @@ public interface OrdiniApi {
         method = RequestMethod.GET)
     ResponseEntity<List<PietanzaDto>> listaPietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
 
-    @RequestMapping(value = "/api/ordini/listaCategoriePietanze",
-            produces = { "application/json" }, 
-            method = RequestMethod.GET)
-        ResponseEntity<List<PietanzaCategoriaDto>> listaCategoriePietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
 
-    
-
-    @ApiOperation(value = "Cerca tavoli accomodati", notes = "Cerca tavoli accomodati", response = TavoloAccomodatoDto.class, responseContainer = "List", 
-    		tags={ "ordinatore", })
+    @ApiOperation(value = "Cerca tavoli accomodati", notes = "Cerca tavoli accomodati", response = TavoloAccomodatoDto.class, responseContainer = "List", tags={ "ordinatore", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = TavoloAccomodatoDto.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
@@ -106,8 +109,7 @@ public interface OrdiniApi {
     		@NotNull@ApiParam(value = "Anche i tavolo di asporto", required = true) @RequestParam(value = "asporto", required = true) Boolean asporto);
 
 
-    @ApiOperation(value = "Modifica Ordine", notes = "Modifica un ordine per un tavolo", response = OrdineDto.class,
-    		tags={ "ordinatore", })
+    @ApiOperation(value = "Modifica Ordine", notes = "Modifica un ordine per un tavolo", response = OrdineDto.class, tags={ "ordinatore", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = OrdineDto.class),
         @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
@@ -116,6 +118,17 @@ public interface OrdiniApi {
         produces = { "application/json" }, 
         method = RequestMethod.POST)
     ResponseEntity<OrdineDto> modificaOrdine(@ApiParam(value = "ordine" ,required=true )  @Valid @RequestBody OrdineDto body);
+
+
+    @ApiOperation(value = "imposta contatori", notes = "imposta contatori", response = PietanzaDto.class, responseContainer = "List", tags={ "ordinatore", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = PietanzaDto.class, responseContainer = "List"),
+        @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
+    
+    @RequestMapping(value = "/api/ordini/setContatori",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<List<PietanzaDto>> setContatori(@ApiParam(value = "pietanze con contatore" ,required=true )  @Valid @RequestBody List<PietanzaDto> body);
 
 
     @ApiOperation(value = "Ristampa Cucina", notes = "Ristampa Cucina", response = OrdineDto.class, tags={ "ordinatore", })

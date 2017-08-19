@@ -162,7 +162,7 @@ public class OrdiniApiController implements OrdiniApi {
 	}
 
 	@Override
-	public ResponseEntity<OrdineDto> modificaOrdine(OrdineDto body) {
+	public ResponseEntity<OrdineDto> modificaOrdine(@ApiParam(value = "ordine" ,required=true )  @Valid @RequestBody OrdineDto body) {
     	body = ordineService.modificaOrdine(body);
         return new ResponseEntity<OrdineDto>(body,HttpStatus.OK);
 	}
@@ -179,6 +179,18 @@ public class OrdiniApiController implements OrdiniApi {
 	public ResponseEntity<OrdineDto> stampaScontrino(Long idOrdine) {
 		OrdineDto ordineDto = ordineService.stampaCucina(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
+	}
+
+
+	@Override
+	public ResponseEntity<List<PietanzaDto>> setContatori(List<PietanzaDto> body) {
+		for(PietanzaDto pietanzaDto : body){
+			Pietanza pietanza = pietanzaRepository.findOne(pietanzaDto.getId());
+			pietanza.setContatore(pietanzaDto.getContatore());
+			pietanzaRepository.save(pietanza);
+		}
+		
+		return new ResponseEntity<List<PietanzaDto>>(body,HttpStatus.OK);
 	}
 
 }
