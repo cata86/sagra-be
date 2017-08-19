@@ -190,13 +190,51 @@ public class OrdineService {
     	printerService.printOrder(ordine.getId());
     	printerService.printCucina(ordine.getId());
 
-    	/*body.setQuotaPersona(ordine.getQuotaPersona());
-    	body.setTotale(ordine.getTotale());
-    	body.setId(ordine.getId());
-    	body.setData(new DateTime(ordine.getDataOrdine().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-    	return body;*/
     	return ordineToOrdineDto(ordine);
     }
+    
+    public OrdineDto modificaOrdine(OrdineDto body) {
+    	Ordine ordine = ordineRepository.findOne(body.getId());
+    	for(PietanzaOrdinata pietanza : ordine.getPietanzeOrdinate()){
+    		pietanzaOrdinataRepository.delete(pietanza);
+    	}
+    	ordine.setPietanzeOrdinate(null);
+    	ordine.setAsporto(body.getAsporto());
+    	ordine.setDataOrdine(ZonedDateTime.now(ZoneId.systemDefault()));
+    	ordine.setNumeroCoperti(body.getNumCoperti());
+    	ordine.setPersonaOrdine(body.getPersonaOrdine());
+    	
+    	TavoloAccomodato tavoloAccomodato = tavoloAccomodatoService.findOne(body.getIdTavoloAccomodato());
+    	ordine.setTavoloAccomodato(tavoloAccomodato);
+    	
+    	Float totale = new Float(0);
+    	Float persone = new Float(body.getNumCoperti());
+
+    	List<PietanzaOrdinata> pietanzeOrdinate = new ArrayList<PietanzaOrdinata>();
+    	for(PietanzaOrdinataDto pietanzaOrdinataDto : body.getPietanzeOrdinate()){
+    		Pietanza pietanza = pietanzaRepository.findOne(pietanzaOrdinataDto.getPietanza().getId());
+    		PietanzaOrdinata pietanzaOrdinata = new PietanzaOrdinata();
+    		pietanzaOrdinata.setOrdine(ordine);
+    		pietanzaOrdinata.setNumeroSequenza(pietanzaOrdinataDto.getNumSequenza());
+    		pietanzaOrdinata.setNote(pietanzaOrdinataDto.getNote());
+    		pietanzaOrdinata.setPietanza(pietanza);
+    		pietanzaOrdinata.setQuantita(pietanzaOrdinataDto.getQuantita());
+    		pietanzaOrdinataRepository.save(pietanzaOrdinata);
+    		pietanzeOrdinate.add(pietanzaOrdinata);
+    		
+    		totale = totale + (pietanzaOrdinata.getQuantita()*pietanza.getPrezzo());
+    	}
+    	//FIXME approssimare 2 decimali
+    	
+    	if(persone==0)
+    		persone=new Float(1);
+    	ordine.setQuotaPersona(totale/persone);
+    	ordine.setTotale(totale);
+    	ordine.setPietanzeOrdinate(pietanzeOrdinate);
+    	
+    	return ordineToOrdineDto(ordine);
+    }
+    
     
     public OrdineDto stampaScontrino(Long idOrdine) {
     	Ordine ordine = ordineRepository.findOne(idOrdine);

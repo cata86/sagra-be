@@ -169,7 +169,8 @@ public class OrdiniApiController implements OrdiniApi {
 	@Override
 	public ResponseEntity<OrdineDto> modificaOrdine(OrdineDto body) {
 		// TODO Auto-generated method stub
-		return null;
+    	body = ordineService.modificaOrdine(body);
+        return new ResponseEntity<OrdineDto>(body,HttpStatus.OK);
 	}
 
 

@@ -88,7 +88,7 @@ public interface SerateApi {
     
     @RequestMapping(value = "/api/serate/stampaSerata",
         produces = { "application/json" }, 
-        method = RequestMethod.POST)
+        method = RequestMethod.GET)
     ResponseEntity<SerataDto> stampaSerata( @NotNull@ApiParam(value = "Identificativo della serata", required = true) @RequestParam(value = "idSerata", required = true) Long idSerata);
 
 }
