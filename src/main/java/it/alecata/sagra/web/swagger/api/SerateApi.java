@@ -66,7 +66,7 @@ public interface SerateApi {
     
     @RequestMapping(value = "/api/serate/listaSerata",
         produces = { "application/json" }, 
-        method = RequestMethod.POST)
+        method = RequestMethod.GET)
     ResponseEntity<List<SerataDto>> listaSerata( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
 
 

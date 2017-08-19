@@ -6,6 +6,7 @@
 package it.alecata.sagra.web.swagger.api;
 
 import it.alecata.sagra.web.swagger.model.OrdineDto;
+import it.alecata.sagra.web.swagger.model.PietanzaCategoriaDto;
 import it.alecata.sagra.web.swagger.model.PietanzaDto;
 import it.alecata.sagra.web.swagger.model.PietanzaOrdinataDto;
 import it.alecata.sagra.web.swagger.model.TavoloAccomodatoDto;
@@ -85,6 +86,12 @@ public interface OrdiniApi {
         method = RequestMethod.GET)
     ResponseEntity<List<PietanzaDto>> listaPietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
 
+    @RequestMapping(value = "/api/ordini/listaCategoriePietanze",
+            produces = { "application/json" }, 
+            method = RequestMethod.GET)
+        ResponseEntity<List<PietanzaCategoriaDto>> listaCategoriePietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra);
+
+    
 
     @ApiOperation(value = "Cerca tavoli accomodati", notes = "Cerca tavoli accomodati", response = TavoloAccomodatoDto.class, responseContainer = "List", 
     		tags={ "ordinatore", })
