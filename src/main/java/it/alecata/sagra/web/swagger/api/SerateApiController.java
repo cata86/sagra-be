@@ -102,8 +102,6 @@ public class SerateApiController implements SerateApi {
     }
 
     public ResponseEntity<SerataDto> modificaSerata(@ApiParam(value = "serata" ,required=true )  @Valid @RequestBody SerataDto body) {
-        // do some magic!
-    	
     	Serata serata = serataService.findOne(body.getId());
     	serata.setCodice(body.getCodice());	
     	if(body.getData()!=null){
@@ -149,14 +147,12 @@ public class SerateApiController implements SerateApi {
 
 	@Override
 	public ResponseEntity<Void> cancellaSerata(Long idSerata) {
-		// TODO Auto-generated method stub
 		serataService.delete(idSerata);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<SerataDto> stampaSerata(Long idSerata) {
-		// TODO Auto-generated method stub
 		Serata serata = serataService.findOne(idSerata);
     	printerService.printSerata(serata);
     	

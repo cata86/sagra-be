@@ -76,14 +76,12 @@ public class OrdiniApiController implements OrdiniApi {
 
 
     public ResponseEntity<OrdineDto> creaOrdine(@ApiParam(value = "ordine" ,required=true )  @Valid @RequestBody OrdineDto body) {
-        // do some magic!
     	
     	body = ordineService.creaOrdine(body);
         return new ResponseEntity<OrdineDto>(body,HttpStatus.OK);
     }
 
     public ResponseEntity<List<OrdineDto>> listaOrdiniByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo accomodato", required = true) @RequestParam(value = "idTavoloAccomodato", required = true) Long idTavoloAccomodato) {
-        // do some magic!
     	List<OrdineDto> ordini = ordineService.listaOrdiniByTavoloId(idTavoloAccomodato);
     	
         return new ResponseEntity<List<OrdineDto>>(ordini,HttpStatus.OK);
@@ -95,7 +93,6 @@ public class OrdiniApiController implements OrdiniApi {
     }
     
     public ResponseEntity<List<PietanzaCategoriaDto>> listaCategoriePietanze( @NotNull@ApiParam(value = "Identificativo della sagra", required = true) @RequestParam(value = "idSagra", required = true) Long idSagra) {
-        // do some magic!
     	
     	Page<PietanzaCategoria> pietanzaCategoriaPage = pietanzaCategoriaRepository.findAll(new PageRequest(0, Integer.MAX_VALUE));
     	List<PietanzaCategoria> pietanzaCategorie = pietanzaCategoriaPage.getContent();
@@ -154,7 +151,6 @@ public class OrdiniApiController implements OrdiniApi {
 
 	@Override
 	public ResponseEntity<Void> cancellaOrdine(Long idOrdine) {
-		// TODO Auto-generated method stub
 		ordineService.delete(idOrdine);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -162,13 +158,11 @@ public class OrdiniApiController implements OrdiniApi {
 
 	@Override
 	public ResponseEntity<List<PietanzaOrdinataDto>> getContatori() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ResponseEntity<OrdineDto> modificaOrdine(OrdineDto body) {
-		// TODO Auto-generated method stub
     	body = ordineService.modificaOrdine(body);
         return new ResponseEntity<OrdineDto>(body,HttpStatus.OK);
 	}
@@ -176,7 +170,6 @@ public class OrdiniApiController implements OrdiniApi {
 
 	@Override
 	public ResponseEntity<OrdineDto> stampaCucina(Long idOrdine) {
-		// TODO Auto-generated method stub
 		OrdineDto ordineDto = ordineService.stampaScontrino(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
 	}
@@ -184,7 +177,6 @@ public class OrdiniApiController implements OrdiniApi {
 
 	@Override
 	public ResponseEntity<OrdineDto> stampaScontrino(Long idOrdine) {
-		// TODO Auto-generated method stub
 		OrdineDto ordineDto = ordineService.stampaCucina(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
 	}
