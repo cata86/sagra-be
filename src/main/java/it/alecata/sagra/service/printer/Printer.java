@@ -99,7 +99,7 @@ public class Printer implements Printable {
 		return PAGE_EXISTS;
 	}
 	
-	
+	/*
     public static void main(String args[]) {
     	Printer printable = new Printer();
     	Font fontNormal = new Font("Times New Roman", Font.PLAIN, 12);
@@ -136,7 +136,7 @@ public class Printer implements Printable {
 			e1.printStackTrace();
 		}
     	
-    }
+    }*/
     
     public static PrintService findPrintService(String printerName) {
 
