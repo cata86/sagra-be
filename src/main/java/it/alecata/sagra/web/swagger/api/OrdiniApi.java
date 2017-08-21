@@ -38,7 +38,7 @@ public interface OrdiniApi {
     
     @RequestMapping(value = "/api/ordini/cancellaOrdine",
         produces = { "application/json" }, 
-        method = RequestMethod.POST)
+        method = RequestMethod.GET)
     ResponseEntity<Void> cancellaOrdine( @NotNull@ApiParam(value = "Identificativo della serata", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine);
 
 

@@ -146,13 +146,13 @@ public class SerateApiController implements SerateApi {
     }
 
 	@Override
-	public ResponseEntity<Void> cancellaSerata(Long idSerata) {
+	public ResponseEntity<Void> cancellaSerata(@NotNull@ApiParam(value = "Identificativo della serata", required = true) @RequestParam(value = "idSerata", required = true) Long idSerata) {
 		serataService.delete(idSerata);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<SerataDto> stampaSerata(Long idSerata) {
+	public ResponseEntity<SerataDto> stampaSerata(@NotNull@ApiParam(value = "Identificativo della serata", required = true) @RequestParam(value = "idSerata", required = true) Long idSerata) {
 		Serata serata = serataService.findOne(idSerata);
     	printerService.printSerata(serata);
     	

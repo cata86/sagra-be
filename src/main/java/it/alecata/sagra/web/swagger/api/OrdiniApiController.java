@@ -150,15 +150,16 @@ public class OrdiniApiController implements OrdiniApi {
 
 
 	@Override
-	public ResponseEntity<Void> cancellaOrdine(Long idOrdine) {
-		ordineService.delete(idOrdine);
+	public ResponseEntity<Void> cancellaOrdine(@NotNull@ApiParam(value = "Identificativo della serata", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine) {
+		ordineService.cancellaOrdine(idOrdine);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 
 	@Override
 	public ResponseEntity<List<PietanzaOrdinataDto>> getContatori() {
-		return null;
+		List<PietanzaOrdinataDto> pietanzeOrdinate =  ordineService.getContatori();
+		return new ResponseEntity<>(pietanzeOrdinate,HttpStatus.OK);
 	}
 
 	@Override
@@ -169,21 +170,21 @@ public class OrdiniApiController implements OrdiniApi {
 
 
 	@Override
-	public ResponseEntity<OrdineDto> stampaCucina(Long idOrdine) {
+	public ResponseEntity<OrdineDto> stampaCucina(@NotNull@ApiParam(value = "Identificativo dell'ordine", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine) {
 		OrdineDto ordineDto = ordineService.stampaScontrino(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
 	}
 
 
 	@Override
-	public ResponseEntity<OrdineDto> stampaScontrino(Long idOrdine) {
+	public ResponseEntity<OrdineDto> stampaScontrino(@NotNull@ApiParam(value = "Identificativo dell'ordine", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine) {
 		OrdineDto ordineDto = ordineService.stampaCucina(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
 	}
 
 
 	@Override
-	public ResponseEntity<List<PietanzaDto>> setContatori(List<PietanzaDto> body) {
+	public ResponseEntity<List<PietanzaDto>> setContatori(@ApiParam(value = "pietanze con contatore" ,required=true )  @Valid @RequestBody List<PietanzaDto> body) {
 		for(PietanzaDto pietanzaDto : body){
 			Pietanza pietanza = pietanzaRepository.findOne(pietanzaDto.getId());
 			pietanza.setContatore(pietanzaDto.getContatore());
@@ -192,5 +193,6 @@ public class OrdiniApiController implements OrdiniApi {
 		
 		return new ResponseEntity<List<PietanzaDto>>(body,HttpStatus.OK);
 	}
+	
 
 }

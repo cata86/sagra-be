@@ -2,13 +2,18 @@ package it.alecata.sagra.service;
 
 import it.alecata.sagra.domain.Ordine;
 import it.alecata.sagra.domain.Pietanza;
+import it.alecata.sagra.domain.PietanzaCategoria;
 import it.alecata.sagra.domain.PietanzaOrdinata;
+import it.alecata.sagra.domain.Sagra;
+import it.alecata.sagra.domain.Serata;
 import it.alecata.sagra.domain.TavoloAccomodato;
 import it.alecata.sagra.domain.enumeration.TavoloStato;
 import it.alecata.sagra.repository.OrdineRepository;
 import it.alecata.sagra.repository.PietanzaCategoriaRepository;
 import it.alecata.sagra.repository.PietanzaOrdinataRepository;
 import it.alecata.sagra.repository.PietanzaRepository;
+import it.alecata.sagra.repository.TavoloAccomodatoRepository;
+import it.alecata.sagra.service.printer.LineaScontrino;
 import it.alecata.sagra.web.swagger.model.OrdineDto;
 import it.alecata.sagra.web.swagger.model.PietanzaCategoriaDto;
 import it.alecata.sagra.web.swagger.model.PietanzaDto;
@@ -17,6 +22,7 @@ import it.alecata.sagra.web.swagger.model.PietanzaOrdinataDto;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -56,14 +62,27 @@ public class OrdineService {
     
     private final PrinterService printerService;
 
+    private final SagraService sagraService;
+    
+    private final PietanzaCategoriaRepository pietanzaCategoriaRepository;
+    
+    private final TavoloAccomodatoRepository tavoloAccomodatoRepository;
+    
+    private final SerataService serataService;
+    
     public OrdineService(TavoloAccomodatoService tavoloAccomodatoService, PietanzaRepository pietanzaRepository, 
     		OrdineRepository ordineRepository, PietanzaOrdinataRepository pietanzaOrdinataRepository,
-    		PrinterService printerService) {
+    		PrinterService printerService, SagraService sagraService, PietanzaCategoriaRepository pietanzaCategoriaRepository,
+    		TavoloAccomodatoRepository tavoloAccomodatoRepository, SerataService serataService) {
         this.tavoloAccomodatoService = tavoloAccomodatoService;
         this.pietanzaRepository = pietanzaRepository;
         this.ordineRepository = ordineRepository;
         this.pietanzaOrdinataRepository = pietanzaOrdinataRepository;
         this.printerService = printerService;
+        this.sagraService = sagraService;
+        this.pietanzaCategoriaRepository = pietanzaCategoriaRepository;
+        this.tavoloAccomodatoRepository = tavoloAccomodatoRepository;
+        this.serataService = serataService;
     }
 
     /**
@@ -305,5 +324,68 @@ public class OrdineService {
 		pietanzaOrdinataDto.setPietanza(pietanzaToPietanzaDto(pietanzaOrdinata.getPietanza()));
 		return pietanzaOrdinataDto;
     }
+
+	public void cancellaOrdine(Long idOrdine) {
+		// TODO Auto-generated method stub
+		Ordine ordine = ordineRepository.findOne(idOrdine);
+		List<PietanzaOrdinata> pietanzeOrdinate = ordine.getPietanzeOrdinate();
+		for(PietanzaOrdinata pietanzeOrdinata : pietanzeOrdinate){
+			pietanzaOrdinataRepository.delete(pietanzeOrdinata);
+		}
+		ordineRepository.delete(idOrdine);
+		
+	}
+	
+	@Transactional
+	public List<PietanzaOrdinataDto> getContatori(){
+		Sagra sagra = sagraService.findAll().get(0);
+		Serata serata = serataService.findLastSerata();
+		List<TavoloAccomodato> tavoliAccomodati = tavoloAccomodatoRepository.findAllBySerata(serata);
+		HashMap<Long,Long> pietanzeQuantità = new HashMap<Long,Long>();
+		
+		for(TavoloAccomodato tavolo : tavoliAccomodati){
+			if(tavolo.getOrdini()!=null){
+				for(Ordine ordine : tavolo.getOrdini()){
+					calcolaQuantita(ordine,pietanzeQuantità);
+				}
+			}
+		}
+		
+		return calcolaContatori(pietanzeQuantità,sagra);
+		
+	}
+	
+	@Transactional
+	private List<PietanzaOrdinataDto> calcolaContatori(HashMap<Long, Long> pietanzeQuantità, Sagra sagra) {
+		List<PietanzaOrdinataDto> pietanzeOrdinateDto = new ArrayList<PietanzaOrdinataDto>();
+		List<PietanzaCategoria> pietanzeCategorie = pietanzaCategoriaRepository.findAllByOrderByCodiceAsc();
+		for(PietanzaCategoria pietanzaCategoria : pietanzeCategorie){
+			for(Pietanza pietanza : pietanzaCategoria.getPietanze()){
+				log.error(pietanza+"");
+				if((pietanza.getContatore()!=null)&&(pietanza.getContatore())){
+					if(pietanzeQuantità.get(pietanza.getId())!=null){
+						PietanzaOrdinataDto pietanzaOrdinataDto = new PietanzaOrdinataDto();
+						pietanzaOrdinataDto.setId(pietanza.getId());
+						pietanzaOrdinataDto.setPietanza(pietanzaToPietanzaDto(pietanza));
+						pietanzaOrdinataDto.setQuantita(pietanzeQuantità.get(pietanza.getId()).intValue());
+						pietanzeOrdinateDto.add(pietanzaOrdinataDto);
+					}
+				}
+			}
+		}
+		return pietanzeOrdinateDto;
+	}
+
+	@Transactional
+	private void calcolaQuantita(Ordine ordine, HashMap<Long,Long> pietanzeQuantità){
+		for(PietanzaOrdinata pietanzaOrdinata : ordine.getPietanzeOrdinate()){
+			Long numQuantita = pietanzeQuantità.get(pietanzaOrdinata.getPietanza().getId());
+			if(numQuantita==null)
+				numQuantita = new Long(0);
+			numQuantita+=pietanzaOrdinata.getQuantita();
+			pietanzeQuantità.put(pietanzaOrdinata.getPietanza().getId(), numQuantita);
+		}
+	}
+	
     
 }
