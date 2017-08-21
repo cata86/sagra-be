@@ -311,6 +311,8 @@ public class OrdineService {
 		PietanzaCategoriaDto pietanzaCategoriaDto = new PietanzaCategoriaDto();
 		pietanzaCategoriaDto.setId(pietanza.getPietanzaCategoria().getId());
 		pietanzaCategoriaDto.setCodice(pietanza.getPietanzaCategoria().getCodice());
+		pietanzaCategoriaDto.setDescrizioneBreve(pietanza.getPietanzaCategoria().getDescrizioneBreve());
+		pietanzaCategoriaDto.setDescrizione(pietanza.getPietanzaCategoria().getDescrizione());
 		pietanzaDto.setCategoria(pietanzaCategoriaDto);
 		return pietanzaDto;
     }
