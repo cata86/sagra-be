@@ -368,13 +368,16 @@ public class OrdineService {
 			for(Pietanza pietanza : pietanzaCategoria.getPietanze()){
 				log.error(pietanza+"");
 				if((pietanza.getContatore()!=null)&&(pietanza.getContatore())){
+					PietanzaOrdinataDto pietanzaOrdinataDto = new PietanzaOrdinataDto();
+					pietanzaOrdinataDto.setId(pietanza.getId());
+					pietanzaOrdinataDto.setPietanza(pietanzaToPietanzaDto(pietanza));
+					pietanzaOrdinataDto.setQuantita(pietanzeQuantità.get(pietanza.getId()).intValue());
 					if(pietanzeQuantità.get(pietanza.getId())!=null){
-						PietanzaOrdinataDto pietanzaOrdinataDto = new PietanzaOrdinataDto();
-						pietanzaOrdinataDto.setId(pietanza.getId());
-						pietanzaOrdinataDto.setPietanza(pietanzaToPietanzaDto(pietanza));
-						pietanzaOrdinataDto.setQuantita(pietanzeQuantità.get(pietanza.getId()).intValue());
 						pietanzeOrdinateDto.add(pietanzaOrdinataDto);
+					}else{
+						pietanzaOrdinataDto.setQuantita(0);
 					}
+					pietanzeOrdinateDto.add(pietanzaOrdinataDto);
 				}
 			}
 		}
