@@ -140,6 +140,7 @@ public class OrdineService {
     		pietanzaDto.setNome(pietanza.getNome());
     		pietanzaDto.setPrezzo(pietanza.getPrezzo());
     		pietanzaDto.setDescrizione(pietanza.getDescrizione());
+    		pietanzaDto.setContatore(pietanza.getContatore());
     		if(pietanza.getCodice().equals("000"))
     			pietanzaDto.setCoperto(true);
     		else
@@ -147,6 +148,8 @@ public class OrdineService {
     		PietanzaCategoriaDto pietanzaCategoriaDto = new PietanzaCategoriaDto();
     		pietanzaCategoriaDto.setId(pietanza.getPietanzaCategoria().getId());
     		pietanzaCategoriaDto.setCodice(pietanza.getPietanzaCategoria().getCodice());
+    		pietanzaCategoriaDto.setDescrizione(pietanza.getPietanzaCategoria().getDescrizione());
+    		pietanzaCategoriaDto.setDescrizioneBreve(pietanza.getPietanzaCategoria().getDescrizioneBreve());
     		pietanzaDto.setCategoria(pietanzaCategoriaDto);
     		response.add(pietanzaDto);
     	}
