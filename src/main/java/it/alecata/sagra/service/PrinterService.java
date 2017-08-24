@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -56,8 +57,8 @@ public class PrinterService {
 	Font fontNormal10 = new Font("Times New Roman", Font.PLAIN, 10);
 	Font fontBold110 = new Font("Times New Roman", Font.BOLD, 10);
 	
-	String printer = "bixolon_srp-370";	
-    //String printer = "BIXOLON_SRP-350plus";
+	//String printer = "bixolon_srp-370";	
+    String printer = "BIXOLON SRP-350plus";
     //String printer = "Virtual_PDF_Printer";
 	
     private final SagraService sagraService;
@@ -247,7 +248,7 @@ public class PrinterService {
 		PrinterJob job = PrinterJob.getPrinterJob ();
 		PrintService service;
 		if((printerName==null)||printerName.isEmpty())
-			service = Printer.findPrintService(printer);
+			service = PrintServiceLookup.lookupDefaultPrintService(); //Printer.findPrintService(printer);
 		else
 			service = Printer.findPrintService(printerName);
         PageFormat format = job.defaultPage();

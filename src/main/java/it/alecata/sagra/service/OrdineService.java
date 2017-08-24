@@ -366,14 +366,12 @@ public class OrdineService {
 		List<PietanzaCategoria> pietanzeCategorie = pietanzaCategoriaRepository.findAllByOrderByCodiceAsc();
 		for(PietanzaCategoria pietanzaCategoria : pietanzeCategorie){
 			for(Pietanza pietanza : pietanzaCategoria.getPietanze()){
-				log.error(pietanza+"");
 				if((pietanza.getContatore()!=null)&&(pietanza.getContatore())){
 					PietanzaOrdinataDto pietanzaOrdinataDto = new PietanzaOrdinataDto();
 					pietanzaOrdinataDto.setId(pietanza.getId());
 					pietanzaOrdinataDto.setPietanza(pietanzaToPietanzaDto(pietanza));
-					pietanzaOrdinataDto.setQuantita(pietanzeQuantità.get(pietanza.getId()).intValue());
 					if(pietanzeQuantità.get(pietanza.getId())!=null){
-						pietanzeOrdinateDto.add(pietanzaOrdinataDto);
+						pietanzaOrdinataDto.setQuantita(pietanzeQuantità.get(pietanza.getId()).intValue());
 					}else{
 						pietanzaOrdinataDto.setQuantita(0);
 					}
