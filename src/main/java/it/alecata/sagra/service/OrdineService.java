@@ -202,12 +202,22 @@ public class OrdineService {
 
     	ordineRepository.save(ordine);
     	
+    	if((body.getMantieniInAttesa()) !=null && (body.getMantieniInAttesa())){
+        	tavoloAccomodato.setStato(TavoloStato.ACCOMODATO);
+    	}else{
+	    	tavoloAccomodato.setStato(TavoloStato.ORDINATO);
+	    	tavoloAccomodato.setOrdinazionePersona(body.getPersonaOrdine());
+	    	tavoloAccomodato.setOrdinazioneOrario(ZonedDateTime.now(ZoneId.systemDefault()));
+    	}
+    	tavoloAccomodatoService.save(tavoloAccomodato);
+    	
+    	/*
     	if(esisteCoperto){
 	    	tavoloAccomodato.setStato(TavoloStato.ORDINATO);
 	    	tavoloAccomodato.setOrdinazionePersona(body.getPersonaOrdine());
 	    	tavoloAccomodato.setOrdinazioneOrario(ZonedDateTime.now(ZoneId.systemDefault()));
 	    	tavoloAccomodatoService.save(tavoloAccomodato);
-    	}
+    	}*/
     	
     	printerService.printOrder(ordine.getId());
     	printerService.printCucina(ordine.getId());

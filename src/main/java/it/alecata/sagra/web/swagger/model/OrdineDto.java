@@ -44,6 +44,9 @@ public class OrdineDto   {
 
   @JsonProperty("asporto")
   private Boolean asporto = false;
+  
+  @JsonProperty("mantieniInAttesa")
+  private Boolean mantieniInAttesa = false;
 
   public OrdineDto id(Long id) {
     this.id = id;
@@ -218,8 +221,18 @@ public class OrdineDto   {
     this.asporto = asporto;
     return this;
   }
+  
+  
 
-   /**
+   public Boolean getMantieniInAttesa() {
+	return mantieniInAttesa;
+}
+
+	public void setMantieniInAttesa(Boolean mantieniInAttesa) {
+		this.mantieniInAttesa = mantieniInAttesa;
+	}
+
+/**
    * Get asporto
    * @return asporto
   **/
