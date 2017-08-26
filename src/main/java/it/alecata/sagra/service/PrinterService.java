@@ -160,8 +160,13 @@ public class PrinterService {
 		else
 			printable.addLines(new LineaScontrino("TAVOLO N. "+ordine.getTavoloAccomodato().getCodice(),null, fontBold18, 3,1));
 			
+		boolean soloDolci = true;
 		int numPietanze = 0;
 		for(PietanzaOrdinata pietanzaOrdinata : ordine.getPietanzeOrdinate()){
+    		if(!pietanzaOrdinata.getPietanza().getPietanzaCategoria().getDescrizioneBreve().toUpperCase().contains("DOLCI")){
+    			soloDolci = false;
+    		}
+			
 			if(pietanzaOrdinata.getPietanza().getPietanzaCategoria().equals(pietanzaCategoria)){
 				if(pietanzaOrdinata.getPietanza().getNome().length()>20)
 					printable.addLines(new LineaScontrino(pietanzaOrdinata.getPietanza().getNome().substring(0, 20)+"... X "+pietanzaOrdinata.getQuantita(),null, fontNormal16, 1,1));
@@ -175,7 +180,10 @@ public class PrinterService {
 
 		
 		if(numPietanze>0){
-			printPrintable(printable,pietanzaCategoria.getNomeStampante());
+			if(soloDolci)
+				printPrintable(printable,pietanzaCategoria.getNomeStampante());
+			else
+				printPrintable(printable,null);
 		}
 	}
 	

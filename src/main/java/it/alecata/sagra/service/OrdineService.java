@@ -203,7 +203,8 @@ public class OrdineService {
     	ordineRepository.save(ordine);
     	
     	if((body.getMantieniInAttesa()) !=null && (body.getMantieniInAttesa())){
-        	tavoloAccomodato.setStato(TavoloStato.ACCOMODATO);
+    		if(tavoloAccomodato.getStato().equals(TavoloStato.ACCOMODATO) || tavoloAccomodato.getStato().equals(TavoloStato.IN_ORDINAZIONE))
+    			tavoloAccomodato.setStato(TavoloStato.ACCOMODATO);
     	}else{
 	    	tavoloAccomodato.setStato(TavoloStato.ORDINATO);
 	    	tavoloAccomodato.setOrdinazionePersona(body.getPersonaOrdine());

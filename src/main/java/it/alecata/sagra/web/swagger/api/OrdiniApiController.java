@@ -171,14 +171,14 @@ public class OrdiniApiController implements OrdiniApi {
 
 	@Override
 	public ResponseEntity<OrdineDto> stampaCucina(@NotNull@ApiParam(value = "Identificativo dell'ordine", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine) {
-		OrdineDto ordineDto = ordineService.stampaScontrino(idOrdine);
+		OrdineDto ordineDto = ordineService.stampaCucina(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
 	}
 
 
 	@Override
 	public ResponseEntity<OrdineDto> stampaScontrino(@NotNull@ApiParam(value = "Identificativo dell'ordine", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine) {
-		OrdineDto ordineDto = ordineService.stampaCucina(idOrdine);
+		OrdineDto ordineDto = ordineService.stampaScontrino(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
 	}
 
