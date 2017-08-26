@@ -181,6 +181,13 @@ public class OrdiniApiController implements OrdiniApi {
 		OrdineDto ordineDto = ordineService.stampaScontrino(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
 	}
+	
+	@Override
+	public ResponseEntity<OrdineDto> stampaTutto(@NotNull@ApiParam(value = "Identificativo dell'ordine", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine) {
+		OrdineDto ordineDto = ordineService.stampaScontrino(idOrdine);
+		ordineDto = ordineService.stampaCucina(idOrdine);
+		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
+	}
 
 
 	@Override

@@ -152,4 +152,15 @@ public interface OrdiniApi {
         method = RequestMethod.GET)
     ResponseEntity<OrdineDto> stampaScontrino( @NotNull@ApiParam(value = "Identificativo dell'ordine", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine);
 
+    
+    @ApiOperation(value = "Stamba Tutto", notes = "Stamba Tutto", response = OrdineDto.class, tags={ "ordinatore", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation", response = OrdineDto.class),
+        @ApiResponse(code = 400, message = "Errore parametri", response = Void.class) })
+    
+    @RequestMapping(value = "/api/ordini/stampaTutto",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    ResponseEntity<OrdineDto> stampaTutto( @NotNull@ApiParam(value = "Identificativo dell'ordine", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine);
+
 }
