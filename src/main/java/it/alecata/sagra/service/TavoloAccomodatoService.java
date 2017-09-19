@@ -1,6 +1,8 @@
 package it.alecata.sagra.service;
 
+import it.alecata.sagra.domain.Serata;
 import it.alecata.sagra.domain.TavoloAccomodato;
+import it.alecata.sagra.domain.TavoloReale;
 import it.alecata.sagra.domain.enumeration.TavoloStato;
 import it.alecata.sagra.repository.TavoloAccomodatoRepository;
 
@@ -51,6 +53,18 @@ public class TavoloAccomodatoService {
         log.debug("Request to get all TavoloAccomodatoes");
         return tavoloAccomodatoRepository.findAll(pageable);
     }
+    
+    @Transactional(readOnly = true)
+    public List<TavoloAccomodato> findAllBySerta(Serata serata) {
+        log.debug("Request to get all TavoloAccomodatoes");
+        return tavoloAccomodatoRepository.findAllBySerata(serata);
+    }
+    
+    @Transactional(readOnly = true)
+    public List<TavoloAccomodato> findAllBySerataAndTavoloReale(Serata serata, TavoloReale tavoloReale) {
+        log.debug("Request to get all TavoloAccomodatoes");
+        return tavoloAccomodatoRepository.findAllBySerataAndTavoloReale(serata, tavoloReale);
+    }
 
     /**
      *  Get one tavoloAccomodato by id.
@@ -74,14 +88,16 @@ public class TavoloAccomodatoService {
         tavoloAccomodatoRepository.delete(id);
     }
     
-    public String findCodeTavoloLibero(String tavoloRealeId,List<TavoloAccomodato> tavoliAccomodati){
+    public String findCodeTavoloLibero(String tavoloRealeId,List<TavoloAccomodato> tavoliAccomodati,Serata serata){
     	
     	for (int i = -1; i < 27*27; ++i) {
 	    	boolean trovato = false;
 	    	for(TavoloAccomodato accomodato : tavoliAccomodati){
 	    		//!liberato & trovato
-	    		if((!accomodato.getStato().equals(TavoloStato.LIBERATO)) && accomodato.getCodice().equals(tavoloRealeId+str(i)) ){
-	    			trovato = true;
+	    		if(accomodato.getSerata().getId().equals(serata.getId())){
+		    		if((!accomodato.getStato().equals(TavoloStato.LIBERATO)) && accomodato.getCodice().equals(tavoloRealeId+str(i)) ){
+		    			trovato = true;
+		    		}
 	    		}
 	    	}
 	    	if(!trovato)

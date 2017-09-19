@@ -121,7 +121,7 @@ public class PrinterService {
     	//TOTALE
     	printable.addLines(new LineaScontrino("",null, fontNormal12, 1,10));
     	printable.addLines(new LineaScontrino("TOTALE: "+ordine.getTotale() ,null, fontBold14, 1,1));
-    	printable.addLines(new LineaScontrino("Quota Persona: "+ordine.getQuotaPersona() ,null, fontBold14, 1,1));
+    	printable.addLines(new LineaScontrino("Quota Persona: "+String.format("%.2f", ordine.getQuotaPersona()) ,null, fontBold14, 1,1));
     	if(ordine.getPersonaOrdine()!=null)
     		printable.addLines(new LineaScontrino("Operatore: "+ordine.getPersonaOrdine() ,null, fontNormal12, 1,1));
     	printable.addLines(new LineaScontrino(sagra.getFooterScontrino() ,null, fontNormal12, 20,1));

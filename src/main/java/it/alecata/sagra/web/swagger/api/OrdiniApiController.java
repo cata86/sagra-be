@@ -6,6 +6,7 @@ import it.alecata.sagra.domain.Ordine;
 import it.alecata.sagra.domain.Pietanza;
 import it.alecata.sagra.domain.PietanzaCategoria;
 import it.alecata.sagra.domain.PietanzaOrdinata;
+import it.alecata.sagra.domain.Serata;
 import it.alecata.sagra.domain.TavoloAccomodato;
 import it.alecata.sagra.domain.enumeration.TavoloStato;
 import it.alecata.sagra.repository.OrdineRepository;
@@ -113,36 +114,38 @@ public class OrdiniApiController implements OrdiniApi {
     		@NotNull@ApiParam(value = "Anche i tavolo di asporto", required = true) @RequestParam(value = "asporto", required = true) Boolean asporto) {
         // do some magic!
     	//FIXME parametro statoOrdinato
-    	
-    	Page<TavoloAccomodato> tavoliAccomodatiPage = tavoloAccomodatoService.findAll(new PageRequest(0, Integer.MAX_VALUE));
-    	List<TavoloAccomodato> tavoliAccomodati = tavoliAccomodatiPage.getContent();
+    	Serata serata = serataService.findLastSerata();
+    	List<TavoloAccomodato> tavoliAccomodati = tavoloAccomodatoService.findAllBySerta(serata);
+    	//List<TavoloAccomodato> tavoliAccomodati = tavoliAccomodatiPage.getContent();
     	List<TavoloAccomodatoDto> response = new ArrayList<TavoloAccomodatoDto>();
     	for (TavoloAccomodato tavoloAccomodato : tavoliAccomodati) {
-    		if(!tavoloAccomodato.getStato().equals(TavoloStato.LIBERATO)){
-    			if(asporto || (!tavoloAccomodato.isAsporto())){
-		    		TavoloAccomodatoDto tavoloAccomodatoDto = new TavoloAccomodatoDto();
-		    		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
-		    		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
-		    		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
-		    		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
-		    		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-		    		tavoloAccomodatoDto.setAccomodatoPersona(tavoloAccomodato.getAccomodatoPersona());
-		    		if(tavoloAccomodato.getLiberatoOrario()!=null)
-		    			tavoloAccomodatoDto.setLiberatoOrario(new DateTime(tavoloAccomodato.getLiberatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-		    		tavoloAccomodatoDto.setLiberatoPersona(tavoloAccomodato.getLiberatoPersona());
-		        	if(tavoloAccomodato.getOrdinazioneOrario()!=null)
-		        		tavoloAccomodatoDto.setOrdinazioneOrario(new DateTime(tavoloAccomodato.getOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-		        	tavoloAccomodatoDto.setOrdinazionePersona(tavoloAccomodato.getOrdinazionePersona());
-		        	if(tavoloAccomodato.getInOrdinazioneOrario()!=null)
-		        		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
-		        	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
-		        	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
-		        	tavoloAccomodatoDto.setNumCoperti(tavoloAccomodato.getNumCoperti());
-		        	tavoloAccomodatoDto.setAsporto(tavoloAccomodato.isAsporto());
-		        	tavoloAccomodatoDto.setNomeAsporto(tavoloAccomodato.getNomeAsporto());
-		        	
-		        	response.add(tavoloAccomodatoDto);
-    			}
+    		if(tavoloAccomodato.getSerata().getId().equals(serata.getId())){
+	    		if(!tavoloAccomodato.getStato().equals(TavoloStato.LIBERATO)){
+	    			if(asporto || (!tavoloAccomodato.isAsporto())){
+			    		TavoloAccomodatoDto tavoloAccomodatoDto = new TavoloAccomodatoDto();
+			    		tavoloAccomodatoDto.setId(tavoloAccomodato.getId());
+			    		tavoloAccomodatoDto.setIdSerata(tavoloAccomodato.getSerata().getId());
+			    		tavoloAccomodatoDto.setCodice(tavoloAccomodato.getCodice());
+			    		tavoloAccomodatoDto.setDescrizione(tavoloAccomodato.getDescrizione());
+			    		tavoloAccomodatoDto.setAccomodatoOrario(new DateTime(tavoloAccomodato.getAccomodatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+			    		tavoloAccomodatoDto.setAccomodatoPersona(tavoloAccomodato.getAccomodatoPersona());
+			    		if(tavoloAccomodato.getLiberatoOrario()!=null)
+			    			tavoloAccomodatoDto.setLiberatoOrario(new DateTime(tavoloAccomodato.getLiberatoOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+			    		tavoloAccomodatoDto.setLiberatoPersona(tavoloAccomodato.getLiberatoPersona());
+			        	if(tavoloAccomodato.getOrdinazioneOrario()!=null)
+			        		tavoloAccomodatoDto.setOrdinazioneOrario(new DateTime(tavoloAccomodato.getOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+			        	tavoloAccomodatoDto.setOrdinazionePersona(tavoloAccomodato.getOrdinazionePersona());
+			        	if(tavoloAccomodato.getInOrdinazioneOrario()!=null)
+			        		tavoloAccomodatoDto.setInOrdinazioneOrario(new DateTime(tavoloAccomodato.getInOrdinazioneOrario().toInstant().toEpochMilli(), DateTimeZone.getDefault()));
+			        	tavoloAccomodatoDto.setInOrdinazionePersona(tavoloAccomodato.getInOrdinazionePersona());
+			        	tavoloAccomodatoDto.setStato(StatoEnum.fromValue(tavoloAccomodato.getStato().toString()));
+			        	tavoloAccomodatoDto.setNumCoperti(tavoloAccomodato.getNumCoperti());
+			        	tavoloAccomodatoDto.setAsporto(tavoloAccomodato.isAsporto());
+			        	tavoloAccomodatoDto.setNomeAsporto(tavoloAccomodato.getNomeAsporto());
+			        	
+			        	response.add(tavoloAccomodatoDto);
+	    			}
+	    		}
     		}
     	}
         return new ResponseEntity<List<TavoloAccomodatoDto>>(response,HttpStatus.OK);
@@ -184,8 +187,7 @@ public class OrdiniApiController implements OrdiniApi {
 	
 	@Override
 	public ResponseEntity<OrdineDto> stampaTutto(@NotNull@ApiParam(value = "Identificativo dell'ordine", required = true) @RequestParam(value = "idOrdine", required = true) Long idOrdine) {
-		OrdineDto ordineDto = ordineService.stampaScontrino(idOrdine);
-		ordineDto = ordineService.stampaCucina(idOrdine);
+		OrdineDto ordineDto = ordineService.stampaTutto(idOrdine);
 		return new ResponseEntity<OrdineDto>(ordineDto,HttpStatus.OK);
 	}
 

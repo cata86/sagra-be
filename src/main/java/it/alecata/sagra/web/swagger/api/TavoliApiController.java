@@ -58,10 +58,11 @@ public class TavoliApiController implements TavoliApi {
     	//FIXME serata me lo passano
     	
     	Serata serata = serataService.findLastSerata();
+    	System.out.println("SERATAAAAAAAAAAAAAA:" + serata.getId());
     	
     	TavoloReale tavoloReale = tavoloRealeService.findOne(body.getIdTavoloReale());
-    	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();
-    	String nuovoCodice = tavoloAccomodatoService.findCodeTavoloLibero(tavoloReale.getCodice(),tavoliAccomodati);
+    	List<TavoloAccomodato> tavoliAccomodati = tavoloAccomodatoService.findAllBySerataAndTavoloReale(serata,tavoloReale);//tavoloReale.getTavoliAccomodati();
+    	String nuovoCodice = tavoloAccomodatoService.findCodeTavoloLibero(tavoloReale.getCodice(),tavoliAccomodati,serata);
     	
     	TavoloAccomodato accomodato = new TavoloAccomodato();
     	accomodato.setCodice(nuovoCodice);
@@ -96,11 +97,15 @@ public class TavoliApiController implements TavoliApi {
 
     public ResponseEntity<List<TavoloAccomodatoDto>> listaTavoliAccomodatiByTavoloId( @NotNull@ApiParam(value = "Identificativo del tavolo reale", required = true) @RequestParam(value = "idTavoloReale", required = true) Long idTavoloReale) {
     	TavoloReale tavoloReale = tavoloRealeService.findOne(idTavoloReale);
-    	List<TavoloAccomodato> tavoliAccomodati = tavoloReale.getTavoliAccomodati();
+    	Serata serata = serataService.findLastSerata();
+    	List<TavoloAccomodato> tavoliAccomodati = tavoloAccomodatoService.findAllBySerataAndTavoloReale(serata,tavoloReale);//tavoloReale.getTavoliAccomodati();
+    	System.out.println("SERATAAAAAAAAAAAAAA:" + serata.getId());
     	List<TavoloAccomodatoDto> response = new ArrayList<TavoloAccomodatoDto>();
     	for (TavoloAccomodato tavoloAccomodato : tavoliAccomodati) {
-    		TavoloAccomodatoDto tavoloAccomodatoDto = tavoloAccomodatoToDto(tavoloAccomodato);
-        	response.add(tavoloAccomodatoDto);      	
+    		if(tavoloAccomodato.getSerata().getId().equals(serata.getId())){
+	    		TavoloAccomodatoDto tavoloAccomodatoDto = tavoloAccomodatoToDto(tavoloAccomodato);
+	        	response.add(tavoloAccomodatoDto);      	
+    		}
     	}
     	
         return new ResponseEntity<List<TavoloAccomodatoDto>>(response,HttpStatus.OK);

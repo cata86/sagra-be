@@ -157,6 +157,7 @@ public class OrdineService {
     }
     
     public OrdineDto creaOrdine(OrdineDto body) {
+    	log.debug("Start Crea Ordine");
     	Ordine ordine = new Ordine();
     	ordine.setAsporto(body.getAsporto());
     	ordine.setDataOrdine(ZonedDateTime.now(ZoneId.systemDefault()));
@@ -219,9 +220,10 @@ public class OrdineService {
 	    	tavoloAccomodato.setOrdinazioneOrario(ZonedDateTime.now(ZoneId.systemDefault()));
 	    	tavoloAccomodatoService.save(tavoloAccomodato);
     	}*/
-    	
-    	printerService.printOrder(ordine.getId());
-    	printerService.printCucina(ordine.getId());
+    	log.debug("Stampa Ordine");
+    	stampaTutto(ordine.getId());
+    	//printerService.printOrder(ordine.getId());
+    	//printerService.printCucina(ordine.getId());
 
     	return ordineToOrdineDto(ordine);
     }
@@ -277,7 +279,14 @@ public class OrdineService {
     
     public OrdineDto stampaCucina(Long idOrdine) {
     	Ordine ordine = ordineRepository.findOne(idOrdine);
-    	printerService.printCucina(ordine.getId());;
+    	printerService.printCucina(ordine.getId());
+    	return ordineToOrdineDto(ordine);
+    }
+    
+    public synchronized OrdineDto stampaTutto(Long idOrdine) {
+    	Ordine ordine = ordineRepository.findOne(idOrdine);
+    	printerService.printOrder(ordine.getId());
+    	printerService.printCucina(ordine.getId());
     	return ordineToOrdineDto(ordine);
     }
     
