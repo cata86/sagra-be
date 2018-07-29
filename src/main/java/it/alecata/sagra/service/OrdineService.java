@@ -286,6 +286,9 @@ public class OrdineService {
     public synchronized OrdineDto stampaTutto(Long idOrdine) {
     	Ordine ordine = ordineRepository.findOne(idOrdine);
     	printerService.printOrder(ordine.getId());
+    	//FIXME CABLATONA TARTUFO
+    	printerService.printOrder(ordine.getId());
+    	
     	printerService.printCucina(ordine.getId());
     	return ordineToOrdineDto(ordine);
     }

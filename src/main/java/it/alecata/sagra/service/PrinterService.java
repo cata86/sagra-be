@@ -87,7 +87,11 @@ public class PrinterService {
 		printable.addLines(new LineaScontrino(null,sagra.getLogo(), fontNormal12, 0,1));
     	
 		//TESTATA
-		printable.addLines(new LineaScontrino(sagra.getNome(),null, fontNormal12, 55,1));
+		//FIXME CABLATONA TARTUFO
+		//printable.addLines(new LineaScontrino(sagra.getNome(),null, fontNormal12, 55,1));
+		printable.addLines(new LineaScontrino("Ass. Tartufai Bondeno",null, fontNormal12, 55,1));
+		printable.addLines(new LineaScontrino("'Al Ramiol'",null, fontNormal12, 55,1));
+		
     	printable.addLines(new LineaScontrino(sagra.getIndirizzo(),null, fontNormal12, 55,1));
     	printable.addLines(new LineaScontrino(sagra.getTestataScontrino(),null, fontNormal12, 55,1));
     	printable.addLines(new LineaScontrino("P.IVA  "+sagra.getPiva(),null, fontNormal12, 55,1));
@@ -141,10 +145,149 @@ public class PrinterService {
 		Sagra sagra = sagraService.findAll().get(0);
 		Ordine ordine = ordineRepository.findOne(ordineID);
 		
+		//FIXME CABLATONA TARTUFO
 		List<PietanzaCategoria> pietanzeCategorie = pietanzaCategoriaRepository.findAllByOrderByCodiceAsc();
-		for(PietanzaCategoria pietanzaCategoria : pietanzeCategorie){
-			stampaCategoria(pietanzaCategoria,ordine);
+		//for(PietanzaCategoria pietanzaCategoria : pietanzeCategorie){
+		//	stampaCategoria(pietanzaCategoria,ordine);
+		//}
+		
+		stampaExtraTartufo(pietanzeCategorie,ordine);
+		stampaCategorieTartufo(pietanzeCategorie,ordine);
+		
+	}
+	
+	private PietanzaCategoria getPietanzaCategoriaByName(String nomePietanza,List<PietanzaCategoria> pietanzaCategorie){
+		for(PietanzaCategoria pietanzaCategoria :  pietanzaCategorie){
+			if(pietanzaCategoria.getCodice().equals(nomePietanza))
+				return pietanzaCategoria;
 		}
+		return null;
+	}
+	
+	@Transactional
+	private void stampaExtraTartufo(List<PietanzaCategoria> pietanzaCategorie, Ordine ordine){
+		Printer printable = new Printer();
+		
+		printable.addLines(new LineaScontrino("COPERTO e BEVANDE",null, fontBold16, 1,1));
+		if(ordine.getPersonaOrdine()!=null)
+			printable.addLines(new LineaScontrino("Operatore: "+ordine.getPersonaOrdine() ,null, fontNormal12, 1,1));
+		printable.addLines(new LineaScontrino(dateTimeFormatter.format(ordine.getDataOrdine()),null, fontNormal16, 1,1));
+		if(ordine.isAsporto())
+			printable.addLines(new LineaScontrino("ASPORTO - "+ordine.getTavoloAccomodato().getNomeAsporto(),null, fontBold18, 3,1));
+		else
+			printable.addLines(new LineaScontrino("TAVOLO N. "+ordine.getTavoloAccomodato().getCodice(),null, fontBold18, 3,1));
+		
+		
+		boolean soloDolci = true;
+		int numPietanze = 0;
+		
+		
+		//COPERTO
+		PietanzaCategoria pietanzaCategoria = getPietanzaCategoriaByName("01",pietanzaCategorie);
+		for(PietanzaOrdinata pietanzaOrdinata : ordine.getPietanzeOrdinate()){
+    		if(!pietanzaOrdinata.getPietanza().getPietanzaCategoria().getDescrizioneBreve().toUpperCase().contains("DOLCI")){
+    			soloDolci = false;
+    		}
+			
+			if(pietanzaOrdinata.getPietanza().getPietanzaCategoria().equals(pietanzaCategoria)){
+				if(pietanzaOrdinata.getPietanza().getNome().length()>20)
+					printable.addLines(new LineaScontrino(pietanzaOrdinata.getPietanza().getNome().substring(0, 20)+"... X "+pietanzaOrdinata.getQuantita(),null, fontNormal16, 1,1));
+				else
+					printable.addLines(new LineaScontrino(pietanzaOrdinata.getPietanza().getNome()+" X "+pietanzaOrdinata.getQuantita(),null, fontNormal16, 1,1));
+				numPietanze++;
+			}
+		}
+		
+		pietanzaCategoria = getPietanzaCategoriaByName("02",pietanzaCategorie);
+		for(PietanzaOrdinata pietanzaOrdinata : ordine.getPietanzeOrdinate()){
+    		if(!pietanzaOrdinata.getPietanza().getPietanzaCategoria().getDescrizioneBreve().toUpperCase().contains("DOLCI")){
+    			soloDolci = false;
+    		}
+			
+			if(pietanzaOrdinata.getPietanza().getPietanzaCategoria().equals(pietanzaCategoria)){
+				if(pietanzaOrdinata.getPietanza().getNome().length()>20)
+					printable.addLines(new LineaScontrino(pietanzaOrdinata.getPietanza().getNome().substring(0, 20)+"... X "+pietanzaOrdinata.getQuantita(),null, fontNormal16, 1,1));
+				else
+					printable.addLines(new LineaScontrino(pietanzaOrdinata.getPietanza().getNome()+" X "+pietanzaOrdinata.getQuantita(),null, fontNormal16, 1,1));
+				numPietanze++;
+			}
+		}
+		
+		
+		printable.addLines(new LineaScontrino("" ,null, fontNormal14, 1,10));
+		printable.addLines(new LineaScontrino("_" ,null, fontNormal14, 1,10));
+
+		
+		if(numPietanze>0){
+			if(soloDolci)
+				printPrintable(printable,pietanzaCategoria.getNomeStampante());
+			else
+				printPrintable(printable,null);
+		}
+		
+		
+		
+		
+	}
+	
+	@Transactional
+	private void stampaCategorieTartufo(List<PietanzaCategoria> pietanzaCategorie, Ordine ordine){
+		Printer printable = new Printer();
+		
+
+		
+		
+		boolean soloDolci = true;
+		int numPietanze = 0;
+		
+		if(ordine.getPersonaOrdine()!=null)
+			printable.addLines(new LineaScontrino("Operatore: "+ordine.getPersonaOrdine() ,null, fontNormal12, 1,1));
+		printable.addLines(new LineaScontrino(dateTimeFormatter.format(ordine.getDataOrdine()),null, fontNormal16, 1,1));
+		if(ordine.isAsporto())
+			printable.addLines(new LineaScontrino("ASPORTO - "+ordine.getTavoloAccomodato().getNomeAsporto(),null, fontBold18, 3,1));
+		else
+			printable.addLines(new LineaScontrino("TAVOLO N. "+ordine.getTavoloAccomodato().getCodice(),null, fontBold18, 3,1));
+		
+		
+		for(PietanzaCategoria pietanzaCategoria : pietanzaCategorie){
+			if((!pietanzaCategoria.getCodice().equals("01"))&&(!pietanzaCategoria.getCodice().equals("02"))){
+				boolean prima = true;
+				for(PietanzaOrdinata pietanzaOrdinata : ordine.getPietanzeOrdinate()){
+		    		if(!pietanzaOrdinata.getPietanza().getPietanzaCategoria().getDescrizioneBreve().toUpperCase().contains("DOLCI")){
+		    			soloDolci = false;
+		    		}
+					
+					if(pietanzaOrdinata.getPietanza().getPietanzaCategoria().equals(pietanzaCategoria)){
+						if(prima){
+							printable.addLines(new LineaScontrino(pietanzaCategoria.getDescrizioneBreve().toUpperCase(),null, fontBold16, 1,1));	
+							prima = false;
+						}
+						if(pietanzaOrdinata.getPietanza().getNome().length()>20)
+							printable.addLines(new LineaScontrino(pietanzaOrdinata.getPietanza().getNome().substring(0, 20)+"... X "+pietanzaOrdinata.getQuantita(),null, fontNormal16, 1,1));
+						else
+							printable.addLines(new LineaScontrino(pietanzaOrdinata.getPietanza().getNome()+" X "+pietanzaOrdinata.getQuantita(),null, fontNormal16, 1,1));
+						numPietanze++;
+					}
+				}
+				printable.addLines(new LineaScontrino("" ,null, fontNormal14, 1,15));
+			}
+		}
+		
+		
+		printable.addLines(new LineaScontrino("" ,null, fontNormal14, 1,10));
+		printable.addLines(new LineaScontrino("_" ,null, fontNormal14, 1,10));
+
+		
+		if(numPietanze>0){
+			if(soloDolci)
+				printPrintable(printable,getPietanzaCategoriaByName("DOLCI",pietanzaCategorie).getNomeStampante());
+			else
+				printPrintable(printable,null);
+		}
+		
+		
+		
+		
 	}
 	
 	@Transactional
@@ -222,7 +365,11 @@ public class PrinterService {
 		printable.addLines(new LineaScontrino(null,sagra.getLogo(), fontNormal12, 0,1));
     	
 		//TESTATA
-		printable.addLines(new LineaScontrino(sagra.getNome(),null, fontNormal12, 55,1));
+		//FIXME CABLATONA TARTUFO
+		//printable.addLines(new LineaScontrino(sagra.getNome(),null, fontNormal12, 55,1));
+		printable.addLines(new LineaScontrino("Ass. Tartufai Bondeno",null, fontNormal12, 55,1));
+		printable.addLines(new LineaScontrino("'Al Ramiol'",null, fontNormal12, 55,1));
+		
     	printable.addLines(new LineaScontrino(sagra.getIndirizzo(),null, fontNormal12, 55,1));
     	printable.addLines(new LineaScontrino("P.IVA  "+sagra.getPiva(),null, fontNormal12, 55,1));
     	printable.addLines(new LineaScontrino("",null, fontNormal12, 50,10));
