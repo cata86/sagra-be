@@ -141,6 +141,7 @@ public class OrdineService {
     		pietanzaDto.setPrezzo(pietanza.getPrezzo());
     		pietanzaDto.setDescrizione(pietanza.getDescrizione());
     		pietanzaDto.setContatore(pietanza.getContatore());
+    		pietanzaDto.setOrdine(pietanza.getOrdine());
     		if(pietanza.getCodice().equals("000"))
     			pietanzaDto.setCoperto(true);
     		else
@@ -286,8 +287,8 @@ public class OrdineService {
     public synchronized OrdineDto stampaTutto(Long idOrdine) {
     	Ordine ordine = ordineRepository.findOne(idOrdine);
     	printerService.printOrder(ordine.getId());
-    	//FIXME CABLATONA TARTUFO
-    	printerService.printOrder(ordine.getId());
+    	//FIXME CABLATONA TARTUFO doppia stampata
+    	// printerService.printOrder(ordine.getId());
     	
     	printerService.printCucina(ordine.getId());
     	return ordineToOrdineDto(ordine);

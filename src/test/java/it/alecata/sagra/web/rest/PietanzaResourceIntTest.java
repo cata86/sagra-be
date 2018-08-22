@@ -51,6 +51,9 @@ public class PietanzaResourceIntTest {
     private static final Float DEFAULT_PREZZO = 1F;
     private static final Float UPDATED_PREZZO = 2F;
 
+    private static final Integer DEFAULT_ORDINE = 1;
+    private static final Integer UPDATED_ORDINE = 2;
+
     @Autowired
     private PietanzaRepository pietanzaRepository;
 
@@ -94,7 +97,8 @@ public class PietanzaResourceIntTest {
             .codice(DEFAULT_CODICE)
             .nome(DEFAULT_NOME)
             .descrizione(DEFAULT_DESCRIZIONE)
-            .prezzo(DEFAULT_PREZZO);
+            .prezzo(DEFAULT_PREZZO)
+            .ordine(DEFAULT_ORDINE);
         // Add required entity
         PietanzaCategoria pietanzaCategoria = PietanzaCategoriaResourceIntTest.createEntity(em);
         em.persist(pietanzaCategoria);
@@ -127,6 +131,7 @@ public class PietanzaResourceIntTest {
         assertThat(testPietanza.getNome()).isEqualTo(DEFAULT_NOME);
         assertThat(testPietanza.getDescrizione()).isEqualTo(DEFAULT_DESCRIZIONE);
         assertThat(testPietanza.getPrezzo()).isEqualTo(DEFAULT_PREZZO);
+        assertThat(testPietanza.getOrdine()).isEqualTo(DEFAULT_ORDINE);
     }
 
     @Test
@@ -162,7 +167,8 @@ public class PietanzaResourceIntTest {
             .andExpect(jsonPath("$.[*].codice").value(hasItem(DEFAULT_CODICE.toString())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
             .andExpect(jsonPath("$.[*].descrizione").value(hasItem(DEFAULT_DESCRIZIONE.toString())))
-            .andExpect(jsonPath("$.[*].prezzo").value(hasItem(DEFAULT_PREZZO.doubleValue())));
+            .andExpect(jsonPath("$.[*].prezzo").value(hasItem(DEFAULT_PREZZO.doubleValue())))
+            .andExpect(jsonPath("$.[*].ordine").value(hasItem(DEFAULT_ORDINE)));
     }
 
     @Test
@@ -179,7 +185,8 @@ public class PietanzaResourceIntTest {
             .andExpect(jsonPath("$.codice").value(DEFAULT_CODICE.toString()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
             .andExpect(jsonPath("$.descrizione").value(DEFAULT_DESCRIZIONE.toString()))
-            .andExpect(jsonPath("$.prezzo").value(DEFAULT_PREZZO.doubleValue()));
+            .andExpect(jsonPath("$.prezzo").value(DEFAULT_PREZZO.doubleValue()))
+            .andExpect(jsonPath("$.ordine").value(DEFAULT_ORDINE));
     }
 
     @Test
@@ -204,7 +211,8 @@ public class PietanzaResourceIntTest {
             .codice(UPDATED_CODICE)
             .nome(UPDATED_NOME)
             .descrizione(UPDATED_DESCRIZIONE)
-            .prezzo(UPDATED_PREZZO);
+            .prezzo(UPDATED_PREZZO)
+            .ordine(UPDATED_ORDINE);
 
         restPietanzaMockMvc.perform(put("/api/pietanzas")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -219,6 +227,7 @@ public class PietanzaResourceIntTest {
         assertThat(testPietanza.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testPietanza.getDescrizione()).isEqualTo(UPDATED_DESCRIZIONE);
         assertThat(testPietanza.getPrezzo()).isEqualTo(UPDATED_PREZZO);
+        assertThat(testPietanza.getOrdine()).isEqualTo(UPDATED_ORDINE);
     }
 
     @Test

@@ -108,6 +108,7 @@
                                 nome: null,
                                 descrizione: null,
                                 prezzo: null,
+                                ordine: null,
                                 id: null
                             };
                         }

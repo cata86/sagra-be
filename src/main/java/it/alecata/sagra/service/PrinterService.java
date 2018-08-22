@@ -87,10 +87,11 @@ public class PrinterService {
 		printable.addLines(new LineaScontrino(null,sagra.getLogo(), fontNormal12, 0,1));
     	
 		//TESTATA
+		
+		printable.addLines(new LineaScontrino(sagra.getNome(),null, fontNormal12, 55,1));
 		//FIXME CABLATONA TARTUFO
-		//printable.addLines(new LineaScontrino(sagra.getNome(),null, fontNormal12, 55,1));
-		printable.addLines(new LineaScontrino("Ass. Tartufai Bondeno",null, fontNormal12, 55,1));
-		printable.addLines(new LineaScontrino("'Al Ramiol'",null, fontNormal12, 55,1));
+		//printable.addLines(new LineaScontrino("Ass. Tartufai Bondeno",null, fontNormal12, 55,1));
+		//printable.addLines(new LineaScontrino("'Al Ramiol'",null, fontNormal12, 55,1));
 		
     	printable.addLines(new LineaScontrino(sagra.getIndirizzo(),null, fontNormal12, 55,1));
     	printable.addLines(new LineaScontrino(sagra.getTestataScontrino(),null, fontNormal12, 55,1));
@@ -145,14 +146,15 @@ public class PrinterService {
 		Sagra sagra = sagraService.findAll().get(0);
 		Ordine ordine = ordineRepository.findOne(ordineID);
 		
-		//FIXME CABLATONA TARTUFO
-		List<PietanzaCategoria> pietanzeCategorie = pietanzaCategoriaRepository.findAllByOrderByCodiceAsc();
-		//for(PietanzaCategoria pietanzaCategoria : pietanzeCategorie){
-		//	stampaCategoria(pietanzaCategoria,ordine);
-		//}
 		
-		stampaExtraTartufo(pietanzeCategorie,ordine);
-		stampaCategorieTartufo(pietanzeCategorie,ordine);
+		List<PietanzaCategoria> pietanzeCategorie = pietanzaCategoriaRepository.findAllByOrderByCodiceAsc();
+		for(PietanzaCategoria pietanzaCategoria : pietanzeCategorie){
+			stampaCategoria(pietanzaCategoria,ordine);
+		}
+		
+		//FIXME CABLATONA TARTUFO
+		//stampaExtraTartufo(pietanzeCategorie,ordine);
+		//stampaCategorieTartufo(pietanzeCategorie,ordine);
 		
 	}
 	
@@ -326,7 +328,7 @@ public class PrinterService {
 			if(soloDolci)
 				printPrintable(printable,pietanzaCategoria.getNomeStampante());
 			else
-				printPrintable(printable,null);
+				printPrintable(printable,pietanzaCategoria.getNomeStampante());
 		}
 	}
 	
@@ -365,8 +367,9 @@ public class PrinterService {
 		printable.addLines(new LineaScontrino(null,sagra.getLogo(), fontNormal12, 0,1));
     	
 		//TESTATA
+		
+		printable.addLines(new LineaScontrino(sagra.getNome(),null, fontNormal12, 55,1));
 		//FIXME CABLATONA TARTUFO
-		//printable.addLines(new LineaScontrino(sagra.getNome(),null, fontNormal12, 55,1));
 		printable.addLines(new LineaScontrino("Ass. Tartufai Bondeno",null, fontNormal12, 55,1));
 		printable.addLines(new LineaScontrino("'Al Ramiol'",null, fontNormal12, 55,1));
 		

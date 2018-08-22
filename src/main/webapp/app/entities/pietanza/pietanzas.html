@@ -23,6 +23,7 @@
                     <th jh-sort-by="nome"><span data-translate="sagrabeApp.pietanza.nome">Nome</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="descrizione"><span data-translate="sagrabeApp.pietanza.descrizione">Descrizione</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="prezzo"><span data-translate="sagrabeApp.pietanza.prezzo">Prezzo</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="ordine"><span data-translate="sagrabeApp.pietanza.ordine">Ordine</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="pietanzaCategoria.descrizioneBreve"><span data-translate="sagrabeApp.pietanza.pietanzaCategoria">Pietanza Categoria</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
@@ -34,6 +35,7 @@
                     <td>{{pietanza.nome}}</td>
                     <td>{{pietanza.descrizione}}</td>
                     <td>{{pietanza.prezzo}}</td>
+                    <td>{{pietanza.ordine}}</td>
                     <td>
                         <a ui-sref="pietanza-categoria-detail({id:pietanza.pietanzaCategoria.id})">{{pietanza.pietanzaCategoria.descrizioneBreve}}</a>
                     </td>

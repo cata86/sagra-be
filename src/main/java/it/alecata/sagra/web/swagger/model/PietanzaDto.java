@@ -35,6 +35,9 @@ public class PietanzaDto   {
 
   @JsonProperty("contatore")
   private Boolean contatore = false;
+  
+  @JsonProperty("ordine")
+  private Integer ordine = null;
 
   public PietanzaDto id(Long id) {
     this.id = id;
@@ -137,10 +140,30 @@ public class PietanzaDto   {
     this.prezzo = prezzo;
   }
 
-  public PietanzaDto coperto(Boolean coperto) {
-    this.coperto = coperto;
+  public PietanzaDto ordine(Integer ordine) {
+    this.ordine = ordine;
     return this;
   }
+  
+  /**
+  * Get ordine
+  * @return ordine
+ **/
+ @ApiModelProperty(value = "")
+
+
+ public Integer getOrdine() {
+   return ordine;
+ }
+
+ public void setOrdine(Integer ordine) {
+   this.ordine = ordine;
+ }
+
+ public PietanzaDto coperto(Boolean coperto) {
+   this.coperto = coperto;
+   return this;
+ }
 
    /**
    * Get coperto
@@ -193,12 +216,13 @@ public class PietanzaDto   {
         Objects.equals(this.descrizione, pietanza.descrizione) &&
         Objects.equals(this.prezzo, pietanza.prezzo) &&
         Objects.equals(this.coperto, pietanza.coperto) &&
-        Objects.equals(this.contatore, pietanza.contatore);
+        Objects.equals(this.contatore, pietanza.contatore) &&
+        Objects.equals(this.ordine, pietanza.ordine);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, categoria, nome, descrizione, prezzo, coperto, contatore);
+    return Objects.hash(id, categoria, nome, descrizione, prezzo, coperto, contatore, ordine);
   }
 
   @Override
@@ -213,6 +237,7 @@ public class PietanzaDto   {
     sb.append("    prezzo: ").append(toIndentedString(prezzo)).append("\n");
     sb.append("    coperto: ").append(toIndentedString(coperto)).append("\n");
     sb.append("    contatore: ").append(toIndentedString(contatore)).append("\n");
+    sb.append("    ordine: ").append(toIndentedString(ordine)).append("\n");
     sb.append("}");
     return sb.toString();
   }

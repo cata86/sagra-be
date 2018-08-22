@@ -33,6 +33,9 @@ public class Pietanza implements Serializable {
     
     @Column(name = "contatore")
     private Boolean contatore;
+    
+    @Column(name = "ordine")
+    private Integer ordine;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -106,6 +109,14 @@ public class Pietanza implements Serializable {
 		this.contatore = contatore;
 	}
 
+	public Integer getOrdine() {
+		return ordine;
+	}
+
+	public void setOrdine(Integer ordine) {
+		this.ordine = ordine;
+	}
+
 	public PietanzaCategoria getPietanzaCategoria() {
         return pietanzaCategoria;
     }
@@ -147,6 +158,7 @@ public class Pietanza implements Serializable {
             ", nome='" + getNome() + "'" +
             ", descrizione='" + getDescrizione() + "'" +
             ", prezzo='" + getPrezzo() + "'" +
+            ", ordine='" + getOrdine() + "'" +
             "}";
     }
 }

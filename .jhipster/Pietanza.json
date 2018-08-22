@@ -27,6 +27,10 @@
         {
             "fieldName": "prezzo",
             "fieldType": "Float"
+        },
+        {
+            "fieldName": "ordine",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20170801161130",

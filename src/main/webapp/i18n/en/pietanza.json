@@ -19,6 +19,7 @@
             "nome": "Nome",
             "descrizione": "Descrizione",
             "prezzo": "Prezzo",
+            "ordine": "Ordine",
             "pietanzaCategoria": "Pietanza Categoria"
         }
     }
