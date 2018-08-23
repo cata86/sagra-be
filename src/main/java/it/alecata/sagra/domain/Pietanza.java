@@ -108,6 +108,11 @@ public class Pietanza implements Serializable {
 	public void setContatore(Boolean contatore) {
 		this.contatore = contatore;
 	}
+	
+    public Pietanza ordine(Integer ordine) {
+        this.ordine = ordine;
+        return this;
+    }
 
 	public Integer getOrdine() {
 		return ordine;
